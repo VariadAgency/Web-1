@@ -147,22 +147,105 @@
     #partners .logo-img { height: 40px !important; max-width: 120px !important; }
 }
 
-/* 5. EDITORIAL - SCROLL REVEAL (FADE UP) */
+/* 5. EDITORIAL - SAFETY VISIBILITY FIX */
 @media (max-width: 768px) {
-    #editorial { padding-top: 60px !important; padding-bottom: 200px !important; margin-bottom: 0 !important; overflow: visible !important; }
-    #editorial .ed-sticky-wrap, #editorial .ed-sticky { height: auto !important; min-height: auto !important; position: static !important; display: block !important; }
+    #editorial { 
+        padding-top: 60px !important; 
+        padding-bottom: 100px !important; 
+        overflow: visible !important; 
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Force elements to be visible immediately, bypassing JS scroll logic if needed */
+    #editorial .ed-sticky-wrap, 
+    #editorial .ed-sticky,
+    #editorial .ed-grid,
+    #editorial .ed-head,
+    #editorial .ed-copy,
+    #editorial .ed-pane { 
+        display: block !important; 
+        opacity: 1 !important; 
+        transform: none !important; 
+        visibility: visible !important; 
+        position: relative !important;
+        height: auto !important;
+    }
+
+    #editorial .ed-pane {
+        margin-bottom: 60px !important; /* Abstand zwischen den Textblöcken */
+    }
+
     #editorial .cf, #editorial .cf-stage, #editorial .cf-card { display: none !important; }
-    #editorial .ed-grid { display: block !important; }
-    #editorial .ed-head { opacity: 1 !important; transform: none !important; margin-bottom: 0 !important; display: block !important; position: relative !important; }
-    #editorial .ed-copy { min-height: auto !important; height: auto !important; display: flex !important; flex-direction: column !important; gap: 100px !important; padding: 0 !important; overflow: visible !important; }
-    #editorial .ed-pane { position: relative !important; opacity: 0 !important; transform: translateY(60px) !important; display: block !important; pointer-events: auto !important; margin: 0 !important; transition: opacity 0.6s ease-out, transform 0.6s ease-out !important; }
-    #editorial .ed-pane[data-key="intro"] { opacity: 1 !important; transform: none !important; margin-top: 100px !important; transition: none !important; }
-    #editorial .ed-pane.mobile-visible { opacity: 1 !important; transform: translateY(0) !important; }
-    #editorial .ed-pane.mobile-exiting { opacity: 0 !important; transform: translateY(-60px) !important; transition: opacity 0.4s ease-in, transform 0.4s ease-in !important; }
-    #editorial .ed-pane[data-key="intro"].mobile-exiting { opacity: 1 !important; transform: none !important; }
-    #editorial .ed-pane h3 { font-size: 26px !important; margin-bottom: 15px !important; }
-    #editorial .ed-pane p, #editorial .ed-pane li { font-size: 17px !important; line-height: 1.6 !important; color: #e5e5e5 !important; }
-    #editorial .ed-cta-layer { display: none !important; }
+}
+
+/* 2. HEADER & MOBILE MENU FIX */
+@media (max-width: 768px) {
+    .nav-container { padding: 15px 20px !important; justify-content: space-between !important; display: flex !important; align-items: center !important; }
+    .nav-logo-img { height: 24px !important; }
+    
+    .nav-right {
+        display: flex !important;
+        align-items: center !important;
+        gap: 15px !important;
+    }
+
+    .cta-button { padding: 8px 14px !important; font-size: 13px !important; white-space: nowrap !important; }
+    .nav-links { display: none !important; }
+
+    /* Hamburger Button */
+    .mobile-nav-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px; /* Etwas breiter für leichteres Klicken */
+        height: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1100;
+        padding: 0;
+        margin-left: 12px;
+    }
+
+    .mobile-nav-toggle span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .mobile-nav-toggle.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .mobile-nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .mobile-nav-toggle.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* Mobile Menu Overlay - STANDARD HIDDEN */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 1050;
+        display: none !important; /* Hart ausblenden via Display */
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Erst wenn Klasse 'is-active' da ist, wird es sichtbar */
+    .mobile-menu.is-active {
+        display: flex !important;
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 /* 6. SERVICES */

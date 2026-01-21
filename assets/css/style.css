@@ -77,6 +77,19 @@
             overflow-y: auto !important; /* CRITICAL: allow vertical scroll for sticky */
         }
         
+        /* Mobile Menu - Default Hidden on Desktop */
+        .mobile-menu { display: none; }
+        .mobile-nav-toggle { display: none; }
+
+        @media (max-width: 768px) {
+            .mobile-nav-toggle { display: flex; }
+            .mobile-menu { display: flex; } /* But visibility handled by opacity/visibility classes */
+        }
+        
+        /* Mobile Menu - Default Hidden on Desktop */
+        .mobile-menu { display: none; }
+        .mobile-nav-toggle { display: none; }
+
         /* Navigation Wrapper */
         .nav-wrapper {
             position: fixed;

@@ -1,6 +1,7 @@
 /* --- Block 2 --- */
 // Navigation Auto-Hide & Mobile Menu Toggle
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('[Main.js] DOM loaded - Init Nav');
         const navWrapper = document.querySelector('.nav-wrapper');
         const nav = document.querySelector('nav');
         const mobileToggle = document.querySelector('.mobile-nav-toggle');
@@ -10,10 +11,23 @@
 
         // Mobile Menu Toggle
         if (mobileToggle && mobileMenu) {
-            mobileToggle.addEventListener('click', function() {
-                mobileToggle.classList.toggle('is-active');
-                mobileMenu.classList.toggle('is-active');
-                document.body.style.overflow = mobileMenu.classList.contains('is-active') ? 'hidden' : '';
+            console.log('[Main.js] Mobile elements found');
+            mobileToggle.addEventListener('click', function(e) {
+                e.preventDefault(); // Stop default action
+                e.stopPropagation(); // Stop bubbling
+                console.log('[Main.js] Toggle clicked');
+                
+                const isActive = mobileToggle.classList.contains('is-active');
+                
+                if (isActive) {
+                    mobileToggle.classList.remove('is-active');
+                    mobileMenu.classList.remove('is-active');
+                    document.body.style.overflow = '';
+                } else {
+                    mobileToggle.classList.add('is-active');
+                    mobileMenu.classList.add('is-active');
+                    document.body.style.overflow = 'hidden';
+                }
             });
 
             // Close menu when link is clicked
@@ -24,6 +38,8 @@
                     document.body.style.overflow = '';
                 });
             });
+        } else {
+            console.warn('[Main.js] Mobile elements NOT found');
         }
 
         // Initial sichtbar wenn oben
