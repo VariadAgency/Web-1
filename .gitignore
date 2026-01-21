@@ -1,0 +1,6 @@
+site-server-*.log
+site-server-*.pid
+start-variad-site.sh
+_gemini_changes/
+editable.html.json
+.DS_Store
