@@ -1,9 +1,30 @@
 /* --- Block 2 --- */
-// Navigation Auto-Hide beim Scrollen
+// Navigation Auto-Hide & Mobile Menu Toggle
     document.addEventListener('DOMContentLoaded', function() {
         const navWrapper = document.querySelector('.nav-wrapper');
         const nav = document.querySelector('nav');
+        const mobileToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
         let lastScrollY = window.scrollY;
+
+        // Mobile Menu Toggle
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', function() {
+                mobileToggle.classList.toggle('is-active');
+                mobileMenu.classList.toggle('is-active');
+                document.body.style.overflow = mobileMenu.classList.contains('is-active') ? 'hidden' : '';
+            });
+
+            // Close menu when link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileToggle.classList.remove('is-active');
+                    mobileMenu.classList.remove('is-active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
 
         // Initial sichtbar wenn oben
         if (window.scrollY < 50) {
@@ -12,6 +33,9 @@
 
         window.addEventListener('scroll', function() {
             const currentScrollY = window.scrollY;
+            
+            // Don't hide nav if mobile menu is open
+            if (mobileMenu && mobileMenu.classList.contains('is-active')) return;
 
             // Wenn ganz oben (innerhalb 50px), Header sichtbar
             if (currentScrollY < 50) {
