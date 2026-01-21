@@ -1,0 +1,738 @@
+/* ====================================
+   MODERN MULTI-STEP CONTACT FORM 2026
+   Features: Glassmorphism, Micro-interactions,
+   Progressive Disclosure, Real-time Validation
+   ==================================== */
+
+/* ===== CONTAINER & BASE STYLES ===== */
+#contact {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    overflow: hidden;
+}
+
+/* Animated Background Gradient */
+#contact::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(220, 38, 38, 0.1) 0%,
+        transparent 50%),
+        radial-gradient(circle at 80% 20%,
+        rgba(251, 146, 60, 0.08) 0%,
+        transparent 50%);
+    animation: rotate-bg 30s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotate-bg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== GLASSMORPHISM CONTAINER ===== */
+.modern-form-container {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 20px 60px rgba(220, 38, 38, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-form-container:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 48px 0 rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 24px 80px rgba(220, 38, 38, 0.2);
+}
+
+/* ===== HEADER ===== */
+.form-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeSlideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.form-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 400;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-container {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.progress-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.progress-line-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #dc2626 0%, #fb923c 100%);
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+.progress-step {
+    position: relative;
+    z-index: 1;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.progress-step:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.progress-step.active {
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    border-color: transparent;
+    color: #ffffff;
+    box-shadow:
+        0 0 0 4px rgba(220, 38, 38, 0.2),
+        0 4px 12px rgba(220, 38, 38, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.progress-step.completed {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.progress-step.completed::after {
+    content: '✓';
+    position: absolute;
+    font-size: 1.2rem;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 4px rgba(220, 38, 38, 0.2),
+            0 4px 12px rgba(220, 38, 38, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(220, 38, 38, 0.1),
+            0 4px 16px rgba(220, 38, 38, 0.6);
+    }
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+}
+
+.progress-label {
+    flex: 1;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.3s ease;
+}
+
+.progress-label.active {
+    color: rgba(251, 146, 60, 1);
+    font-weight: 600;
+}
+
+/* ===== FORM STEPS ===== */
+.form-steps {
+    position: relative;
+    min-height: 400px;
+}
+
+.form-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(50px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-step.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    position: relative;
+}
+
+.form-step.exiting {
+    transform: translateX(-50px);
+    opacity: 0;
+}
+
+.step-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.step-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 2rem;
+}
+
+/* ===== OPTION CHIPS (GLASSMORPHIC) ===== */
+.option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.option-chip {
+    position: relative;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    overflow: hidden;
+}
+
+.option-chip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0) 0%, rgba(251, 146, 60, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.option-chip:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.option-chip:hover::before {
+    opacity: 0.1;
+}
+
+.option-chip.selected {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(251, 146, 60, 0.2) 100%);
+    border-color: rgba(251, 146, 60, 0.5);
+    color: #ffffff;
+    box-shadow:
+        0 0 0 3px rgba(220, 38, 38, 0.2),
+        0 8px 24px rgba(220, 38, 38, 0.3);
+    transform: translateY(-2px);
+}
+
+.option-chip.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    animation: checkmark 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* ===== FORM INPUTS ===== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(251, 146, 60, 0.5);
+    box-shadow:
+        0 0 0 3px rgba(251, 146, 60, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.form-input:focus + .form-label,
+.form-textarea:focus + .form-label {
+    color: rgba(251, 146, 60, 1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Input Validation States */
+.form-input.valid,
+.form-textarea.valid {
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.form-input.invalid,
+.form-textarea.invalid {
+    border-color: rgba(239, 68, 68, 0.5);
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.error-message {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(239, 68, 68, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeSlideDown 0.3s ease;
+}
+
+.error-message::before {
+    content: '⚠';
+}
+
+/* ===== RANGE SLIDER (BUDGET) ===== */
+.range-container {
+    margin: 2rem 0;
+}
+
+.range-value {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+@keyframes pulse-subtle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.range-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    cursor: pointer;
+    box-shadow:
+        0 0 0 4px rgba(220, 38, 38, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow:
+        0 0 0 6px rgba(220, 38, 38, 0.3),
+        0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.range-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    cursor: pointer;
+    border: none;
+    box-shadow:
+        0 0 0 4px rgba(220, 38, 38, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.range-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.form-navigation {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.btn-nav {
+    flex: 1;
+    padding: 1.125rem 2rem;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-back {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-back:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    transform: translateX(-4px);
+}
+
+.btn-back:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-next {
+    background: linear-gradient(135deg, #dc2626 0%, #fb923c 100%);
+    color: #ffffff;
+    box-shadow:
+        0 4px 12px rgba(220, 38, 38, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.btn-next::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-next:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-next:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(220, 38, 38, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.btn-next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-next span,
+.btn-back span {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== SUCCESS STATE ===== */
+.success-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    animation: fadeSlideDown 0.6s ease;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    animation: success-pop 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes success-pop {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.success-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    #contact {
+        padding: 2rem 1rem;
+    }
+
+    .modern-form-container {
+        padding: 2rem 1.5rem;
+        border-radius: 24px;
+    }
+
+    .form-title {
+        font-size: 2rem;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+    }
+
+    .progress-step {
+        width: 40px;
+        height: 40px;
+        font-size: 0.95rem;
+    }
+
+    .progress-label {
+        font-size: 0.65rem;
+    }
+
+    .option-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-navigation {
+        flex-direction: column-reverse;
+    }
+
+    .step-title {
+        font-size: 1.5rem;
+    }
+
+    .range-value {
+        font-size: 2rem;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus visible for keyboard navigation */
+.option-chip:focus-visible,
+.form-input:focus-visible,
+.form-textarea:focus-visible,
+.btn-nav:focus-visible {
+    outline: 2px solid rgba(251, 146, 60, 1);
+    outline-offset: 2px;
+}
+
+/* ===== LOADING STATE ===== */
+.btn-next.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-next.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
