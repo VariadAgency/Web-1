@@ -215,22 +215,26 @@
         justify-content: center !important;
         align-items: center !important;
         gap: 12px !important; /* Exakter Abstand zwischen DE | EN */
-        margin-top: 8px !important;
-        font-size: 13px !important;
-        opacity: 0.5 !important;
+        margin-top: 0px !important; /* Weiter nach oben gezogen */
+        font-size: 14px !important; /* Einheitliche Größe */
+        opacity: 0.8 !important; /* Bessere Lesbarkeit */
         border-top: 1px solid rgba(255,255,255,0.05) !important;
-        padding-top: 12px !important;
+        padding-top: 10px !important;
+        padding-bottom: 5px !important; /* Weniger Platz nach unten zur Kante */
         width: 100% !important;
     }
 
-    .mobile-lang-switch .lang-de.active {
-        color: #fff !important;
+    .mobile-lang-switch .lang-de.active,
+    .mobile-lang-switch .lang-en.active {
+        color: var(--brand-red) !important; /* VARIAD ROT für die aktive Sprache */
         font-weight: 700 !important;
     }
 
-    .mobile-lang-switch .lang-en {
+    .mobile-lang-switch .lang-en,
+    .mobile-lang-switch .lang-de {
         color: #d4d4d4 !important;
         text-decoration: none !important;
+        font-size: 14px !important; /* Sicherstellen, dass beide gleich groß sind */
     }
 
     .mobile-lang-switch .lang-sep {

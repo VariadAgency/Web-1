@@ -51,6 +51,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/mobile-fixes.css?v=3">
 
     <!-- Schema.org Comprehensive Knowledge Graph -->
     <script type="application/ld+json">
@@ -124,19 +125,48 @@
         <div class="nav-hover-trigger"></div>
         <nav>
             <div class="nav-container">
-                <div class="logo-nav">
+                <a href="#home" class="logo-nav" aria-label="To Homepage">
                     <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agency" class="nav-logo-img">
-                </div>
+                </a>
                 <ul class="nav-links">
-                    <li><a href="#home" aria-label="Go to homepage Social Media Agency">Home</a></li>
+                    <li><a href="#home" aria-label="Back to Homepage">Home</a></li>
                     <li><a href="#editorial" aria-label="Services: Content, Ads, Management">Services</a></li>
-                    <li><a href="portfolio.html" aria-label="Portfolio Video Production and Social Media">Portfolio</a></li>
-                    <li><a href="#contact" aria-label="Contact the agency">Contact</a></li>
+                    <li><a href="../portfolio.html" aria-label="Portfolio Video Production and Social Media">Portfolio</a></li>
+                    <li><a href="#contact" aria-label="Contact the Agency">Contact</a></li>
                     <li><a href="../index.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
                 </ul>
-                <a href="#contact" class="cta-button" aria-label="Book Social Media Marketing Consultation" title="Request free initial consultation now">Get Started</a>
+                <div class="nav-right">
+                    <a href="#contact" class="cta-button" aria-label="Book Consultation for Social Media Marketing" title="Request free consultation now">Book Consultation</a>
+                    <button id="mobile-toggle-btn" class="mobile-nav-toggle" aria-label="Open Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
             </div>
         </nav>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="mobile-menu">
+            <div class="mobile-menu-inner">
+                <ul class="mobile-nav-links">
+                    <li><a href="#home" class="mob-link">Home</a></li>
+                    <li><a href="#editorial" class="mob-link">Services</a></li>
+                    <li><a href="../portfolio.html" class="mob-link">Portfolio</a></li>
+                    <li><a href="#about" class="mob-link">About us</a></li>
+                    <li><a href="#contact" class="mob-link">Contact</a></li>
+                    <li><a href="../impressum.html" class="mob-link">Imprint</a></li>
+                    <li class="mobile-lang-switch">
+                        <a href="../index.html" class="lang-de">DE</a>
+                        <span class="lang-sep">|</span>
+                        <span class="lang-en active">EN</span>
+                    </li>
+                </ul>
+                <div class="mobile-menu-footer">
+                    <a href="#contact" class="cta-button mob-link">Book Consultation</a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -778,7 +808,7 @@
 
                 <!-- Right Column: Founder Card -->
                 <div class="contact-right">
-                    <div class="founder-card">
+                    <div class="founder-card" id="about">
                         <div class="founder-image">
                             <img src="../images/social-media-experte-clemens-roessle-stuttgart.jpg" alt="Clemens Rößle - CEO VARIAD Agency" loading="lazy">
                         </div>
