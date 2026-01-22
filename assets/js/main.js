@@ -1310,9 +1310,28 @@
 /* --- Block 9 --- */
 // Make "Beratung buchen" CTA focus the contact form after scroll
     (function(){
-        const ctas = document.querySelectorAll('a[href="#contact"].cta-button, a[href="#contact"].btn-primary');
-        const focusName = () => setTimeout(()=> document.getElementById('contact-name')?.focus({ preventScroll:true }), 600);
-        ctas.forEach(a=> a.addEventListener('click', focusName));
+        const ctas = document.querySelectorAll('a[href="#contact"]');
+        
+        const smoothScrollToContact = (e) => {
+            e.preventDefault();
+            const target = document.getElementById('contact');
+            if (!target) return;
+            
+            // Calculate position: target top + offset (e.g. -95px)
+            // A negative offset helps land higher up if the target is being overshot
+            const offset = window.innerWidth <= 768 ? -95 : 80;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + offset;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+
+            // Focus name field after scroll
+            setTimeout(()=> document.getElementById('wiz-name')?.focus({ preventScroll:true }), 800);
+        };
+
+        ctas.forEach(a=> a.addEventListener('click', smoothScrollToContact));
     })();
 
 
