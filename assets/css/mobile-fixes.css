@@ -316,7 +316,7 @@
 
     /* HEADER OBEN */
     .camera-header {
-        margin-bottom: 40px !important;
+        margin-bottom: 110px !important;
         opacity: 1 !important;
         visibility: visible !important;
         position: relative !important;
@@ -324,8 +324,10 @@
         text-align: center !important;
     }
     .camera-header h2 {
-        font-size: 28px !important;
-        margin-bottom: 12px !important;
+        font-size: clamp(36px, 8vw, 48px) !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        margin-bottom: 16px !important;
     }
     .camera-header p {
         font-size: 16px !important;
@@ -476,6 +478,10 @@
         display: block !important;
         opacity: 1 !important;
         overflow: visible !important;
+    }
+
+    #contact .section-title {
+        margin-bottom: 40px !important; /* Weiter vergrößerter Abstand zum Untertitel */
     }
 
     .contact-wrapper {
