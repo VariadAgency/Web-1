@@ -51,7 +51,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/mobile-fixes.css?v=3">
+    <link rel="stylesheet" href="assets/css/mobile-fixes.css?v=9">
 
     <!-- Schema.org Comprehensive Knowledge Graph -->
     <script type="application/ld+json">
@@ -197,9 +197,9 @@
         <div class="nav-hover-trigger"></div>
         <nav>
             <div class="nav-container">
-                <div class="logo-nav">
+                <a href="#home" class="logo-nav" aria-label="Zur Startseite">
                     <img src="images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agentur" class="nav-logo-img">
-                </div>
+                </a>
                 <ul class="nav-links">
                     <li><a href="#home" aria-label="Zur Startseite Social Media Agentur Heilbronn">Home</a></li>
                     <li><a href="#editorial" aria-label="Dienstleistungen: Content, Ads, Management">Services</a></li>
@@ -209,7 +209,7 @@
                 </ul>
                 <div class="nav-right">
                     <a href="#contact" class="cta-button" aria-label="Beratung für Social Media Marketing buchen" title="Jetzt kostenloses Erstgespräch anfragen">Beratung buchen</a>
-                    <button class="mobile-nav-toggle" aria-label="Menü öffnen">
+                    <button id="mobile-toggle-btn" class="mobile-nav-toggle" aria-label="Menü öffnen">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -219,19 +219,23 @@
         </nav>
         
         <!-- Mobile Menu Overlay -->
-        <div class="mobile-menu">
+        <div id="mobile-menu-overlay" class="mobile-menu">
             <div class="mobile-menu-inner">
                 <ul class="mobile-nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#editorial">Services</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
+                    <li><a href="#home" class="mob-link">Home</a></li>
+                    <li><a href="#editorial" class="mob-link">Services</a></li>
+                    <li><a href="portfolio.html" class="mob-link">Portfolio</a></li>
+                    <li><a href="#about" class="mob-link">Über uns</a></li>
+                    <li><a href="#contact" class="mob-link">Kontakt</a></li>
+                    <li><a href="impressum.html" class="mob-link">Impressum</a></li>
                     <li class="mobile-lang-switch">
-                        <strong>DE</strong> | <a href="en/index.html">EN</a>
+                        <span class="lang-de active">DE</span>
+                        <span class="lang-sep">|</span>
+                        <a href="en/index.html" class="lang-en">EN</a>
                     </li>
                 </ul>
                 <div class="mobile-menu-footer">
-                    <a href="#contact" class="cta-button">Beratung buchen</a>
+                    <a href="#contact" class="cta-button mob-link">Beratung buchen</a>
                 </div>
             </div>
         </div>
@@ -906,7 +910,7 @@
 
                 <!-- Right Column: Founder Card -->
                 <div class="contact-right">
-                    <div class="founder-card">
+                    <div class="founder-card" id="about">
                         <div class="founder-image">
                             <img src="images/social-media-experte-clemens-roessle-stuttgart.jpg" alt="Clemens Rößle - Geschäftsführer VARIAD Agentur" loading="lazy">
                         </div>
@@ -1029,66 +1033,7 @@
             <input type="tel" name="phone">
         </form>
     
-        <script src="assets/js/main.js"></script>
-    
-    <!-- Mobile Scroll Reveal Script -->
-    <script>
-    if (window.innerWidth < 768) {
-        document.addEventListener('DOMContentLoaded', () => {
-            // Robuster IntersectionObserver mit niedrigem Threshold
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const el = entry.target;
-                    const r = entry.boundingClientRect;
+    <script src="assets/js/main.js?v=3"></script>
 
-                    if (entry.isIntersecting) {
-                        el.classList.add('mobile-visible');
-                        el.classList.remove('mobile-exiting');
-                    } else {
-                        // Nur für ed-pane: Exiting Animation beim Hochscrollen
-                        if (el.classList.contains('ed-pane') && r.top < 100) {
-                            el.classList.add('mobile-exiting');
-                            el.classList.remove('mobile-visible');
-                        }
-                    }
-                });
-            }, {
-                threshold: 0.02, // Niedriger Threshold - triggert frueher
-                rootMargin: "50px 0px 50px 0px" // Groesserer Bereich
-            });
-
-            // Alle zu animierenden Elemente beobachten
-            const animatedElements = document.querySelectorAll('.ed-pane, .content-slide, .production-card');
-            animatedElements.forEach(el => observer.observe(el));
-
-            // Fallback: Nach 2.5 Sekunden alle noch unsichtbaren Elemente sichtbar machen
-            setTimeout(() => {
-                animatedElements.forEach(el => {
-                    const style = window.getComputedStyle(el);
-                    const opacity = parseFloat(style.opacity);
-                    // Wenn Element noch unsichtbar ist (opacity < 0.5)
-                    if (opacity < 0.5 && !el.classList.contains('mobile-visible')) {
-                        el.classList.add('mobile-visible');
-                    }
-                });
-            }, 2500);
-
-            // Zusaetzlicher Check beim ersten Scroll
-            let scrollChecked = false;
-            window.addEventListener('scroll', () => {
-                if (!scrollChecked) {
-                    scrollChecked = true;
-                    animatedElements.forEach(el => {
-                        const rect = el.getBoundingClientRect();
-                        // Element ist im Viewport
-                        if (rect.top < window.innerHeight && rect.bottom > 0) {
-                            el.classList.add('mobile-visible');
-                        }
-                    });
-                }
-            }, { passive: true });
-        });
-    }
-    </script>
 </body>
-    </html>
+</html>

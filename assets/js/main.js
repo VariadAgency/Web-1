@@ -11,35 +11,52 @@
 
         // Mobile Menu Toggle
         if (mobileToggle && mobileMenu) {
-            console.log('[Main.js] Mobile elements found');
-            mobileToggle.addEventListener('click', function(e) {
-                e.preventDefault(); // Stop default action
-                e.stopPropagation(); // Stop bubbling
-                console.log('[Main.js] Toggle clicked');
-                
-                const isActive = mobileToggle.classList.contains('is-active');
-                
+            console.log('[Main.js] Mobile elements found:', mobileToggle, mobileMenu);
+
+            let lastToggle = 0;
+            function toggleMenu(e) {
+                // Prevent double-fire from touch + click
+                const now = Date.now();
+                if (now - lastToggle < 300) return;
+                lastToggle = now;
+
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                console.log('[Main.js] Menu toggled!');
+
+                const isActive = mobileMenu.classList.contains('is-active');
+
                 if (isActive) {
                     mobileToggle.classList.remove('is-active');
                     mobileMenu.classList.remove('is-active');
-                    document.body.style.overflow = '';
+                    nav.classList.remove('is-expanded'); // Header schrumpft
                 } else {
                     mobileToggle.classList.add('is-active');
                     mobileMenu.classList.add('is-active');
-                    document.body.style.overflow = 'hidden';
+                    nav.classList.add('is-expanded'); // Header wächst
                 }
-            });
+            }
+
+            // Click event
+            mobileToggle.addEventListener('click', toggleMenu, { passive: false });
 
             // Close menu when link is clicked
             mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileToggle.classList.remove('is-active');
-                    mobileMenu.classList.remove('is-active');
-                    document.body.style.overflow = '';
+                link.addEventListener('click', (e) => {
+                    // Wenn es ein Anker-Link (#) auf der gleichen Seite ist
+                    if (link.getAttribute('href').startsWith('#')) {
+                        mobileToggle.classList.remove('is-active');
+                        mobileMenu.classList.remove('is-active');
+                        nav.classList.remove('is-expanded'); // Header schrumpft
+                        document.body.style.overflow = '';
+                    } 
+                    // Bei normalen Links (wie en/index.html) lassen wir den Browser einfach navigieren
                 });
             });
         } else {
-            console.warn('[Main.js] Mobile elements NOT found');
+            console.warn('[Main.js] Mobile elements NOT found!', { mobileToggle, mobileMenu });
         }
 
         // Initial sichtbar wenn oben
