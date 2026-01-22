@@ -661,8 +661,9 @@
                 const dur = minDur + Math.random() * (maxDur - minDur);
 
                 // Exclusion: nicht im Phone inkl. Sicherheitsrand aus Größe & Drift
-                const marginBase = 24 + Math.random()*28; // 24–52
-                const M = marginBase + size*0.35 + 12; // proportionaler Sicherheitsrand
+                const isMobile = window.innerWidth <= 768;
+                const marginBase = isMobile ? 5 : (24 + Math.random()*28); // Mobile: minimal margin (5px)
+                const M = marginBase + size*0.35 + (isMobile ? 2 : 12); 
                 const expanded = { left:P.left-M, top:P.top-M, right:P.right+M, bottom:P.bottom+M };
 
                 // Punkt suchen – wähle eine Seite (links/rechts) und halte Pfad dort
@@ -674,23 +675,32 @@
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
 
-                  // Spawn-Area: Phone-zentriert, aber variabel je nach Scroll
-                  const maxRadius = P.width * 1.3;
-                  const minRadius = P.width * 0.85;
-                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+                  let x, y;
 
-                  // Voller Kreis: 0° bis 360°
-                  const angle = Math.random() * Math.PI * 2;
-                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
+                  if (isMobile) {
+                    // Mobile: Streue Emojis über die gesamte Breite und Höhe des Layers
+                    x = L.left + Math.random() * L.width;
+                    y = L.top + Math.random() * L.height;
+                    
+                    x = Math.max(L.left + 10, Math.min(L.right - 10, x));
+                    y = Math.max(L.top + 10, Math.min(L.bottom - 10, y));
+                  } else {
+                    // Desktop: Bleibe beim Radius um das Handy
+                    const maxRadius = P.width * 1.3;
+                    const minRadius = P.width * 0.85;
+                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
 
-                  let x = centerX + Math.cos(angle) * distance;
-                  let y = centerY + Math.sin(angle) * distance;
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
 
-                  // WICHTIG: Y-Position muss MINDESTENS unter Header + rise sein!
-                  // Damit End-Position (y - rise) immer noch unter Header bleibt
-                  const minY = absoluteTopLimit + rise + 100;
+                    x = centerX + Math.cos(angle) * distance;
+                    y = centerY + Math.sin(angle) * distance;
+                  }
+
+                  // WICHTIG: Y-Position auf Mobile freier lassen
+                  const minY = isMobile ? (L.top + 50) : (absoluteTopLimit + rise + 100);
                   if (y < minY) {
-                    y = minY + Math.random() * 80;
+                    y = minY + Math.random() * 50;
                   }
 
                   return {x, y};
@@ -806,12 +816,13 @@
                 const dur = minDur + Math.random()*(maxDur-minDur);
 
                 // VIEL GRÖSSERER Sicherheitsrand - Messages WEIT WEG vom Phone!
-                const M = 120 + fs*1.5; // Stark erhöht! (vorher 32 + fs*0.6)
+                const isMobile = window.innerWidth <= 768;
+                const M = isMobile ? 10 : (120 + fs*1.5); // Mobile: minimal margin (10px) instead of 120px+
                 const expanded = { left:P.left-M, top:P.top-M, right:P.right+M, bottom:P.bottom+M };
                 const eCenters = emojiCenters();
 
                 function farFromEmojis(x,y){
-                  for(const c of eCenters){ if(Math.hypot(x-c.x,y-c.y) < c.r + 90) return false; }
+                  for(const c of eCenters){ if(Math.hypot(x-c.x,y-c.y) < c.r + (isMobile ? 30 : 90)) return false; }
                   return true;
                 }
 
@@ -822,21 +833,33 @@
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
 
-                  // Messages spawnen WEITER WEG vom Phone als Emojis!
-                  const maxRadius = P.width * 1.6; // Erhöht von 1.3
-                  const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
-                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+                  let x, y;
 
-                  // Spawn in kreisförmiger Area um das Phone
-                  const angle = Math.random() * Math.PI * 2;
-                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
-                  let x = centerX + Math.cos(angle) * distance;
-                  let y = centerY + Math.sin(angle) * distance;
+                  if (isMobile) {
+                    // Mobile: Streue Messages über die gesamte Breite und Höhe des Layers
+                    x = L.left + Math.random() * L.width;
+                    y = L.top + Math.random() * L.height;
+                    
+                    x = Math.max(L.left + 15, Math.min(L.right - 15, x));
+                    y = Math.max(L.top + 15, Math.min(L.bottom - 15, y));
+                  } else {
+                    // Desktop: Bleibe beim Radius um das Handy
+                    // Messages spawnen WEITER WEG vom Phone als Emojis!
+                    const maxRadius = P.width * 1.6; // Erhöht von 1.3
+                    const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
+                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
 
-                  // WICHTIG: Y muss unter Header + rise sein!
-                  const minY = absoluteTopLimit + rise + 100;
+                    // Spawn in kreisförmiger Area um das Phone
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
+                    x = centerX + Math.cos(angle) * distance;
+                    y = centerY + Math.sin(angle) * distance;
+                  }
+
+                  // WICHTIG: Y muss auf Mobile freier sein
+                  const minY = isMobile ? (L.top + 50) : (absoluteTopLimit + rise + 100);
                   if (y < minY) {
-                    y = minY + Math.random() * 80;
+                    y = minY + Math.random() * 50;
                   }
 
                   return {x, y};
