@@ -616,28 +616,19 @@
               const phone = section.querySelector('.phone');
               const layer = section.querySelector('.emoji-layer');
               const EMOJIS = ['🔥','😍','🥳','🤝','👍','🙌','👏','✨','💡','💬','🎯','📣','🧠','❤️','💪','😊','😎','🤩','🎉','👀','🚀','💯','⚡️','👌'];
-              const MAX = 60; 
+              const MAX = 21; // 30% weniger gleichzeitig (von 30 auf 21)
               const lastPoints = [];
               let lastEmoji = '';
 
-              function gentleRemove(el) {
-                if (!el || el.dataset.dying === 'true') return;
-                el.dataset.dying = 'true';
-                // Wir setzen nur die opacity via JS, der Browser priorisiert dies gegenüber dem Klassen-Style
-                el.style.transition = 'opacity 0.6s ease';
-                el.style.opacity = '0';
-                setTimeout(() => el.remove(), 650);
-              }
-              window.SMM.gentleRemove = gentleRemove;
-
               function randomSize(){
-                // Grundverteilung: große Emojis seltener und insgesamt kleiner (um ein Drittel reduziert)
+                // Grundverteilung: große Emojis um ~30% seltener
                 let size = (Math.random() < 0.21)
-                  ? 70 + Math.random()*50   // 70–120px (groß - reduziert von 84-168)
-                  : 40 + Math.random()*40;  // 40–80px (mittel - reduziert von 48-112)
-                
-                // Größte nochmals drosseln
-                if(size > 100) size *= 0.7; 
+                  ? 84 + Math.random()*84   // 84–168px (groß - 30% reduziert)
+                  : 48  + Math.random()*64;   // 48–112px (mittel)
+                // Größte ca. 25% kleiner
+                if(size > 140) size *= 0.75; // Schwellwert angepasst (vorher 200)
+                // Kleinste ca. 15% größer
+                if(size < 60)  size *= 1.15;
                 return size;
               }
 
@@ -649,11 +640,7 @@
               }
 
               function spawnOne(){
-                // Sanftes Entfernen statt hartem Kill
-                if(layer.children.length > MAX) {
-                  const first = layer.querySelector('.emoji:not([data-dying="true"])');
-                  if (first) gentleRemove(first);
-                }
+                if(layer.children.length > MAX) layer.firstChild?.remove();
                 const L = layer.getBoundingClientRect();
                 const P = phone.getBoundingClientRect();
 
@@ -674,55 +661,59 @@
                 const dur = minDur + Math.random() * (maxDur - minDur);
 
                 // Exclusion: nicht im Phone inkl. Sicherheitsrand aus Größe & Drift
-                const isMobile = window.innerWidth <= 768;
-                const marginBase = isMobile ? 5 : (24 + Math.random()*28); // Mobile: minimal margin (5px)
-                const M = marginBase + size*0.35 + (isMobile ? 2 : 12); 
+                const marginBase = 24 + Math.random()*28; // 24–52
+                const M = marginBase + size*0.35 + 12; // proportionaler Sicherheitsrand
                 const expanded = { left:P.left-M, top:P.top-M, right:P.right+M, bottom:P.bottom+M };
 
-                // Punkt suchen
+                // Punkt suchen – wähle eine Seite (links/rechts) und halte Pfad dort
                 let cx=0, cy=0, tries=0;
+                // Kandidaten erzeugen (Blue‑Noise ähnlich): wähle den mit größtem Abstand zu letzten Punkten
                 function candidate(){
-                  const isMobile = window.innerWidth <= 768;
                   const scrollProgress = (window.SMM && window.SMM.scrollProgress) || 0;
                   const P = phone.getBoundingClientRect();
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
 
-                  if (isMobile) {
-                    // Mobile: Streue Emojis über die gesamte Breite und Höhe des Layers
-                    let x = L.left + Math.random() * L.width;
-                    let y = L.top + Math.random() * L.height;
-                    x = Math.max(L.left + 10, Math.min(L.right - 10, x));
-                    y = Math.max(L.top + 10, Math.min(L.bottom - 10, y));
-                    return {x, y};
-                  } else {
-                    // Desktop: Bleibe beim Radius um das Handy
-                    const maxRadius = P.width * 1.3;
-                    const minRadius = P.width * 0.85;
-                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
-                    let x = centerX + Math.cos(angle) * distance;
-                    let y = centerY + Math.sin(angle) * distance;
-                    return {x, y};
+                  // Spawn-Area: Phone-zentriert, aber variabel je nach Scroll
+                  const maxRadius = P.width * 1.3;
+                  const minRadius = P.width * 0.85;
+                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+
+                  // Voller Kreis: 0° bis 360°
+                  const angle = Math.random() * Math.PI * 2;
+                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
+
+                  let x = centerX + Math.cos(angle) * distance;
+                  let y = centerY + Math.sin(angle) * distance;
+
+                  // WICHTIG: Y-Position muss MINDESTENS unter Header + rise sein!
+                  // Damit End-Position (y - rise) immer noch unter Header bleibt
+                  const minY = absoluteTopLimit + rise + 100;
+                  if (y < minY) {
+                    y = minY + Math.random() * 80;
                   }
+
+                  return {x, y};
                 }
                 function dist2(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return dx*dx+dy*dy; }
                 let best=null, bestScore=-1;
                 for(let i=0;i<10;i++){
                   const c = candidate();
-                  const isMobile = window.innerWidth <= 768;
 
-                  if (!isMobile) {
-                    // Desktop-Beschränkungen anwenden
-                    const endCx = c.x + driftX;
-                    const endCy = c.y + driftY - rise;
-                    if (endCy < absoluteTopLimit + 60) continue;
-                    if (c.y < absoluteTopLimit + rise + 80) continue;
-                    const startIntersects = (c.x > expanded.left - size/2 && c.x < expanded.right + size/2 && c.y > expanded.top - size/2 && c.y < expanded.bottom + size/2);
-                    const endIntersects   = (endCx > expanded.left - size/2 && endCx < expanded.right + size/2 && endCy > expanded.top - size/2 && endCy < expanded.bottom + size/2);
-                    if(startIntersects || endIntersects) continue;
-                  }
+                  // End-Position berechnen (mit Rise!)
+                  const endCx = c.x + driftX;
+                  const endCy = c.y + driftY - rise;
+
+                  // KRITISCH: End-Position darf NICHT über Header gehen!
+                  if (endCy < absoluteTopLimit + 60) continue;
+
+                  // Start-Position auch checken
+                  if (c.y < absoluteTopLimit + rise + 80) continue;
+
+                  // Überschneidung mit Phone prüfen (Start & End)
+                  const startIntersects = (c.x > expanded.left - size/2 && c.x < expanded.right + size/2 && c.y > expanded.top - size/2 && c.y < expanded.bottom + size/2);
+                  const endIntersects   = (endCx > expanded.left - size/2 && endCx < expanded.right + size/2 && endCy > expanded.top - size/2 && endCy < expanded.bottom + size/2);
+                  if(startIntersects || endIntersects) continue;
 
                   // Score = Abstand zum nächsten zuletzt gesetzten Punkt
                   let minD = Infinity; for(const p of lastPoints){ const d = dist2(c,p); if(d<minD) minD=d; }
@@ -753,7 +744,7 @@
                 el.style.setProperty('--sx', '0px');
                 el.style.setProperty('--sy', '0px');
                 layer.appendChild(el);
-                el.addEventListener('animationend', ()=> gentleRemove(el));
+                el.addEventListener('animationend', ()=> el.remove());
                 // Actor registrieren (für Collision‑Avoidance)
                 const rb = el.getBoundingClientRect();
                 const actor = { el, born: performance.now(), r: Math.max(rb.width, rb.height)*0.5 };
@@ -793,17 +784,12 @@
               const layer = section.querySelector('.msg-layer');
               const MSGS = ['cool','stark','mega','geil','sauber','weiter so','top','hammer','nice','beste','tolles video','super','liebe es','grandios','gutes ding','saugeil','stabil','wow','echt stark','bitte mehr'];
               const lastPts = [];
-              const MAX = 50; 
 
               function emojiCenters(){
                 return Array.from(section.querySelectorAll('.emoji')).map(e=>{ const r=e.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2, r: Math.max(r.width,r.height)/2}; });
               }
 
               function spawn(){
-                if(layer.children.length > MAX) {
-                  const first = layer.querySelector('.msg:not([data-dying="true"])');
-                  if (first) window.SMM.gentleRemove(first);
-                }
                 const L = layer.getBoundingClientRect();
                 const P = phone.getBoundingClientRect();
 
@@ -812,21 +798,20 @@
                 const headerRect = header ? header.getBoundingClientRect() : null;
                 const absoluteTopLimit = headerRect ? (headerRect.bottom + 120) : (L.top + 250);
 
-                const fs = 26 + Math.random()*12; // 26–38px (weiter erhöht von 22-32px)
-                const rise = 150 + Math.random()*130; // 150–280px (erhöht von 140–260px)
+                const fs = 16 + Math.random()*6; // 16–22px
+                const rise = 120 + Math.random()*100; // 120–220px (erhöht für schnellere Bewegung)
                 let dx = (Math.random()*40 - 20);   // -20..20px Seitwärtsbewegung
                 const dy = (Math.random()*20 - 10);  // -10..10px vertikale Variation
                 const minDur = 3500, maxDur = 6000; // SCHNELLER (vorher 4500-8000)
                 const dur = minDur + Math.random()*(maxDur-minDur);
 
                 // VIEL GRÖSSERER Sicherheitsrand - Messages WEIT WEG vom Phone!
-                const isMobile = window.innerWidth <= 768;
-                const M = isMobile ? 10 : (120 + fs*1.5); // Mobile: minimal margin (10px) instead of 120px+
+                const M = 120 + fs*1.5; // Stark erhöht! (vorher 32 + fs*0.6)
                 const expanded = { left:P.left-M, top:P.top-M, right:P.right+M, bottom:P.bottom+M };
                 const eCenters = emojiCenters();
 
                 function farFromEmojis(x,y){
-                  for(const c of eCenters){ if(Math.hypot(x-c.x,y-c.y) < c.r + (isMobile ? 30 : 90)) return false; }
+                  for(const c of eCenters){ if(Math.hypot(x-c.x,y-c.y) < c.r + 90) return false; }
                   return true;
                 }
 
@@ -837,33 +822,21 @@
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
 
-                  let x, y;
+                  // Messages spawnen WEITER WEG vom Phone als Emojis!
+                  const maxRadius = P.width * 1.6; // Erhöht von 1.3
+                  const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
+                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
 
-                  if (isMobile) {
-                    // Mobile: Streue Messages über die gesamte Breite und Höhe des Layers
-                    x = L.left + Math.random() * L.width;
-                    y = L.top + Math.random() * L.height;
-                    
-                    x = Math.max(L.left + 15, Math.min(L.right - 15, x));
-                    y = Math.max(L.top + 15, Math.min(L.bottom - 15, y));
-                  } else {
-                    // Desktop: Bleibe beim Radius um das Handy
-                    // Messages spawnen WEITER WEG vom Phone als Emojis!
-                    const maxRadius = P.width * 1.6; // Erhöht von 1.3
-                    const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
-                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+                  // Spawn in kreisförmiger Area um das Phone
+                  const angle = Math.random() * Math.PI * 2;
+                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
+                  let x = centerX + Math.cos(angle) * distance;
+                  let y = centerY + Math.sin(angle) * distance;
 
-                    // Spawn in kreisförmiger Area um das Phone
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
-                    x = centerX + Math.cos(angle) * distance;
-                    y = centerY + Math.sin(angle) * distance;
-                  }
-
-                  // WICHTIG: Y muss auf Mobile freier sein
-                  const minY = isMobile ? (L.top + 50) : (absoluteTopLimit + rise + 100);
+                  // WICHTIG: Y muss unter Header + rise sein!
+                  const minY = absoluteTopLimit + rise + 100;
                   if (y < minY) {
-                    y = minY + Math.random() * 50;
+                    y = minY + Math.random() * 80;
                   }
 
                   return {x, y};
@@ -898,12 +871,11 @@
                 el.style.setProperty('--dy', dy+'px');
                 el.style.setProperty('--rise', rise+'px');
                 el.style.animation=`msgPopFloat ${dur}ms linear forwards`;
-                                                el.style.setProperty('--sx', '0px');
-                                                el.style.setProperty('--sy', '0px');
-                                                layer.appendChild(el);
-                                
-                                                // Desktop-Style Cleanup: Animation fadet auf 0, dann löschen
-                                                el.addEventListener('animationend', () => el.remove());                const rb = el.getBoundingClientRect();
+                el.style.setProperty('--sx','0px');
+                el.style.setProperty('--sy','0px');
+                layer.appendChild(el);
+                el.addEventListener('animationend', ()=> el.remove());
+                const rb = el.getBoundingClientRect();
                 const actor = { el, born: performance.now(), r: Math.max(rb.width, rb.height)*0.55 };
                 window.SMM.msgs.push(actor);
                 lastPts.push(best); if(lastPts.length>10) lastPts.shift();
@@ -942,16 +914,13 @@
                 el.style.setProperty('--rise', (cur + inc) + 'px');
               }
 
-              function soften(el, to=0.4, ms=240){
+              function soften(el, to=0.9, ms=240){
                 if(!el) return;
+                const prev = el.style.opacity || '';
                 el.style.transition = `opacity ${ms}ms linear`;
                 el.style.opacity = String(to);
                 clearTimeout(el.__softenT);
-                // Nicht auf '1' zurücksetzen, sondern das CSS-Animation-System übernehmen lassen
-                el.__softenT = setTimeout(()=>{ 
-                    el.style.transition = ''; 
-                    el.style.opacity = ''; 
-                }, ms+60);
+                el.__softenT = setTimeout(()=>{ el.style.opacity = prev || '1'; }, ms+60);
               }
 
               function center(a){ const r=a.el.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2}; }
@@ -1267,32 +1236,21 @@
         
         const io = new IntersectionObserver((entries)=>{
             entries.forEach(entry=>{ 
-                // Trigger animation earlier (5% visibility or near viewport)
-                if(entry.isIntersecting){ 
+                // ZUSATZ-CHECK: Nur animieren, wenn wir nicht ganz oben sind (verhindert Instant-Trigger beim Laden)
+                if(entry.isIntersecting && window.scrollY > 50){ 
                     entry.target.classList.add('visible'); 
                     io.unobserve(entry.target); 
                 } 
             });
         }, { 
-            threshold: 0.05, // Trigger as soon as 5% is visible
-            rootMargin: "0px 0px 200px 0px" // Trigger 200px before it enters the viewport
+            threshold: 0.3, // Muss zu 30% sichtbar sein
+            rootMargin: "0px 0px -100px 0px" // Trigger weit oberhalb des Bodens
         });
         
         // Erst beobachten, wenn wir sicher sind, dass das Layout steht
         setTimeout(() => {
             els.forEach(el => io.observe(el));
         }, 500);
-
-        // Force reveal if contact CTA is clicked
-        const contactCtas = document.querySelectorAll('a[href="#contact"]');
-        contactCtas.forEach(cta => {
-            cta.addEventListener('click', () => {
-                const contact = document.getElementById('contact');
-                if (contact) contact.classList.add('visible');
-                const fadeIns = document.querySelectorAll('#contact .fade-in');
-                fadeIns.forEach(el => el.classList.add('visible'));
-            });
-        });
     })();
 
 
