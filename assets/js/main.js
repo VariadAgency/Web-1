@@ -93,6 +93,7 @@
         const root = document.getElementById('contact-wizard');
         if(!root) return; // should exist now
         console.log('[Wizard] init');
+        const isEn = document.documentElement.lang.startsWith('en');
         const steps = Array.from(root.querySelectorAll('.wiz-step'));
         const nextBtn = root.querySelector('.wiz-btn.next');
         const prevBtn = root.querySelector('.wiz-btn.prev');
@@ -102,7 +103,6 @@
         let idx = 0;
 
         function setActive(i){
-            const isEn = document.documentElement.lang.startsWith('en');
             steps.forEach((s,k)=> s.classList.toggle('is-active', k===i));
             idx = i;
             prevBtn.disabled = (idx===0);
@@ -226,7 +226,6 @@
 
         // Mapping von technischen Werten zu lesbaren Namen
         function getIntentLabel(value){
-            const isEn = document.documentElement.lang.startsWith('en');
             const labelsDe = {
                 'smm': 'Social Media Management',
                 'content': 'Content-Produktion',
@@ -246,7 +245,6 @@
         }
 
         function renderSummary(){
-            const isEn = document.documentElement.lang.startsWith('en');
             const el = root.querySelector('#wiz-summary');
             const locale = isEn ? 'en-US' : 'de-DE';
             const budgetTxt = (state.budgetValue>=2500) ? '> 2,500 €' : (new Intl.NumberFormat(locale).format(state.budgetValue||0)+' €');
@@ -325,6 +323,7 @@
             // Netlify Form Submission
             const formData = new FormData();
             formData.append('form-name', 'contact-wizard');
+            formData.append('bot-field', '');
             formData.append('recipient', 'projekte@variad.de');
             formData.append('intent', intentLabel);
             formData.append('note', state.note || '');
@@ -334,12 +333,13 @@
             formData.append('email', state.email);
             formData.append('phone', state.phone);
 
-            fetch('/', {
+            fetch(window.location.pathname, {
                 method: 'POST',
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams(formData).toString()
             })
-            .then(() => {
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
                 console.log('[Wizard] Success: Data sent to Netlify');
                 // Success View (MASSIVE TEXT LEFT)
                 root.querySelector('.wiz-viewport').innerHTML = `
