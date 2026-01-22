@@ -1236,21 +1236,32 @@
         
         const io = new IntersectionObserver((entries)=>{
             entries.forEach(entry=>{ 
-                // ZUSATZ-CHECK: Nur animieren, wenn wir nicht ganz oben sind (verhindert Instant-Trigger beim Laden)
-                if(entry.isIntersecting && window.scrollY > 50){ 
+                // Trigger animation earlier (5% visibility or near viewport)
+                if(entry.isIntersecting){ 
                     entry.target.classList.add('visible'); 
                     io.unobserve(entry.target); 
                 } 
             });
         }, { 
-            threshold: 0.3, // Muss zu 30% sichtbar sein
-            rootMargin: "0px 0px -100px 0px" // Trigger weit oberhalb des Bodens
+            threshold: 0.05, // Trigger as soon as 5% is visible
+            rootMargin: "0px 0px 200px 0px" // Trigger 200px before it enters the viewport
         });
         
         // Erst beobachten, wenn wir sicher sind, dass das Layout steht
         setTimeout(() => {
             els.forEach(el => io.observe(el));
         }, 500);
+
+        // Force reveal if contact CTA is clicked
+        const contactCtas = document.querySelectorAll('a[href="#contact"]');
+        contactCtas.forEach(cta => {
+            cta.addEventListener('click', () => {
+                const contact = document.getElementById('contact');
+                if (contact) contact.classList.add('visible');
+                const fadeIns = document.querySelectorAll('#contact .fade-in');
+                fadeIns.forEach(el => el.classList.add('visible'));
+            });
+        });
     })();
 
 
@@ -2520,13 +2531,18 @@
                 }
             });
         }, {
-            threshold: 0.3 // Trigger when 30% of section is visible
+            threshold: 0.1, // Trigger when 10% of section is visible (better for mobile)
+            rootMargin: '0px 0px -50px 0px'
         });
 
-        // Observe the section containing the stats
-        const section = document.getElementById('why-variad');
-        if (section) {
-            observer.observe(section);
+        // Observe the grid containing the stats for more precise triggering
+        const statsGrid = document.querySelector('#why-variad .stats-grid');
+        if (statsGrid) {
+            observer.observe(statsGrid);
+        } else {
+            // Fallback to section if grid not found
+            const section = document.getElementById('why-variad');
+            if (section) observer.observe(section);
         }
     })();
 
@@ -2635,5 +2651,32 @@
             if (iconLink && originalIcon) iconLink.href = originalIcon;
         }
     });
+
+    /* ==========================================================================
+       MOBILE EDITORIAL FADE-IN ANIMATION (ROBUST)
+       ========================================================================== */
+    const mobilePanes = document.querySelectorAll('#editorial .ed-pane');
+    if (mobilePanes.length > 0 && 'IntersectionObserver' in window) {
+        const paneObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } else {
+                    // Fade out when leaving viewport
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, {
+            root: null, 
+            rootMargin: '-5% 0px -5% 0px', // Trigger slightly inside the viewport (top/bottom)
+            threshold: 0.1 // Trigger as soon as 10% is visible
+        });
+
+        mobilePanes.forEach(pane => paneObserver.observe(pane));
+        
+        // Remove Safety Timer because we want dynamic fade-in/out behavior,
+        // forcing them visible would break the scroll effect.
+    }
+
 })();
 
