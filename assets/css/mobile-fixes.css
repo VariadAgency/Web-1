@@ -493,7 +493,7 @@
         flex-direction: column !important;
         gap: 60px !important; 
         width: 100% !important;
-        height: 1250px !important; /* Erhöht um 50px von 1200px */
+        height: auto !important; 
         overflow: visible !important;
         padding: 40px 20px !important;
         border: 2.5px solid #ff2200 !important;
