@@ -2899,6 +2899,12 @@
         }
 
         /* Production Cards Container */
+        .production-text-frame {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+        }
+
         .production-cards {
             position: absolute;
             inset: 0;

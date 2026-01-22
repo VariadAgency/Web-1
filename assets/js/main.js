@@ -2711,3 +2711,61 @@
 
 })();
 
+
+/* --- Mobile-Only Sequential Typewriter Animation --- */
+(function() {
+    if (window.innerWidth > 768) return; 
+
+    const section = document.querySelector('#content-production');
+    if (!section) return;
+
+    const cards = Array.from(section.querySelectorAll('.production-card'));
+    const allTextElements = [];
+
+    cards.forEach(card => {
+        const num = card.querySelector('.step-number');
+        const title = card.querySelector('.step-title');
+        const desc = card.querySelector('.step-desc');
+        if (num) allTextElements.push({ el: num, text: num.textContent.trim() });
+        if (title) allTextElements.push({ el: title, text: title.textContent.trim() });
+        if (desc) allTextElements.push({ el: desc, text: desc.textContent.trim() });
+    });
+
+    allTextElements.forEach(item => {
+        item.el.innerHTML = '';
+        item.el.style.opacity = '0';
+    });
+
+    let hasStarted = false;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !hasStarted) {
+            hasStarted = true;
+            startGlobalTyping();
+        }
+    }, { threshold: 0.15 });
+
+    observer.observe(section);
+
+    async function startGlobalTyping() {
+        const typeSpeed = 2; 
+        
+        for (let i = 0; i < allTextElements.length; i++) {
+            const item = allTextElements[i];
+            const text = item.text;
+            const el = item.el;
+            
+            el.style.opacity = '1';
+            el.innerHTML = '<span class="txt"></span><span class="typing-cursor"></span>';
+            const txtSpan = el.querySelector('.txt');
+            const cursor = el.querySelector('.typing-cursor');
+
+            for (let char of text) {
+                txtSpan.textContent += char;
+                await new Promise(r => setTimeout(r, typeSpeed));
+            }
+            
+            cursor.remove();
+            await new Promise(r => setTimeout(r, 50));
+        }
+    }
+})();

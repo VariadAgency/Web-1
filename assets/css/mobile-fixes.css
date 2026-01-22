@@ -449,55 +449,129 @@
         position: static !important;
         width: 100% !important;
         height: auto !important;
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
-        bottom: auto !important;
         inset: auto !important;
         transform: none !important;
-        aspect-ratio: unset !important;
         background: transparent !important;
+        background-color: transparent !important;
         border: none !important;
-        border-radius: 0 !important;
         box-shadow: none !important;
         overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    /* Der umschließende Rahmen um ALLE Texte auf Mobile */
+    .production-text-frame {
+        position: static !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important; /* Startet oben für Schreibmaschine */
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 1200px !important; 
+        transform: none !important;
+        border: 2.5px solid #ff2200 !important;
+        border-radius: 24px !important;
+        padding: 40px 20px !important; 
+        margin: 0 auto 40px auto !important;
+        pointer-events: auto !important;
+        box-sizing: border-box !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: 0 0 15px rgba(255, 34, 0, 0.2) !important;
     }
 
     /* TEXT KARTEN CONTAINER */
     .production-cards {
         position: static !important;
-        inset: auto !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: 40px !important;
+        gap: 60px !important; 
         width: 100% !important;
         height: auto !important;
         overflow: visible !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        justify-content: flex-start !important;
     }
 
     /* PRODUCTION CARD - Alle Varianten */
     .production-card,
-    .production-card.active,
-    .production-card[data-step="0"],
-    .production-card[data-step="1"],
-    .production-card[data-step="2"],
-    .production-card[data-step="3"] {
+    .production-card.active {
         position: static !important;
-        inset: auto !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
         width: 100% !important;
         height: auto !important;
         opacity: 1 !important;
         transform: none !important;
+        transition: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+    }
+
+    /* Card Content - Einfacher Text */
+    .card-content {
+        position: static !important;
+        padding: 0 !important;
+        opacity: 1 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
         border: none !important;
         border-radius: 0 !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
         background: transparent !important;
-        overflow: visible !important;
-        animation: none !important;
-        pointer-events: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        inset: auto !important; 
+        transform: none !important; 
+    }
+
+    .card-content .step-number {
+        font-size: 12px !important;
+        letter-spacing: 2px !important;
+        opacity: 1 !important;
+        margin-bottom: 8px !important;
+        color: #ff2200 !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .card-content .step-title {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        opacity: 1 !important;
+        margin-bottom: 12px !important;
+        display: block !important;
+        color: #fff !important;
+        text-align: center !important;
+        width: 100% !important;
+        min-height: 1.2em !important;
+    }
+
+    .card-content .step-desc {
+        font-size: 17px !important;
+        line-height: 1.6 !important;
+        opacity: 0.9 !important;
+        display: block !important;
+        color: #e5e5e5 !important;
+        text-align: center !important;
+        width: 100% !important;
+        min-height: 4.8em !important;
+    }
     }
 
     /* Video-Hintergrund ausblenden */
