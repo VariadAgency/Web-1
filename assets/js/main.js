@@ -616,19 +616,28 @@
               const phone = section.querySelector('.phone');
               const layer = section.querySelector('.emoji-layer');
               const EMOJIS = ['🔥','😍','🥳','🤝','👍','🙌','👏','✨','💡','💬','🎯','📣','🧠','❤️','💪','😊','😎','🤩','🎉','👀','🚀','💯','⚡️','👌'];
-              const MAX = 21; // 30% weniger gleichzeitig (von 30 auf 21)
+              const MAX = 60; 
               const lastPoints = [];
               let lastEmoji = '';
 
+              function gentleRemove(el) {
+                if (!el || el.dataset.dying === 'true') return;
+                el.dataset.dying = 'true';
+                // Wir setzen nur die opacity via JS, der Browser priorisiert dies gegenüber dem Klassen-Style
+                el.style.transition = 'opacity 0.6s ease';
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 650);
+              }
+              window.SMM.gentleRemove = gentleRemove;
+
               function randomSize(){
-                // Grundverteilung: große Emojis um ~30% seltener
+                // Grundverteilung: große Emojis seltener und insgesamt kleiner (um ein Drittel reduziert)
                 let size = (Math.random() < 0.21)
-                  ? 84 + Math.random()*84   // 84–168px (groß - 30% reduziert)
-                  : 48  + Math.random()*64;   // 48–112px (mittel)
-                // Größte ca. 25% kleiner
-                if(size > 140) size *= 0.75; // Schwellwert angepasst (vorher 200)
-                // Kleinste ca. 15% größer
-                if(size < 60)  size *= 1.15;
+                  ? 70 + Math.random()*50   // 70–120px (groß - reduziert von 84-168)
+                  : 40 + Math.random()*40;  // 40–80px (mittel - reduziert von 48-112)
+                
+                // Größte nochmals drosseln
+                if(size > 100) size *= 0.7; 
                 return size;
               }
 
@@ -640,7 +649,11 @@
               }
 
               function spawnOne(){
-                if(layer.children.length > MAX) layer.firstChild?.remove();
+                // Sanftes Entfernen statt hartem Kill
+                if(layer.children.length > MAX) {
+                  const first = layer.querySelector('.emoji:not([data-dying="true"])');
+                  if (first) gentleRemove(first);
+                }
                 const L = layer.getBoundingClientRect();
                 const P = phone.getBoundingClientRect();
 
@@ -666,64 +679,50 @@
                 const M = marginBase + size*0.35 + (isMobile ? 2 : 12); 
                 const expanded = { left:P.left-M, top:P.top-M, right:P.right+M, bottom:P.bottom+M };
 
-                // Punkt suchen – wähle eine Seite (links/rechts) und halte Pfad dort
+                // Punkt suchen
                 let cx=0, cy=0, tries=0;
-                // Kandidaten erzeugen (Blue‑Noise ähnlich): wähle den mit größtem Abstand zu letzten Punkten
                 function candidate(){
+                  const isMobile = window.innerWidth <= 768;
                   const scrollProgress = (window.SMM && window.SMM.scrollProgress) || 0;
                   const P = phone.getBoundingClientRect();
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
 
-                  let x, y;
-
                   if (isMobile) {
                     // Mobile: Streue Emojis über die gesamte Breite und Höhe des Layers
-                    x = L.left + Math.random() * L.width;
-                    y = L.top + Math.random() * L.height;
-                    
+                    let x = L.left + Math.random() * L.width;
+                    let y = L.top + Math.random() * L.height;
                     x = Math.max(L.left + 10, Math.min(L.right - 10, x));
                     y = Math.max(L.top + 10, Math.min(L.bottom - 10, y));
+                    return {x, y};
                   } else {
                     // Desktop: Bleibe beim Radius um das Handy
                     const maxRadius = P.width * 1.3;
                     const minRadius = P.width * 0.85;
                     const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
-
                     const angle = Math.random() * Math.PI * 2;
                     const distance = minRadius + Math.random() * (currentRadius - minRadius);
-
-                    x = centerX + Math.cos(angle) * distance;
-                    y = centerY + Math.sin(angle) * distance;
+                    let x = centerX + Math.cos(angle) * distance;
+                    let y = centerY + Math.sin(angle) * distance;
+                    return {x, y};
                   }
-
-                  // WICHTIG: Y-Position auf Mobile freier lassen
-                  const minY = isMobile ? (L.top + 50) : (absoluteTopLimit + rise + 100);
-                  if (y < minY) {
-                    y = minY + Math.random() * 50;
-                  }
-
-                  return {x, y};
                 }
                 function dist2(a,b){ const dx=a.x-b.x, dy=a.y-b.y; return dx*dx+dy*dy; }
                 let best=null, bestScore=-1;
                 for(let i=0;i<10;i++){
                   const c = candidate();
+                  const isMobile = window.innerWidth <= 768;
 
-                  // End-Position berechnen (mit Rise!)
-                  const endCx = c.x + driftX;
-                  const endCy = c.y + driftY - rise;
-
-                  // KRITISCH: End-Position darf NICHT über Header gehen!
-                  if (endCy < absoluteTopLimit + 60) continue;
-
-                  // Start-Position auch checken
-                  if (c.y < absoluteTopLimit + rise + 80) continue;
-
-                  // Überschneidung mit Phone prüfen (Start & End)
-                  const startIntersects = (c.x > expanded.left - size/2 && c.x < expanded.right + size/2 && c.y > expanded.top - size/2 && c.y < expanded.bottom + size/2);
-                  const endIntersects   = (endCx > expanded.left - size/2 && endCx < expanded.right + size/2 && endCy > expanded.top - size/2 && endCy < expanded.bottom + size/2);
-                  if(startIntersects || endIntersects) continue;
+                  if (!isMobile) {
+                    // Desktop-Beschränkungen anwenden
+                    const endCx = c.x + driftX;
+                    const endCy = c.y + driftY - rise;
+                    if (endCy < absoluteTopLimit + 60) continue;
+                    if (c.y < absoluteTopLimit + rise + 80) continue;
+                    const startIntersects = (c.x > expanded.left - size/2 && c.x < expanded.right + size/2 && c.y > expanded.top - size/2 && c.y < expanded.bottom + size/2);
+                    const endIntersects   = (endCx > expanded.left - size/2 && endCx < expanded.right + size/2 && endCy > expanded.top - size/2 && endCy < expanded.bottom + size/2);
+                    if(startIntersects || endIntersects) continue;
+                  }
 
                   // Score = Abstand zum nächsten zuletzt gesetzten Punkt
                   let minD = Infinity; for(const p of lastPoints){ const d = dist2(c,p); if(d<minD) minD=d; }
@@ -754,7 +753,7 @@
                 el.style.setProperty('--sx', '0px');
                 el.style.setProperty('--sy', '0px');
                 layer.appendChild(el);
-                el.addEventListener('animationend', ()=> el.remove());
+                el.addEventListener('animationend', ()=> gentleRemove(el));
                 // Actor registrieren (für Collision‑Avoidance)
                 const rb = el.getBoundingClientRect();
                 const actor = { el, born: performance.now(), r: Math.max(rb.width, rb.height)*0.5 };
@@ -794,12 +793,17 @@
               const layer = section.querySelector('.msg-layer');
               const MSGS = ['cool','stark','mega','geil','sauber','weiter so','top','hammer','nice','beste','tolles video','super','liebe es','grandios','gutes ding','saugeil','stabil','wow','echt stark','bitte mehr'];
               const lastPts = [];
+              const MAX = 50; 
 
               function emojiCenters(){
                 return Array.from(section.querySelectorAll('.emoji')).map(e=>{ const r=e.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2, r: Math.max(r.width,r.height)/2}; });
               }
 
               function spawn(){
+                if(layer.children.length > MAX) {
+                  const first = layer.querySelector('.msg:not([data-dying="true"])');
+                  if (first) window.SMM.gentleRemove(first);
+                }
                 const L = layer.getBoundingClientRect();
                 const P = phone.getBoundingClientRect();
 
@@ -808,8 +812,8 @@
                 const headerRect = header ? header.getBoundingClientRect() : null;
                 const absoluteTopLimit = headerRect ? (headerRect.bottom + 120) : (L.top + 250);
 
-                const fs = 16 + Math.random()*6; // 16–22px
-                const rise = 120 + Math.random()*100; // 120–220px (erhöht für schnellere Bewegung)
+                const fs = 26 + Math.random()*12; // 26–38px (weiter erhöht von 22-32px)
+                const rise = 150 + Math.random()*130; // 150–280px (erhöht von 140–260px)
                 let dx = (Math.random()*40 - 20);   // -20..20px Seitwärtsbewegung
                 const dy = (Math.random()*20 - 10);  // -10..10px vertikale Variation
                 const minDur = 3500, maxDur = 6000; // SCHNELLER (vorher 4500-8000)
@@ -894,11 +898,12 @@
                 el.style.setProperty('--dy', dy+'px');
                 el.style.setProperty('--rise', rise+'px');
                 el.style.animation=`msgPopFloat ${dur}ms linear forwards`;
-                el.style.setProperty('--sx','0px');
-                el.style.setProperty('--sy','0px');
-                layer.appendChild(el);
-                el.addEventListener('animationend', ()=> el.remove());
-                const rb = el.getBoundingClientRect();
+                                                el.style.setProperty('--sx', '0px');
+                                                el.style.setProperty('--sy', '0px');
+                                                layer.appendChild(el);
+                                
+                                                // Desktop-Style Cleanup: Animation fadet auf 0, dann löschen
+                                                el.addEventListener('animationend', () => el.remove());                const rb = el.getBoundingClientRect();
                 const actor = { el, born: performance.now(), r: Math.max(rb.width, rb.height)*0.55 };
                 window.SMM.msgs.push(actor);
                 lastPts.push(best); if(lastPts.length>10) lastPts.shift();
@@ -937,13 +942,16 @@
                 el.style.setProperty('--rise', (cur + inc) + 'px');
               }
 
-              function soften(el, to=0.9, ms=240){
+              function soften(el, to=0.4, ms=240){
                 if(!el) return;
-                const prev = el.style.opacity || '';
                 el.style.transition = `opacity ${ms}ms linear`;
                 el.style.opacity = String(to);
                 clearTimeout(el.__softenT);
-                el.__softenT = setTimeout(()=>{ el.style.opacity = prev || '1'; }, ms+60);
+                // Nicht auf '1' zurücksetzen, sondern das CSS-Animation-System übernehmen lassen
+                el.__softenT = setTimeout(()=>{ 
+                    el.style.transition = ''; 
+                    el.style.opacity = ''; 
+                }, ms+60);
               }
 
               function center(a){ const r=a.el.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2}; }
