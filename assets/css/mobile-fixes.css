@@ -281,8 +281,35 @@
     #smm .showcase { position: static !important; height: auto !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 30px !important; opacity: 1 !important; transform: none !important; padding: 0 !important; pointer-events: auto !important; }
     #smm .section-header { order: 1 !important; margin-bottom: 20px !important; }
     #smm .content-slides { position: static !important; inset: auto !important; display: flex !important; flex-direction: column !important; gap: 16px !important; width: 100% !important; max-width: 100% !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; order: 2 !important; }
-    #smm .content-slide { position: static !important; inset: auto !important; display: block !important; width: 100% !important; height: auto !important; padding: 0 !important; margin: 0 !important; opacity: 1 !important; transform: none !important; visibility: visible !important; }
-    #smm .content-slide .slide-text { position: static !important; top: auto !important; left: auto !important; right: auto !important; bottom: auto !important; inset: auto !important; transform: none !important; width: 100% !important; max-width: 100% !important; opacity: 1 !important; visibility: visible !important; display: block !important; text-align: center !important; margin: 0 auto !important; }
+    #smm .content-slide { 
+        position: static !important; 
+        inset: auto !important; 
+        display: block !important; 
+        width: 100% !important; 
+        height: auto !important; 
+        padding: 0 !important; 
+        margin: 0 !important; 
+        opacity: 0.1; 
+        transform: scale(0.9);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        visibility: visible !important; 
+    }
+    #smm .content-slide .slide-text { 
+        position: static !important; 
+        top: auto !important; 
+        left: auto !important; 
+        right: auto !important; 
+        bottom: auto !important; 
+        inset: auto !important; 
+        transform: none !important; 
+        width: 100% !important; 
+        max-width: 100% !important; 
+        opacity: 1 !important; 
+        visibility: visible !important; 
+        display: block !important; 
+        text-align: center !important; 
+        margin: 0 auto !important; 
+    }
     /* Text Box Styling - Die großen Beschreibungstexte über/unter dem Handy */
     #smm .slide-text p {
         font-size: 26px !important; /* Massively increased to 26px */

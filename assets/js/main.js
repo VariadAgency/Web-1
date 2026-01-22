@@ -2799,3 +2799,49 @@
         }
     }
 })();
+
+/* --- Mobile Spotlight Effect for SMM Section --- */
+(function() {
+    function updateSMMSpotlight() {
+        if (window.innerWidth > 768) return;
+
+        const smmSection = document.querySelector('#smm');
+        if (!smmSection) return;
+
+        const slides = smmSection.querySelectorAll('.content-slide');
+        const viewportCenter = window.innerHeight / 2;
+
+        slides.forEach(slide => {
+            const rect = slide.getBoundingClientRect();
+            const slideCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(viewportCenter - slideCenter);
+            
+            // Calculate opacity: 1.0 at center, tapering to 0.2
+            const fadeRange = window.innerHeight * 0.35; 
+            let opacity = 1 - (distance / fadeRange);
+            
+            // Clamp zwischen 0.1 und 1.0
+            opacity = Math.max(0.1, Math.min(1.0, opacity));
+            
+            // Skalierung: 1.0 in der Mitte, bis zu 0.9 an den Rändern
+            let scale = 0.9 + (opacity - 0.1) * (1 - 0.9) / (1 - 0.1);
+            
+            slide.style.opacity = opacity;
+            slide.style.transform = `scale(${scale})`;
+        });
+    }
+
+    let isTicking = false;
+    window.addEventListener('scroll', () => {
+        if (!isTicking && window.innerWidth <= 768) {
+            window.requestAnimationFrame(() => {
+                updateSMMSpotlight();
+                isTicking = false;
+            });
+            isTicking = true;
+        }
+    }, { passive: true });
+
+    window.addEventListener('resize', updateSMMSpotlight);
+    setTimeout(updateSMMSpotlight, 300);
+})();
