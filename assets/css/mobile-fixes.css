@@ -581,6 +581,10 @@
         overflow: visible !important;
     }
 
+    .contact-right {
+        margin-top: 80px !important; /* Deutlicher Abstand zur Founder Card auf Mobile */
+    }
+
     .contact-left {
         height: auto !important;
         overflow: visible !important;
@@ -621,6 +625,11 @@
 
     .wiz-step.is-active {
         display: block !important;
+    }
+
+    /* Schritt 1 (Beschreibung) auf Mobile weiter nach unten schieben */
+    .wiz-step[data-step="1"].is-active {
+        padding-top: 40px !important;
     }
 
     /* Navigation ABSOLUT FIXIERT am unteren Rand des Wizards */

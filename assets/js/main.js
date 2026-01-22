@@ -263,6 +263,30 @@
         }
 
         function onNext(){
+            // --- Cookie Requirement Check: Before proceeding ---
+            if(typeof klaro !== 'undefined') {
+                const manager = klaro.getManager();
+                manager.loadConsents();
+                const confirmed = manager.confirmed;
+                const facebookConsent = manager.consents ? manager.consents.facebook : false;
+
+                if (!confirmed || facebookConsent !== true) {
+                    console.log('[Wizard Check] ACCESS DENIED on Next. Showing Banner.');
+                    const banner = document.getElementById('variad-cookie-banner');
+                    if(banner) {
+                        const p = banner.querySelector('.text-side p');
+                        const originalText = "Wir nutzen Cookies für Performance";
+                        p.textContent = "Akzeptiere erst die Cookies.";
+                        banner.classList.add('is-visible');
+                        const resetText = () => { p.textContent = originalText; };
+                        document.getElementById('v-accept-btn').addEventListener('click', resetText, {once:true});
+                        document.getElementById('v-decline-btn').addEventListener('click', resetText, {once:true});
+                    }
+                    return; 
+                }
+            }
+            // ----------------------------------------------
+
             if(idx < steps.length-1){
                 // Capture note from Step 1
                 if(idx===1){
@@ -621,6 +645,7 @@
               let lastEmoji = '';
 
               function randomSize(){
+                const isMobile = window.innerWidth <= 768;
                 // Grundverteilung: große Emojis um ~30% seltener
                 let size = (Math.random() < 0.21)
                   ? 84 + Math.random()*84   // 84–168px (groß - 30% reduziert)
@@ -629,6 +654,10 @@
                 if(size > 140) size *= 0.75; // Schwellwert angepasst (vorher 200)
                 // Kleinste ca. 15% größer
                 if(size < 60)  size *= 1.15;
+                
+                // Mobile: Mindestens ein Drittel kleiner
+                if(isMobile) size *= 0.6;
+                
                 return size;
               }
 
@@ -669,22 +698,34 @@
                 let cx=0, cy=0, tries=0;
                 // Kandidaten erzeugen (Blue‑Noise ähnlich): wähle den mit größtem Abstand zu letzten Punkten
                 function candidate(){
+                  const isMobile = window.innerWidth <= 768;
                   const scrollProgress = (window.SMM && window.SMM.scrollProgress) || 0;
                   const P = phone.getBoundingClientRect();
-                  const centerX = P.left + P.width / 2;
-                  const centerY = P.top + P.height / 2;
+                  
+                  let x, y;
 
-                  // Spawn-Area: Phone-zentriert, aber variabel je nach Scroll
-                  const maxRadius = P.width * 1.3;
-                  const minRadius = P.width * 0.85;
-                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+                  if (isMobile) {
+                    // Mobile: Spawne über die komplette Breite und Höhe der Sektion
+                    // Aber halte etwas Abstand zu den Rändern
+                    x = L.left + 40 + Math.random() * (L.width - 80);
+                    y = L.top + 100 + Math.random() * (L.height - 200);
+                  } else {
+                    // Desktop: Bestehende Phone-zentrierte Logik
+                    const centerX = P.left + P.width / 2;
+                    const centerY = P.top + P.height / 2;
 
-                  // Voller Kreis: 0° bis 360°
-                  const angle = Math.random() * Math.PI * 2;
-                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
+                    // Spawn-Area: Phone-zentriert, aber variabel je nach Scroll
+                    const maxRadius = P.width * 1.3;
+                    const minRadius = P.width * 0.85;
+                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
 
-                  let x = centerX + Math.cos(angle) * distance;
-                  let y = centerY + Math.sin(angle) * distance;
+                    // Voller Kreis: 0° bis 360°
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
+
+                    x = centerX + Math.cos(angle) * distance;
+                    y = centerY + Math.sin(angle) * distance;
+                  }
 
                   // WICHTIG: Y-Position muss MINDESTENS unter Header + rise sein!
                   // Damit End-Position (y - rise) immer noch unter Header bleibt
@@ -798,7 +839,10 @@
                 const headerRect = header ? header.getBoundingClientRect() : null;
                 const absoluteTopLimit = headerRect ? (headerRect.bottom + 120) : (L.top + 250);
 
-                const fs = 16 + Math.random()*6; // 16–22px
+                const isMobile = window.innerWidth <= 768;
+                let fs = 16 + Math.random()*6; // 16–22px
+                if (isMobile) fs *= 0.8; // Auf Mobile etwas kleiner
+                
                 const rise = 120 + Math.random()*100; // 120–220px (erhöht für schnellere Bewegung)
                 let dx = (Math.random()*40 - 20);   // -20..20px Seitwärtsbewegung
                 const dy = (Math.random()*20 - 10);  // -10..10px vertikale Variation
@@ -817,21 +861,30 @@
 
                 // Kandidaten und bestes mit größtem Abstand wählen
                 function candidate(){
+                  const isMobile = window.innerWidth <= 768;
                   // Scroll-basierte spawn area wie bei Emojis
                   const scrollProgress = (window.SMM && window.SMM.scrollProgress) || 0;
                   const centerX = P.left + P.width / 2;
                   const centerY = P.top + P.height / 2;
+                  
+                  let x, y;
 
-                  // Messages spawnen WEITER WEG vom Phone als Emojis!
-                  const maxRadius = P.width * 1.6; // Erhöht von 1.3
-                  const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
-                  const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
+                  if (isMobile) {
+                    // Mobile: Über die komplette Sektion verteilen
+                    x = L.left + 30 + Math.random() * (L.width - 60);
+                    y = L.top + 100 + Math.random() * (L.height - 200);
+                  } else {
+                    // Desktop: Messages spawnen WEITER WEG vom Phone als Emojis!
+                    const maxRadius = P.width * 1.6; // Erhöht von 1.3
+                    const minRadius = P.width * 1.2; // Erhöht von 0.9 - MINDESTENS 1.2x Phone-Breite weg!
+                    const currentRadius = maxRadius - (scrollProgress * (maxRadius - minRadius));
 
-                  // Spawn in kreisförmiger Area um das Phone
-                  const angle = Math.random() * Math.PI * 2;
-                  const distance = minRadius + Math.random() * (currentRadius - minRadius);
-                  let x = centerX + Math.cos(angle) * distance;
-                  let y = centerY + Math.sin(angle) * distance;
+                    // Spawn in kreisförmiger Area um das Phone
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = minRadius + Math.random() * (currentRadius - minRadius);
+                    x = centerX + Math.cos(angle) * distance;
+                    y = centerY + Math.sin(angle) * distance;
+                  }
 
                   // WICHTIG: Y muss unter Header + rise sein!
                   const minY = absoluteTopLimit + rise + 100;

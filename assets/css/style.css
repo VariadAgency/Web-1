@@ -580,6 +580,7 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
             display: flex;
             flex-direction: column;
+            justify-content: center; /* Vertikale Zentrierung */
             gap: 40px;
             pointer-events: none;
             padding: 0;
@@ -677,8 +678,8 @@
             margin: 0 auto;
             padding: 0 40px;
             display: grid;
-            grid-template-columns: 1.7fr 0.7fr; /* Formular noch breiter, Karte schiebt nach rechts */
-            gap: 100px; /* Abstand deutlich erhöht */
+            grid-template-columns: 1.8fr 0.6fr; /* Formular noch breiter, Karte schiebt nach rechts */
+            gap: 160px; /* Abstand deutlich erhöht von 100px auf 160px */
             align-items: start;
         }
 
@@ -936,7 +937,7 @@
             color: #fff;
             padding: 24px;
             resize: none;
-            flex: 1; /* Füllt den gesamten verfügbaren Platz im Flex-Container aus */
+            height: 220px; /* Feste Höhe statt flex:1, damit Zentrierung wirkt */
             font-size: 24px; /* Deutlich größere Schrift */
             font-weight: 500;
             transition: all 0.2s ease;
