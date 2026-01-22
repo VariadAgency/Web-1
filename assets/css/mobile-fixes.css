@@ -268,6 +268,11 @@
     #why-variad .dot-grid { gap: 11px !important; grid-template-columns: repeat(10, 14px) !important; grid-auto-rows: 14px !important; justify-content: center; margin: 0 auto !important; }
     #why-variad .dot { width: 14px !important; height: 14px !important; box-shadow: none !important; border: none !important; transform: translateZ(0) scale(0.6) !important; }
     #why-variad .dot.show { transform: translateZ(0) scale(1) !important; }
+
+    /* Doppelte Überschrift in Kachel verstecken */
+    #why-variad .editorial-headline {
+        display: none !important;
+    }
 }
 
 /* 8. SMM SHOWCASE */
@@ -462,14 +467,109 @@
     }
 }
 
-/* 10. CONTACT */
+/* 10. CONTACT - KEIN INTERNER SCROLL! */
 @media (max-width: 768px) {
-    #contact { padding: 60px 15px !important; min-height: auto !important; display: block !important; opacity: 1 !important; }
-    .modern-form-container { width: 100% !important; padding: 30px 20px !important; border-radius: 20px !important; }
-    textarea#wiz-note { 
-        min-height: 350px !important; 
+    #contact {
+        padding: 60px 15px !important;
+        min-height: auto !important;
+        height: auto !important;
+        display: block !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+    }
+
+    .contact-wrapper {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .contact-left {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .modern-form-container {
+        width: 100% !important;
+        padding: 30px 20px !important;
+        border-radius: 20px !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    /* WIZARD - Feste Höhe mit absolut positionierter Navigation */
+    .wizard,
+    #contact-wizard {
+        position: relative !important;
+        min-height: 600px !important;
+        height: 600px !important;
+        overflow: visible !important;
+        padding-bottom: 80px !important;
+    }
+
+    .wiz-viewport {
+        position: relative !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Inaktive Steps verstecken */
+    .wiz-step {
+        display: none !important;
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+    }
+
+    .wiz-step.is-active {
+        display: block !important;
+    }
+
+    /* Navigation ABSOLUT FIXIERT am unteren Rand des Wizards */
+    .wiz-nav {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 20px 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+    }
+
+    /* KONTAKTFORMULAR KOMPAKTER - Labels verstecken, nur Placeholders */
+    .form-mini label {
+        display: none !important;
+    }
+
+    .form-mini input {
+        margin-top: 0 !important;
+        padding: 12px 0 !important;
+        font-size: 15px !important;
+    }
+
+    .form-mini {
+        margin-bottom: 0 !important;
+    }
+
+    .grid-two {
+        gap: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .wiz-step[data-step="3"] .grid-two + .grid-two {
+        margin-top: 0 !important;
+    }
+
+    .chip-grid {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    textarea#wiz-note {
+        min-height: 200px !important; 
         font-size: 17px !important; 
-        padding: 20px !important; /* Fix: Added padding so text doesn't touch the border */
+        padding: 20px !important;
         box-sizing: border-box !important;
     }
     input[type=range] { height: 60px !important; }
