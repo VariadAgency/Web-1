@@ -129,6 +129,17 @@
                     setTimeout(() => note.focus({ preventScroll: true }), 600);
                 }
             }
+
+            // Auto-Focus Slider on Step 2 (Budget)
+            if(idx === 2) {
+                const budgetSlider = root.querySelector('#wiz-budget');
+                if(budgetSlider) {
+                    setTimeout(() => {
+                        budgetSlider.focus({ preventScroll: true });
+                        budgetSlider.click(); // Simuliere Klick
+                    }, 150);
+                }
+            }
         }
 
         function toggleChip(btn){

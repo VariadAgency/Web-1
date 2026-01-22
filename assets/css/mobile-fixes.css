@@ -638,16 +638,129 @@
     #why-ads .pin { position: static !important; height: auto !important; display: block !important; }
     #why-ads svg { display: none !important; }
     
-    /* Kontaktformular Scroll-Fix */
+    /* Kontaktformular Scroll-Fix - MAXIMALE BREITE & HÖHE & SOFORT SICHTBAR */
     #contact { 
-        padding-top: 60px !important; 
-        padding-bottom: 80px !important; 
+        padding: 60px 15px !important; /* Wenig seitlicher Abstand für Sektion */
         min-height: auto !important;
         overflow: visible !important;
-    }
-    .modern-form-container {
-        overflow: visible !important;
+        display: block !important;
+        opacity: 1 !important; /* Sofort sichtbar */
         transform: none !important;
     }
-    .contact-wrapper { gap: 40px !important; }
-}
+
+    /* Animationen im Kontaktbereich deaktivieren (sofort da) */
+    #contact .fade-in,
+    #contact .form-header,
+    #contact .contact-wrapper {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+        visibility: visible !important;
+    }
+    
+    .contact-wrapper,
+    .contact-left,
+    .contact-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+    }
+
+    .modern-form-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 30px 20px !important; /* Innenabstand der Kachel */
+        margin: 0 !important;
+        border-radius: 20px !important;
+        overflow: visible !important;
+        height: auto !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+    }
+
+    .wizard, 
+    .wiz-viewport {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 450px !important; /* Genug Platz für die Textarea */
+    }
+
+    /* Kurzbeschreibung Textarea - FULL SIZE */
+    textarea#wiz-note {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 350px !important; /* DEUTLICH GRÖSSER */
+        padding: 25px !important; /* Viel Platz zum Rand */
+        margin: 20px 0 !important;
+        box-sizing: border-box !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 16px !important;
+        color: #fff !important;
+        font-size: 17px !important;
+        line-height: 1.6 !important;
+        resize: none !important;
+    }
+
+    /* WICHTIG: Der aktive Schritt muss volle Breite haben */
+    .wiz-step.is-active {
+        position: relative !important;
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* ... der Rest bleibt ... */
+    .wiz-step:not(.is-active) {
+        position: absolute !important;
+        top: 0; left: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* SLIDER FIX FÜR MOBILE - MAXIMALE SICHERHEIT */
+    input[type=range] {
+        -webkit-appearance: none !important;
+        width: 100% !important;
+        height: 60px !important; /* Riesige Touch-Zone */
+        background: transparent !important;
+        margin: 10px 0 !important;
+        touch-action: none !important; /* KEIN Scrollen erlaubt beim Berühren -> Sofortige Reaktion */
+        cursor: pointer !important;
+        position: relative !important;
+        z-index: 10 !important;
+    }
+
+    /* Der Slider-Knopf (Thumb) */
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none !important;
+        height: 30px !important; /* Etwas kleinerer, dezenter Knopf */
+        width: 30px !important;
+        border-radius: 50% !important;
+        background: var(--brand-red) !important;
+        cursor: pointer !important;
+        margin-top: -13px !important; /* Neu zentriert */
+        box-shadow: 0 0 15px rgba(220, 38, 38, 0.6) !important;
+        position: relative !important;
+        z-index: 20 !important; /* Über allem */
+    }
+
+    /* Die Slider-Leiste (Track) */
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100% !important;
+        height: 6px !important;
+        cursor: pointer !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-radius: 3px !important;
+    }
+
+    /* Fokus-Rahmen entfernen */
+    input[type=range]:focus {
+        outline: none !important;
+    }
