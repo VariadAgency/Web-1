@@ -139,17 +139,23 @@
 .leistung-hero h1 {
     font-size: clamp(36px, 5vw, 64px);
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.15;
     margin-bottom: 24px;
+    padding-bottom: 0.15em;
     background: linear-gradient(135deg, #fff 0%, #a3a3a3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
 }
 
 .leistung-hero .highlight-orange {
     background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-red) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-bottom: 0.1em;
 }
 
 .hero-subtitle {
