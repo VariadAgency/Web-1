@@ -648,47 +648,165 @@
     }
 
     .modern-form-container {
-        padding: 2rem 1.5rem;
-        border-radius: 24px;
+        padding: 1.5rem 1.25rem;
+        border-radius: 20px;
+        box-shadow:
+            0 8px 32px 0 rgba(0, 0, 0, 0.37),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .modern-form-container:hover {
+        transform: none;
+    }
+
+    .form-header {
+        margin-bottom: 1.5rem;
     }
 
     .form-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
     }
 
     .form-subtitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Compact progress bar */
+    .progress-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-steps {
+        margin-bottom: 0.5rem;
     }
 
     .progress-step {
-        width: 40px;
-        height: 40px;
-        font-size: 0.95rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
     }
 
     .progress-label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 
+    .progress-labels {
+        margin-top: 0.4rem;
+    }
+
+    /* Compact steps */
+    .form-steps {
+        min-height: auto;
+    }
+
+    .step-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .step-description {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+
+    /* Compact option chips */
     .option-grid {
         grid-template-columns: 1fr;
-        gap: 0.75rem;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .option-chip {
+        padding: 0.875rem 1rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    .option-chip:hover {
+        transform: none;
+    }
+
+    .option-chip.selected {
+        transform: none;
+    }
+
+    /* Compact inputs */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-input,
+    .form-textarea {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-textarea {
+        min-height: 80px;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+        margin-bottom: 0.35rem;
     }
 
     .input-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 
+    /* Compact navigation */
     .form-navigation {
         flex-direction: column-reverse;
+        gap: 0.6rem;
+        margin-top: 1.5rem;
     }
 
-    .step-title {
-        font-size: 1.5rem;
+    .btn-nav {
+        padding: 0.875rem 1.5rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+    }
+
+    .btn-next:hover::before {
+        width: 0;
+        height: 0;
+    }
+
+    /* Compact budget slider */
+    .range-container {
+        margin: 1.25rem 0;
     }
 
     .range-value {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .range-labels {
+        font-size: 0.8rem;
+    }
+
+    /* Compact success state */
+    .success-state {
+        padding: 2rem 1rem;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
         font-size: 2rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .success-title {
+        font-size: 1.5rem;
+    }
+
+    .success-message {
+        font-size: 1rem;
     }
 }
 

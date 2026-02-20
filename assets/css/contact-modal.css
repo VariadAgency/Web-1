@@ -100,40 +100,71 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+    #contact-modal-overlay {
+        padding: 16px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+
     .contact-modal {
         max-width: 100%;
-        max-height: 100vh;
-        border-radius: 0;
+        max-height: calc(100vh - 80px);
+        border-radius: 20px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Hide scrollbar completely */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .contact-modal::-webkit-scrollbar {
+        display: none;
     }
 
     .contact-modal-wrapper {
-        padding: 50px 20px 30px;
+        padding: 36px 20px 24px;
+    }
+
+    .contact-modal-header {
+        margin-bottom: 20px;
+    }
+
+    .contact-modal-header h2 {
+        font-size: 22px;
+        margin-bottom: 6px;
+    }
+
+    .contact-modal-header p {
+        font-size: 14px;
     }
 
     .modal-close-btn {
-        top: 15px;
-        right: 15px;
-        width: 36px;
-        height: 36px;
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
     }
 }
 
-/* Scrollbar Styling */
-.contact-modal::-webkit-scrollbar {
-    width: 8px;
-}
+/* Scrollbar Styling - Desktop only */
+@media (min-width: 769px) {
+    .contact-modal::-webkit-scrollbar {
+        width: 8px;
+    }
 
-.contact-modal::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
+    .contact-modal::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
 
-.contact-modal::-webkit-scrollbar-thumb {
-    background: rgba(220, 38, 38, 0.5);
-    border-radius: 4px;
-}
+    .contact-modal::-webkit-scrollbar-thumb {
+        background: rgba(220, 38, 38, 0.5);
+        border-radius: 4px;
+    }
 
-.contact-modal::-webkit-scrollbar-thumb:hover {
-    background: var(--brand-red);
+    .contact-modal::-webkit-scrollbar-thumb:hover {
+        background: var(--brand-red);
+    }
 }
 
 /* Fix overlapping text in CTA sections */
