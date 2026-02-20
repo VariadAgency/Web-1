@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VARIAD – Get to know us. A growing team of creatives and strategists helping companies become digitally visible.">
+    <title>About Us | VARIAD - Social Media & Content Agency</title>
+
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://variad.de/en/about-us.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://variad.de/en/about-us.html">
+    <meta property="og:title" content="About Us | VARIAD">
+    <meta property="og:description" content="A growing team of creatives and strategists. We make companies digitally visible.">
+    <meta property="og:image" content="https://variad.de/images/og-image.jpg">
+
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/leistungen.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "VARIAD",
+      "description": "Social Media & Content Agency for SMEs",
+      "url": "https://variad.de/en/",
+      "founder": {
+        "@type": "Person",
+        "name": "Clemens Rößle"
+      },
+      "areaServed": ["Stuttgart", "Heilbronn", "Ludwigsburg", "Baden-Württemberg"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+49-1551-1541310",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+
+    <style>
+        /* ========================================
+           About Us Page Styles
+           ======================================== */
+
+        /* Hero Section */
+        .about-hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 160px 24px 100px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.08) 0%, transparent 60%);
+            overflow: hidden;
+        }
+
+        .about-hero-content {
+            max-width: 950px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            background: linear-gradient(135deg, #fff 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-hero .highlight-gradient {
+            background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-lead {
+            font-size: clamp(18px, 2.2vw, 22px);
+            color: var(--text-3);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Mission Statement */
+        .mission-section {
+            padding: 100px 0;
+            background: transparent;
+        }
+
+        .mission-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-text {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-2);
+        }
+
+        .mission-text span {
+            color: var(--text-1);
+        }
+
+        /* Founder Section */
+        .founder-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .founder-image-wrapper {
+            position: sticky;
+            top: 120px;
+        }
+
+        .founder-image {
+            aspect-ratio: 3/4;
+            background: transparent;
+            border: none !important;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-4);
+            font-size: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .founder-image::after {
+            display: none !important;
+        }
+
+        .founder-social {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .founder-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            border-radius: 12px;
+            color: var(--text-3);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .founder-social a:hover {
+            background: rgba(220,38,38,0.1);
+            border-color: var(--brand-red) !important;
+            color: var(--text-1);
+        }
+
+        .founder-content {
+            padding-top: 20px;
+        }
+
+        .founder-label {
+            display: inline-block;
+            background: rgba(220,38,38,0.15);
+            color: var(--brand-red);
+            padding: 8px 20px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .founder-name {
+            font-size: clamp(36px, 4vw, 52px);
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text-1);
+        }
+
+        .founder-role {
+            font-size: 18px;
+            color: var(--text-3);
+            margin-bottom: 40px;
+        }
+
+        .founder-bio p {
+            font-size: 17px;
+            line-height: 1.85;
+            color: var(--text-3);
+            margin-bottom: 24px;
+        }
+
+        .founder-bio p:last-child {
+            margin-bottom: 0;
+        }
+
+        .founder-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+            padding-top: 48px;
+        }
+
+        .founder-highlight {
+            text-align: center;
+        }
+
+        .founder-highlight-value {
+            display: block;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .founder-highlight-label {
+            font-size: 14px;
+            color: var(--text-4);
+        }
+
+        /* Philosophy Section */
+        .philosophy-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .philosophy-card {
+            background: rgba(255,255,255,0.03) !important;
+            border-radius: 24px !important;
+            padding: 48px 36px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy-card::before {
+            display: none !important;
+        }
+
+        .philosophy-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(220,38,38,0.3) !important;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .philosophy-number {
+            font-size: 72px;
+            font-weight: 900;
+            color: #fb923c;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .philosophy-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-1);
+        }
+
+        .philosophy-card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-3);
+        }
+
+        /* How We Work Section */
+        .approach-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .approach-card {
+            background: transparent;
+            border: none !important;
+            border-radius: 20px;
+            padding: 40px 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .approach-card:hover {
+            background: rgba(255,255,255,0.02);
+            transform: translateY(-4px);
+        }
+
+        .approach-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(220,38,38,0.1) 0%, rgba(251,146,60,0.05) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 24px;
+        }
+
+        .approach-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 12px;
+        }
+
+        .approach-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-3);
+        }
+
+        .approach-connector {
+            display: none !important;
+        }
+
+        .approach-card:last-child .approach-connector {
+            display: none;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 140px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(220,38,38,0.02) 100%);
+        }
+
+        .team-intro {
+            max-width: 700px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+
+        .team-intro p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-3);
+        }
+
+        .team-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 280px 280px;
+            gap: 24px;
+        }
+
+        .team-image {
+            background: transparent;
+            border: none !important;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-4);
+            font-size: 13px;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .team-image::before {
+            display: none !important;
+        }
+
+        .team-image:hover {
+            transform: scale(1.02);
+        }
+
+        .team-image.hero-img {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .team-image.tall-img {
+            grid-row: span 2;
+        }
+
+        /* Differentiators Section */
+        .differentiators-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .diff-content h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 32px;
+            color: var(--text-1);
+        }
+
+        .diff-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .diff-item {
+            display: flex;
+            gap: 20px;
+            padding: 28px 0;
+        }
+
+        .diff-item:first-child {
+            padding-top: 0;
+        }
+
+        .diff-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .diff-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(220,38,38,0.1) 0%, rgba(251,146,60,0.05) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .diff-text h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-1);
+            margin-bottom: 8px;
+        }
+
+        .diff-text p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-3);
+        }
+
+        .diff-visual {
+            position: relative;
+        }
+
+        .diff-image {
+            aspect-ratio: 4/3;
+            background: transparent;
+            border: none !important;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-4);
+            font-size: 14px;
+        }
+
+        .diff-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-orange) 100%);
+            color: #fff;
+            padding: 20px 28px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: none !important;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .comparison-table {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            gap: 0;
+            align-items: stretch;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-topic {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-1);
+            text-align: left;
+            padding: 32px 24px;
+            background: rgba(255,255,255,0.02);
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .comparison-old,
+        .comparison-new {
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .comparison-old {
+            background: transparent;
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .comparison-new {
+            background: rgba(220,38,38,0.03);
+        }
+
+        .comparison-new:hover {
+            background: rgba(220,38,38,0.05);
+        }
+
+        .old-label,
+        .new-label {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        .old-label {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-4);
+        }
+
+        .new-label {
+            background: rgba(220,38,38,0.15);
+            color: var(--brand-orange);
+        }
+
+        .comparison-old p,
+        .comparison-new p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-3);
+            margin: 0;
+        }
+
+        .comparison-new p {
+            color: var(--text-2);
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .about-cta-section {
+            padding: 140px 0;
+            background: transparent;
+        }
+
+        .about-cta-box {
+            background: linear-gradient(135deg, rgba(220,38,38,0.15) 0%, rgba(251,146,60,0.1) 100%);
+            border-radius: 32px;
+            padding: 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220,38,38,0.1) 0%, transparent 50%);
+            animation: ctaGlow 10s ease-in-out infinite;
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10%, 10%); }
+        }
+
+        .about-cta-box > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-cta-box h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-1);
+        }
+
+        .about-cta-box p {
+            font-size: 18px;
+            color: var(--text-3);
+            margin-bottom: 36px;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ========================================
+           Responsive Styles
+           ======================================== */
+
+        @media (max-width: 1100px) {
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .founder-image-wrapper {
+                position: relative;
+                top: 0;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .founder-highlights {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .philosophy-grid,
+            .approach-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .approach-connector {
+                display: none;
+            }
+
+            .diff-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .diff-visual {
+                order: -1;
+            }
+
+            .team-gallery {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 220px 220px;
+            }
+
+            .team-image.hero-img {
+                grid-column: span 2;
+            }
+
+            .team-image.tall-img {
+                grid-row: span 1;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .comparison-topic {
+                grid-column: span 2;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-hero {
+                padding: 140px 24px 80px;
+                min-height: 65vh;
+            }
+
+            .mission-section,
+            .founder-section,
+            .philosophy-section,
+            .approach-section,
+            .team-section,
+            .comparison-section,
+            .differentiators-section,
+            .about-cta-section {
+                padding: 80px 0;
+            }
+
+            .mission-text {
+                font-size: clamp(20px, 5vw, 28px);
+            }
+
+            .founder-highlights {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .philosophy-grid,
+            .approach-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .philosophy-card {
+                padding: 36px 28px;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .comparison-topic {
+                grid-column: span 1;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .comparison-old,
+            .comparison-new {
+                padding: 20px;
+            }
+
+            .about-cta-box {
+                padding: 48px 24px;
+                border-radius: 24px;
+            }
+
+            .diff-badge {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: 20px;
+                display: inline-block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .team-gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 200px);
+            }
+
+            .team-image.hero-img,
+            .team-image.tall-img {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .cta-button {
+                width: 100%;
+            }
+        }
+
+        /* Ultra-aggressive border removal */
+        * {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        *::before, *::after {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        section > div,
+        .container > div,
+        [class*="image"],
+        [class*="comparison"],
+        [class*="badge"],
+        [class*="icon"],
+        [class*="highlight"],
+        [class*="stat"] {
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Force ALL sections to be transparent */
+        section,
+        [class*="-section"] {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+
+        /* Restore visibility for placeholder elements */
+        .team-image,
+        .founder-image,
+        .diff-image {
+            background: rgba(255,255,255,0.03) !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+        }
+
+        /* Restore structural borders for comparison table */
+        .comparison-row {
+            border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+            padding-bottom: 32px !important;
+            margin-bottom: 32px !important;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none !important;
+            margin-bottom: 0 !important;
+        }
+    </style>
+
+    <!-- Announcement Modal -->
+    <link rel="stylesheet" href="../scripts/announcement-modal/modal.css">
+    <script src="../scripts/announcement-modal/config.js"></script>
+    <script src="../scripts/announcement-modal/modal.js"></script>
+</head>
+<body>
+
+    <!-- Animated Background Glows -->
+    <div class="page-glows">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="nav-wrapper">
+        <div class="nav-hover-trigger"></div>
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo-nav" aria-label="To Homepage">
+                    <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#editorial" aria-label="Services: Content, Ads, Management">Services</a></li>
+                    <li><a href="about-us.html" class="active">About Us</a></li>
+                    <li><a href="../portfolio.html" aria-label="Portfolio Video Production and Social Media">Portfolio</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="../ueber-uns.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
+                </ul>
+                <div class="nav-right">
+                    <a href="index.html#contact" class="cta-button">Book Consultation</a>
+                    <button id="mobile-toggle-btn" class="mobile-nav-toggle" aria-label="Open Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="mobile-menu-overlay" class="mobile-menu">
+            <div class="mobile-menu-inner">
+                <ul class="mobile-nav-links">
+                    <li><a href="index.html" class="mob-link">Home</a></li>
+                    <li><a href="index.html#editorial" class="mob-link">Services</a></li>
+                    <li><a href="about-us.html" class="mob-link">About Us</a></li>
+                    <li><a href="../portfolio.html" class="mob-link">Portfolio</a></li>
+                    <li><a href="index.html#contact" class="mob-link">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-footer">
+                    <a href="index.html#contact" class="cta-button mob-link">Book Consultation</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="glow-layer" aria-hidden="true">
+                <div class="glow g1"></div>
+                <div class="glow g2"></div>
+                <div class="glow g3"></div>
+                <div class="glow g4"></div>
+                <div class="glow g5"></div>
+            </div>
+            <div class="about-hero-content">
+                <span class="hero-badge">About Us</span>
+                <h1>The people behind <span class="highlight-gradient">VARIAD</span>.</h1>
+                <p class="about-lead">We are not an anonymous agency construct. We are real people with real names who engage with your brand – not just some interchangeable team in the background.</p>
+            </div>
+        </section>
+
+        <!-- Mission Statement -->
+        <section class="mission-section">
+            <div class="container">
+                <div class="mission-content">
+                    <p class="mission-text">
+                        We believe that <span>good content is not a luxury</span>, but the foundation for any company that wants to remain relevant today.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Founder Section -->
+        <section class="founder-section">
+            <div class="container">
+                <div class="founder-grid">
+                    <div class="founder-image-wrapper">
+                        <div class="founder-image">
+                            <img src="../images/social-media-experte-clemens-roessle-stuttgart.jpg" alt="Clemens Rößle - Founder & CEO VARIAD" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="founder-social">
+                            <a href="https://www.linkedin.com/in/clemens-r%C3%B6%C3%9Fle-53260b374?" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                            <a href="https://www.instagram.com/variad.agency?" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="mailto:hello@variad.de" aria-label="E-Mail" title="E-Mail">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </a>
+                            <a href="tel:+4970314249969" aria-label="Phone" title="Phone">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </a>
+                            <a href="https://wa.me/4970314249969" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="founder-content">
+                        <span class="founder-label">Founder & CEO</span>
+                        <h2 class="founder-name">Clemens Rößle</h2>
+                        <p class="founder-role">The Head behind VARIAD</p>
+
+                        <div class="founder-bio">
+                            <p>I didn't start VARIAD because I necessarily wanted to have an agency. I founded it because I saw how many companies leave potential on the table – simply because they don't know how to tell their story.</p>
+
+                            <p>My journey started in the event and club scene. There you learn quickly what works and what doesn't. If your flyer doesn't pull, the place stays empty on Saturday. If your reel doesn't perform, nobody comes. this directness has shaped me: No long theories, but results you can feel.</p>
+
+                            <p>Today I work with companies that understand that social media is more than a few posts here and there. Who know that visibility is no coincidence. And who want partners, not service providers who just work through a list.</p>
+
+                            <p>With VARIAD, you get me directly. No account manager in between, no endless ticket ping-pong. If we work together, we do it right.</p>
+                        </div>
+
+                        <div class="founder-highlights">
+                            <div class="founder-highlight">
+                                <span class="founder-highlight-value">5+ Years</span>
+                                <span class="founder-highlight-label">Marketing & Content</span>
+                            </div>
+                            <div class="founder-highlight">
+                                <span class="founder-highlight-value">€10k+</span>
+                                <span class="founder-highlight-label">Managed Ad Budget</span>
+                            </div>
+                            <div class="founder-highlight">
+                                <span class="founder-highlight-value">50+</span>
+                                <span class="founder-highlight-label">Satisfied Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy-section">
+            <div class="container">
+                <h2 class="section-title">What We Stand For</h2>
+                <p class="section-subtitle">Three principles that guide our work</p>
+
+                <div class="philosophy-grid">
+                    <div class="philosophy-card">
+                        <span class="philosophy-number">01</span>
+                        <h3>Honesty over Harmony</h3>
+                        <p>We tell you what we think – even if it's uncomfortable. If an idea doesn't work, you'll hear it from us. Better an honest conversation than nice words that lead nowhere.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <span class="philosophy-number">02</span>
+                        <h3>Speed with Substance</h3>
+                        <p>We work fast because we are efficient – not because we cut corners. Learned in the event scene: Tomorrow is too late. We bring this mentality to every project.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <span class="philosophy-number">03</span>
+                        <h3>Results, not Vanity</h3>
+                        <p>We don't care if something looks "nice" or wins awards. We care if it works. If it brings inquiries, builds reach, generates revenue.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How We Work Section -->
+        <section class="approach-section">
+            <div class="container">
+                <h2 class="section-title">How We Work</h2>
+                <p class="section-subtitle">No agency theater, but real collaboration</p>
+
+                <div class="approach-grid">
+                    <div class="approach-card">
+                        <div class="approach-icon">💬</div>
+                        <h3>Direct Communication</h3>
+                        <p>No account manager standing between us. You talk directly to the people working on your project.</p>
+                        <div class="approach-connector"></div>
+                    </div>
+                    <div class="approach-card">
+                        <div class="approach-icon">🎯</div>
+                        <h3>Clear Goals</h3>
+                        <p>Before we start, we define together what success means. Measurable, concrete, comprehensible.</p>
+                        <div class="approach-connector"></div>
+                    </div>
+                    <div class="approach-card">
+                        <div class="approach-icon">⚡</div>
+                        <h3>Fast Execution</h3>
+                        <p>No months-long concept phases. We start fast, test, learn, and optimize – in real-time.</p>
+                        <div class="approach-connector"></div>
+                    </div>
+                    <div class="approach-card">
+                        <div class="approach-icon">📊</div>
+                        <h3>Transparent Results</h3>
+                        <p>You see exactly what works and what doesn't. No sugarcoating, no hidden numbers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section: How We're Different -->
+        <section class="comparison-section">
+            <div class="container">
+                <h2 class="section-title">How We Work</h2>
+                <p class="section-subtitle">What you can expect from us – and what not</p>
+
+                <div class="comparison-table">
+                    <div class="comparison-row">
+                        <div class="comparison-topic">Communication</div>
+                        <div class="comparison-old">
+                            <span class="old-label">Elsewhere</span>
+                            <p>You talk to an account manager who passes on your wishes.</p>
+                        </div>
+                        <div class="comparison-new">
+                            <span class="new-label">With Us</span>
+                            <p>You talk directly to the people creating your content.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-topic">Speed</div>
+                        <div class="comparison-old">
+                            <span class="old-label">Elsewhere</span>
+                            <p>Briefing, concept, approval – three weeks later the post is online.</p>
+                        </div>
+                        <div class="comparison-new">
+                            <span class="new-label">With Us</span>
+                            <p>Short coordination, fast implementation. Sometimes on the same day.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-topic">Success</div>
+                        <div class="comparison-old">
+                            <span class="old-label">Elsewhere</span>
+                            <p>Reports with reach and impressions. Looks good, brings nothing.</p>
+                        </div>
+                        <div class="comparison-new">
+                            <span class="new-label">With Us</span>
+                            <p>We measure what counts: Inquiries, clicks, revenue. The rest is decoration.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison-row">
+                        <div class="comparison-topic">Flexibility</div>
+                        <div class="comparison-old">
+                            <span class="old-label">Elsewhere</span>
+                            <p>12-month contract, fixed packages, little leeway.</p>
+                        </div>
+                        <div class="comparison-new">
+                            <span class="new-label">With Us</span>
+                            <p>We adapt. Monthly cancellable, scalable as needed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Differentiators Section -->
+        <section class="differentiators-section">
+            <div class="container">
+                <div class="diff-grid">
+                    <div class="diff-content">
+                        <h2>Why Companies Work With Us</h2>
+                        <ul class="diff-list">
+                            <li class="diff-item">
+                                <div class="diff-icon">🚀</div>
+                                <div class="diff-text">
+                                    <h4>No Agency Overhead</h4>
+                                    <p>No hidden hierarchies with us. You work directly with the people creating the content and developing the strategy.</p>
+                                </div>
+                            </li>
+                            <li class="diff-item">
+                                <div class="diff-icon">⏱️</div>
+                                <div class="diff-text">
+                                    <h4>Fast Response Times</h4>
+                                    <p>We come from an industry where tomorrow is too late. We bring this mentality. Inquiries are answered quickly, projects implemented swiftly.</p>
+                                </div>
+                            </li>
+                            <li class="diff-item">
+                                <div class="diff-icon">🤝</div>
+                                <div class="diff-text">
+                                    <h4>Real Partnership</h4>
+                                    <p>We want to understand what drives you. Your success is our success. That's why we invest time to really get to know your business.</p>
+                                </div>
+                            </li>
+                            <li class="diff-item">
+                                <div class="diff-icon">📈</div>
+                                <div class="diff-text">
+                                    <h4>Focus on Results</h4>
+                                    <p>We measure ourselves by what arrives at your end. Not vanity metrics, but real business results.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="diff-visual">
+                        <div class="diff-image">
+                            <img src="../images/team/Variad - Büro - Stuttgart, Heilbronn, Ludwigsburg.jpg" alt="VARIAD Team at Work" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
+                        </div>
+                        <div class="diff-badge">From the Region. For the Region.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="about-cta-section">
+            <div class="container">
+                <div class="about-cta-box">
+                    <h2>Let's get to know each other.</h2>
+                    <p>No sales pitch, no pressure. Simply an honest conversation about where you stand and whether we are a good fit.</p>
+                    <div class="cta-buttons">
+                        <a href="index.html#contact" class="cta-button primary large">Schedule Call</a>
+                        <a href="../portfolio.html" class="cta-button secondary large">View Our Work</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agency Heilbronn" class="footer-logo-img">
+                <p>Social Media & Content Agency.<br>Based in the region for Stuttgart, Heilbronn,<br>Ludwigsburg, Schwäbisch Hall & surroundings.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="consulting.html">Consulting</a></li>
+                    <li><a href="social-media-management.html">Social Media Management</a></li>
+                    <li><a href="content-production.html">Content Production</a></li>
+                    <li><a href="advertising.html">Meta Ads (Advertising)</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="impressum.html">Legal Notice</a></li>
+                    <li><a href="datenschutz.html">Privacy Policy</a></li>
+                    <li><a href="agb.html">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="index.html#contact">Contact Form</a></li>
+                    <li>Phone: <a href="tel:+4915511541310">+49 1551 1541310</a></li>
+                    <li>E-Mail: <a href="mailto:hello@variad.de">hello@variad.de</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Social</h4>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/clemens-r%C3%B6%C3%9Fle-53260b374?" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://www.instagram.com/variad.agency?" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://wa.me/message/GICCQW5PMS4OD1" target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 VARIAD. All rights reserved.</div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

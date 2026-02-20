@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Free Instagram Profile Makeover by VARIAD – We optimize your profile and give you professional feedback.">
+    <title>Free Instagram Profile Makeover | VARIAD</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        /* Landing Page Specific Styles */
+        .offer-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 160px 24px 80px;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.1) 0%, transparent 60%);
+        }
+
+        .offer-hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .offer-badge {
+            display: inline-block;
+            background: rgba(220,38,38,0.15);
+            border: 1px solid rgba(220,38,38,0.3);
+            color: var(--brand-red);
+            padding: 8px 20px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+        }
+
+        .offer-hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .offer-hero h1 .highlight {
+            background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .offer-hero p {
+            font-size: 18px;
+            color: var(--text-3);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .value-section {
+            padding: 80px 0;
+            background: transparent;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .value-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .value-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: var(--text-3);
+            line-height: 1.6;
+        }
+
+        .form-section {
+            padding: 0 0 100px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 48px 40px;
+        }
+
+        .form-container h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .form-container .form-subtitle {
+            text-align: center;
+            color: var(--text-3);
+            font-size: 15px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: var(--brand-red);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brand-red);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 32px;
+            background: var(--brand-red);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+        }
+
+        .submit-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(220,38,38,0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-3);
+            margin-top: 20px;
+        }
+
+        /* Hidden honeypot field */
+        .hidden {
+            display: none;
+        }
+
+        /* Success/Error Messages */
+        .form-message {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .form-message.success {
+            background: rgba(34,197,94,0.2);
+            border: 1px solid rgba(34,197,94,0.4);
+            color: #22c55e;
+        }
+
+        .form-message.error {
+            background: rgba(220,38,38,0.2);
+            border: 1px solid rgba(220,38,38,0.4);
+            color: #dc2626;
+        }
+
+        @media (max-width: 768px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 36px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="nav-wrapper">
+        <div class="nav-hover-trigger"></div>
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo-nav" aria-label="Go to homepage">
+                    <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#editorial">Services</a></li>
+                    <li><a href="about-us.html">About us</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="../index.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
+                </ul>
+                <div class="nav-right">
+                    <a href="index.html#contact" class="cta-button">Book Consultation</a>
+                    <button id="mobile-toggle-btn" class="mobile-nav-toggle" aria-label="Open menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="mobile-menu-overlay" class="mobile-menu">
+            <div class="mobile-menu-inner">
+                <ul class="mobile-nav-links">
+                    <li><a href="index.html" class="mob-link">Home</a></li>
+                    <li><a href="index.html#editorial" class="mob-link">Services</a></li>
+                    <li><a href="about-us.html" class="mob-link">About us</a></li>
+                    <li><a href="portfolio.html" class="mob-link">Portfolio</a></li>
+                    <li><a href="index.html#contact" class="mob-link">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-footer">
+                    <a href="index.html#contact" class="cta-button mob-link">Book Consultation</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="offer-hero">
+            <div class="offer-hero-content">
+                <span class="offer-badge">🎯 Free Instagram Profile Makeover</span>
+                <h1>We'll redesign your <span class="highlight">Instagram profile</span> – for free!</h1>
+                <p>Give us access to your profile, and we'll optimize your bio, highlights, feed structure, and visual branding – including a detailed feedback document with tips for more reach!</p>
+            </div>
+        </section>
+
+        <!-- Value Section -->
+        <section class="value-section">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 48px;">What you get:</h2>
+                <div class="value-grid">
+                    <div class="value-card">
+                        <span class="value-icon">✨</span>
+                        <h3>Complete Profile Makeover</h3>
+                        <p>We optimize bio, highlights, feed structure, content strategy, and visual branding – professionally and for free</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-icon">📄</span>
+                        <h3>Detailed Feedback Document</h3>
+                        <p>You'll receive a comprehensive document with all changes, explanations, and concrete tips for the future</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="value-icon">🚀</span>
+                        <h3>More Reach & Engagement</h3>
+                        <p>With a professionally optimized profile, you'll increase your visibility and gain more followers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Request for free now</h2>
+                    <p class="form-subtitle">Fill out the form and we'll get back to you within 48 hours to redesign your profile!</p>
+
+                    <!-- Netlify Form -->
+                    <form name="instagram-profile-review-en" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                        <!-- Hidden fields for Netlify -->
+                        <input type="hidden" name="form-name" value="instagram-profile-review-en">
+                        <div class="hidden">
+                            <label>Don't fill out: <input name="bot-field"></label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Your Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="instagram">Instagram Handle <span class="required">*</span></label>
+                            <input type="text" id="instagram" name="instagram" required placeholder="@your_username">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number (optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 123 456789">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Special Requests or Questions? (optional)</label>
+                            <textarea id="message" name="message" placeholder="E.g., what we should pay special attention to..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Request Free Profile Makeover</button>
+
+                        <p class="form-note">🔒 Your data will be treated confidentially and not shared with third parties.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo" class="footer-logo-img">
+                <p>Social Media & Content Agency.<br>From the region for Stuttgart, Heilbronn,<br>Ludwigsburg, Schwäbisch Hall & surrounding areas.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="consulting.html">Consulting</a></li>
+                    <li><a href="social-media-management.html">Social Media Management</a></li>
+                    <li><a href="content-production.html">Content Production</a></li>
+                    <li><a href="advertising.html">Meta Ads (Advertising)</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="impressum.html">Imprint</a></li>
+                    <li><a href="datenschutz.html">Privacy</a></li>
+                    <li><a href="agb.html">Terms</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="index.html#contact">Contact Form</a></li>
+                    <li>Phone: <a href="tel:+4915511541310">+49 1551 1541310</a></li>
+                    <li>Email: <a href="mailto:hello@variad.de">hello@variad.de</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Social</h4>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/clemens-r%C3%B6%C3%9Fle-53260b374?" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://www.instagram.com/variad.agency?" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://wa.me/message/GICCQW5PMS4OD1" target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 VARIAD. All rights reserved.</div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

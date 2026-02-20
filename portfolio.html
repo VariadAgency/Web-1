@@ -305,6 +305,11 @@
         opacity: 0.6;
     }
   </style>
+
+  <!-- Announcement Modal -->
+  <link rel="stylesheet" href="scripts/announcement-modal/modal.css">
+  <script src="scripts/announcement-modal/config.js"></script>
+  <script src="scripts/announcement-modal/modal.js"></script>
 </head>
 <body>
 
@@ -320,8 +325,9 @@
                 </div>
                 <ul class="nav-links">
                     <li><a href="/#home">Home</a></li>
-                    <li><a href="/#editorial">Services</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="index.html#editorial" aria-label="Dienstleistungen: Content, Ads, Management">Services</a></li>
+                    <li><a href="ueber-uns.html">Über uns</a></li>
+                    <li><a href="portfolio.html" class="active" aria-label="Portfolio Videoproduktion und Social Media">Portfolio</a></li>
                     <li><a href="/#contact">Kontakt</a></li>
                     <li><strong>DE</strong> | <a href="en/portfolio.html" style="opacity: 0.7;">EN</a></li>
                 </ul>
@@ -389,8 +395,17 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <h3>VARIAD</h3>
-                <p>Social Media & Content Agentur</p>
+                <img src="images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agentur Heilbronn" class="footer-logo-img">
+                <p>Social Media & Content Agentur.<br>Aus der Region für Stuttgart, Heilbronn,<br>Ludwigsburg, Schwäbisch Hall & Umgebung.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Leistungen</h4>
+                <ul>
+                    <li><a href="beratung.html">Beratung</a></li>
+                    <li><a href="social-media-management.html">Social Media Management</a></li>
+                    <li><a href="content-produktion.html">Content Produktion</a></li>
+                    <li><a href="advertising.html">Meta Ads (Advertising)</a></li>
+                </ul>
             </div>
             <div class="footer-section">
                 <h4>Rechtliches</h4>
@@ -403,7 +418,7 @@
             <div class="footer-section">
                 <h4>Kontakt</h4>
                 <ul>
-                    <li><a href="/#contact">Kontaktformular</a></li>
+                    <li><a href="index.html#contact">Kontaktformular</a></li>
                     <li>Telefon: <a href="tel:+4915511541310">+49 1551 1541310</a></li>
                     <li>E‑Mail: <a href="mailto:hello@variad.de">hello@variad.de</a></li>
                 </ul>
@@ -417,7 +432,7 @@
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">© 2026 VARIAD. Alle Rechte vorbehalten.</div>
+        <div class="footer-bottom">© 2025 VARIAD. Alle Rechte vorbehalten.</div>
     </footer>
 
     <script>

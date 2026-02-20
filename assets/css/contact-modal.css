@@ -1,0 +1,150 @@
+/* ================================================
+   CONTACT MODAL / POPUP
+   Wiederverwendbares Popup-Kontaktformular
+   ================================================ */
+
+/* Modal Overlay */
+#contact-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+#contact-modal-overlay.active {
+    display: flex;
+}
+
+/* Modal Container */
+.contact-modal {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.4s ease;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Close Button */
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    color: #fff;
+}
+
+/* Modal Content - Exactly like index.html */
+.contact-modal-wrapper {
+    padding: 60px 40px 40px;
+}
+
+.contact-modal-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-modal-header h2 {
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.contact-modal-header p {
+    font-size: 16px;
+    color: var(--text-2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .contact-modal {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .contact-modal-wrapper {
+        padding: 50px 20px 30px;
+    }
+
+    .modal-close-btn {
+        top: 15px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Scrollbar Styling */
+.contact-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contact-modal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-modal::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.5);
+    border-radius: 4px;
+}
+
+.contact-modal::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-red);
+}
+
+/* Fix overlapping text in CTA sections */
+.final-cta-section .cta-box {
+    text-align: center;
+}
+
+.final-cta-section .cta-note {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.6;
+    display: block;
+}

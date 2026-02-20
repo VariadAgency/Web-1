@@ -2845,3 +2845,237 @@
     window.addEventListener('resize', updateSMMSpotlight);
     setTimeout(updateSMMSpotlight, 300);
 })();
+
+/* ===========================================
+   LEISTUNGSSEITEN - INTERAKTIVE KOMPONENTEN
+   =========================================== */
+
+/* --- FAQ Accordion (Ludwigsburg) --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const accordionItems = document.querySelectorAll('.faq-accordion-item');
+
+        if (accordionItems.length === 0) return;
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.faq-accordion-header');
+
+            if (!header) return;
+
+            header.addEventListener('click', function() {
+                // Schließe alle anderen Items
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle aktuelles Item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Erstes Item standardmäßig öffnen
+        if (accordionItems.length > 0) {
+            accordionItems[0].classList.add('active');
+        }
+    });
+})();
+
+/* --- Campaign Tabs (Advertising) --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabNav = document.querySelector('.kampagnen-tab-nav');
+        const tabContent = document.querySelector('.kampagnen-tab-content');
+
+        if (!tabNav || !tabContent) return;
+
+        const tabBtns = tabNav.querySelectorAll('.tab-btn');
+        const tabPanes = tabContent.querySelectorAll('.tab-pane');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+
+                // Entferne active von allen Buttons
+                tabBtns.forEach(b => b.classList.remove('active'));
+
+                // Füge active zum geklickten Button hinzu
+                this.classList.add('active');
+
+                // Zeige/Verstecke Tab-Inhalte
+                tabPanes.forEach(pane => {
+                    if (pane.id === targetTab) {
+                        pane.classList.add('active');
+                    } else {
+                        pane.classList.remove('active');
+                    }
+                });
+            });
+        });
+    });
+})();
+
+/* --- Testimonial Carousel (Stuttgart) --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.querySelector('.testimonial-carousel');
+
+        if (!carousel) return;
+
+        const track = carousel.querySelector('.testimonial-track');
+        const cards = carousel.querySelectorAll('.testimonial-card');
+        const prevBtn = carousel.querySelector('.carousel-btn.prev');
+        const nextBtn = carousel.querySelector('.carousel-btn.next');
+        const dots = carousel.querySelectorAll('.carousel-dots .dot');
+
+        if (cards.length === 0) return;
+
+        let currentIndex = 0;
+        let autoplayInterval;
+
+        function showSlide(index) {
+            // Boundary check
+            if (index < 0) index = cards.length - 1;
+            if (index >= cards.length) index = 0;
+
+            currentIndex = index;
+
+            // Update cards
+            cards.forEach((card, i) => {
+                card.classList.toggle('active', i === currentIndex);
+            });
+
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+            }
+        }
+
+        // Event Listeners
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                prevSlide();
+                startAutoplay();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                nextSlide();
+                startAutoplay();
+            });
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', function() {
+                showSlide(i);
+                startAutoplay();
+            });
+        });
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+
+        // Initialize
+        showSlide(0);
+        startAutoplay();
+    });
+})();
+
+/* --- Animated Stats Counter --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const statItems = document.querySelectorAll('.animated-stats .stat-item');
+
+        if (statItems.length === 0) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statItems.forEach(item => observer.observe(item));
+    });
+})();
+
+/* --- Smooth Scroll für Leistungsseiten --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+
+        smoothScrollLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+
+                if (href === '#' || href === '') return;
+
+                const target = document.querySelector(href);
+
+                if (target) {
+                    e.preventDefault();
+
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+})();
+
+/* --- Metric Bars Animation --- */
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const metricCards = document.querySelectorAll('.metric-card');
+
+        if (metricCards.length === 0) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fill = entry.target.querySelector('.metric-fill');
+                    if (fill) {
+                        const width = fill.style.width;
+                        fill.style.width = '0';
+                        setTimeout(() => {
+                            fill.style.width = width;
+                        }, 100);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        metricCards.forEach(card => observer.observe(card));
+    });
+})();
