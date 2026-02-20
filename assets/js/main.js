@@ -32,6 +32,8 @@
                     mobileToggle.classList.remove('is-active');
                     mobileMenu.classList.remove('is-active');
                     nav.classList.remove('is-expanded'); // Header schrumpft
+                    // Reset scroll position so nav doesn't flicker after close
+                    lastScrollY = window.scrollY;
                 } else {
                     mobileToggle.classList.add('is-active');
                     mobileMenu.classList.add('is-active');
@@ -51,6 +53,7 @@
                         mobileMenu.classList.remove('is-active');
                         nav.classList.remove('is-expanded'); // Header schrumpft
                         document.body.style.overflow = '';
+                        lastScrollY = window.scrollY;
                     } 
                     // Bei normalen Links (wie en/index.html) lassen wir den Browser einfach navigieren
                 });
@@ -64,22 +67,26 @@
             nav.classList.add('nav-visible-on-top');
         }
 
+        const SCROLL_THRESHOLD = 5; // Minimum scroll delta to trigger show/hide
         window.addEventListener('scroll', function() {
             const currentScrollY = window.scrollY;
-            
+
             // Don't hide nav if mobile menu is open
             if (mobileMenu && mobileMenu.classList.contains('is-active')) return;
+
+            const delta = currentScrollY - lastScrollY;
 
             // Wenn ganz oben (innerhalb 50px), Header sichtbar
             if (currentScrollY < 50) {
                 nav.classList.add('nav-visible-on-top');
-            } else if (currentScrollY < lastScrollY) {
+            } else if (delta < -SCROLL_THRESHOLD) {
                 // Nach oben scrollen - Header einblenden
                 nav.classList.add('nav-visible-on-top');
-            } else {
+            } else if (delta > SCROLL_THRESHOLD) {
                 // Nach unten scrollen - Header verstecken
                 nav.classList.remove('nav-visible-on-top');
             }
+            // Bei delta innerhalb Threshold: nichts ändern (Deadzone)
 
             lastScrollY = currentScrollY;
         });
