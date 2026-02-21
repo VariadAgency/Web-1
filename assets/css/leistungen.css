@@ -1648,11 +1648,16 @@ section {
 .equipment-card h3 {
     font-size: 16px;
     margin-bottom: 8px;
+    min-height: 1.3em;
 }
 
 .equipment-card p {
     color: var(--text-2);
     margin-bottom: 0;
+    min-height: 2.6em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .equipment-spec {
@@ -3018,6 +3023,9 @@ section {
     border-radius: 16px;
     padding: 24px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     /* Optimierte Transitions - nur transform und border-color */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 border-color 0.3s ease;
@@ -3075,11 +3083,22 @@ section {
     color: var(--text-3);
 }
 
+.format-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
 .format-text h3 {
     font-size: 16px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 4px;
+    min-height: 2.4em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .format-duration {
@@ -3185,7 +3204,7 @@ section {
     .funnel-stage {
         clip-path: none !important;
         margin-left: 0;
-        margin-top: -8px;
+        margin-top: 12px;
         width: 80%;
         max-width: 260px;
         border-radius: 12px;
