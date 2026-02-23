@@ -1,95 +1,73 @@
-# VARIAD - Social Media & Content Agentur Website
+# VARIAD Agentur-Website (Dokumentation)
 
-Willkommen im offiziellen Repository der **VARIAD** Agentur-Website. Dies ist eine hochperformante, SEO-optimierte Web-Plattform für unsere Präsenz im Raum Stuttgart, Heilbronn und Ludwigsburg sowie für unseren internationalen Markt.
-
----
-
-## 🚀 Projekt-Übersicht
-
-VARIAD ist eine spezialisierte Agentur für digitales Marketing. Die Website dient als zentraler Hub für die Neukundengewinnung, Portfolio-Präsentation und als Informationsquelle für unsere Dienstleistungen:
-
-*   **Social Media Management:** Strategische Betreuung und Community-Aufbau.
-*   **Content Produktion:** Professionelle Foto- und Videoproduktion (Reels, TikToks, Imagefilme).
-*   **Performance Advertising:** Zielgerichtete Meta Ads (Instagram & Facebook).
-*   **Consulting:** Strategie-Workshops und individuelle Beratung.
+Dieses Repository enthält die technische Basis und den Content der **VARIAD** Agentur-Website. Die Plattform ist als hochperformante, SEO-optimierte Static-Site konzipiert, die sowohl regionale (Stuttgart, Heilbronn, Ludwigsburg) als auch internationale Märkte bedient.
 
 ---
 
-## ✨ Kern-Features
+## 🛠 Technische Architektur & Features
 
-### 1. Internationalisierung & SEO (Ready for Global)
-Die Website ist von Grund auf für internationales SEO konzipiert:
-*   **Sprachunterstützung:** Vollständige DE- und EN-Versionen im `/en/` Verzeichnis.
-*   **Hreflang-Set:** Korrekte Implementierung von `hreflang="de"`, `hreflang="en"` und `x-default` auf jeder Unterseite.
-*   **Sitemap 2.0:** Dynamisch generierte `sitemap.xml` inklusive aller Sprachvarianten.
-*   **JSON-LD:** Umfassende strukturierte Daten (Schema.org) für Organisation, Dienstleistungen und lokale Sichtbarkeit.
+### 1. SEO & Internationalisierung
+*   **Multilinguales Setup:** Strukturierte DE- und EN-Versionen (Verzeichnis `/en/`).
+*   **Hreflang-Management:** Vollständiges Set (`de`, `en`, `x-default`) auf jeder Unterseite zur Vermeidung von Duplicate Content und zur Steuerung der regionalen Indexierung.
+*   **Sitemap 2.0:** Vollständig indizierte `sitemap.xml` inklusive aller Sprachvarianten und Prioritäten.
+*   **Structured Data:** JSON-LD Implementierung (Schema.org) für Organisation, Dienstleistungen und LocalBusiness-Entitäten.
 
-### 2. Modernes UI/UX Design
-*   **Glassmorphism Header:** Ein einheitlicher, hochfunktionaler Header mit Blur-Effekten und automatischer Sichtbarkeitssteuerung.
-*   **Mobile-First:** Speziell optimiertes mobiles Menü mit einem benutzerfreundlichen **2x2 Grid-Layout**.
-*   **Interaktive Wizards:** Ein mehrstufiger Kontakt-Wizard, der die Konversionsrate durch einfache Nutzerführung steigert.
-*   **Dynamic Component Injection:** Das Kontakt-Modal wird zentral über JavaScript gesteuert, was Redundanz im HTML-Code eliminiert.
+### 2. UI/UX & Design-System
+*   **Modulare Styles:** Trennung der CSS-Logik in dedizierte Module (`leistungen.css`, `agentur.css`, `mobile-fixes.css`) zur Reduzierung von Overhead.
+*   **Unified Navigation:** Zentral gesteuerter Header über alle 25+ HTML-Dateien mit Glassmorphism-Effekten und automatischer Sichtbarkeits-Logik.
+*   **Mobile-Optimierung:** Redesign des mobilen Menüs auf ein **2x2 Grid-Layout** zur verbesserten Daumen-Bedienbarkeit.
+*   **Dynamic Components:** Injektion des Kontakt-Modals via `contact-modal.js`, um Redundanz in den HTML-Quelltexten zu eliminieren.
 
-### 3. Technische Highlights
-*   **Performance:** Drastische Reduzierung der Ladezeiten durch Umstellung von schweren PNG-Assets auf optimierte JPEG/WebP-Formate.
-*   **Sicherheit (Anti-Spam):** Implementierung einer **E-Mail-Obfuskation** via Base64, um die Ernte von E-Mail-Adressen durch Bots zu verhindern.
-*   **Strukturierte Pfade:** Konsistente Nutzung absoluter Pfade (`/`), um Fehler bei tiefen Verzeichnisstrukturen auszuschließen.
-*   **Modulares CSS:** Trennung der Styles in spezialisierte Module (`leistungen.css`, `agentur.css`, `mobile-fixes.css`).
+### 3. Sicherheit & Performance
+*   **Spam-Prävention:** E-Mail-Obfuskation mittels Base64-Encoding für alle öffentlichen Kontakt-Links.
+*   **Asset-Optimierung:** Konsequente Nutzung von optimierten JPEGs statt PNGs im Editorial-Bereich zur Minimierung der Payload.
+*   **Absolute Routing:** Konsistente Nutzung absoluter Pfade (`/`), um Fehlverlinkungen bei variierender Verzeichnistiefe auszuschließen.
 
 ---
 
-## 📁 Projektstruktur
+## 📂 Projektstruktur
 
 ```text
 /
-├── about-us.html           # Team & Philosophie (DE)
-├── consulting.html         # Beratungsleistungen (DE)
-├── content-production.html  # Produktions-Sektion (DE)
-├── portfolio.html          # Case Studies & Arbeiten
-├── index.html              # Startseite (DE)
-├── sitemap.xml             # SEO Sitemap
-├── UPDATE_REPORT.md        # Detaillierte Änderungshistorie
+├── about-us.html           # Agenturvorstellung & Team
+├── consulting.html         # Bereich Beratung & Strategie
+├── content-production.html  # Bereich Foto- & Videoproduktion
+├── portfolio.html          # Case Studies & Referenzen
+├── index.html              # Zentrale Einstiegsseite
+├── UPDATE_REPORT.md        # Technisches Log der letzten Änderungen
 │
-├── en/                     # Englische Sprachversion
+├── en/                     # Englische Sprachsektion
+│   ├── index.html
 │   ├── about-us.html
-│   ├── consulting.html
 │   └── ...
 │
-├── assets/                 # Statische Ressourcen
+├── assets/                 # Globale Ressourcen
 │   ├── css/                # Modulare Stylesheets
-│   ├── js/                 # Kern-Logik & Interaktionen
-│   └── vendor/             # Drittanbieter (z.B. Klaro Cookie Consent)
+│   ├── js/                 # App-Logik (Wizard, Modal, Scroll)
+│   └── vendor/             # Externe Bibliotheken (Klaro etc.)
 │
-├── images/                 # Bilder & Grafiken
-│   ├── editorial/          # Optimierte Service-Bilder
-│   ├── logo/               # Branding Assets
-│   └── partner/            # Partner-Logos
-│
-├── scripts/                # Zusätzliche Skripte (z.B. Announcement Modals)
-└── videos/                 # Videohintergründe & Portfolio-Clips
+├── images/                 # Optimierte Bild-Assets
+├── scripts/                # Hilfsskripte & Konfigurationen
+└── videos/                 # Background-Videos & Loops
 ```
 
 ---
 
-## 🛠 Entwicklung & Workflow
+## ⚙️ Entwicklung & Deployment-Workflow
 
 ### AI-Driven Engineering
-Dieses Projekt wurde unter Einsatz modernster KI-Technologien entwickelt und optimiert. Der Workflow nutzt fortschrittliche Agenten-Systeme zur Code-Generierung, zum Refactoring und zur Qualitätssicherung:
-*   **Claude Code & Gemini:** Primär genutzt für komplexes Refactoring, architektonische Entscheidungen, SEO-Strategien und multilinguale Strukturierung.
-*   **Automatisierte Workflows:** KI-gestützte Validierung von Pfaden, technischer Integrität und UI-Konsistenz über 25+ Unterseiten hinweg.
+Die Entwicklung und das Refactoring dieses Projekts erfolgt unter Einsatz von KI-Agenten-Systemen (**Claude Code**, **Gemini**, **Codex**). Der Fokus liegt auf:
+*   Automatisierter Qualitätssicherung der Code-Integrität.
+*   Effizientem Massen-Refactoring (z.B. Pfad-Normalisierung, Header-Synchronisation).
+*   SEO-technischer Validierung und Strukturierung.
 
-### Git Workflow
-*   **main:** Stabiler Live-Stand der Produktion.
-*   **preview:** Aktiver Staging-Branch für Tests und Abnahmen.
-
----
-
-## 📞 Kontakt & Support
-
-**VARIAD Agentur**  
-Web: [variad.de](https://variad.de)  
-E-Mail: hello@variad.de  
-Region: Stuttgart | Heilbronn | Ludwigsburg
+### Git & Release Management
+*   **main:** Produktionsreifer Live-Stand.
+*   **preview:** Integrations-Branch für Staging und Abnahme neuer Features.
 
 ---
-*Zuletzt aktualisiert am 23. Februar 2026*
+
+## 📊 Kontakt-Daten
+*   **Unternehmen:** VARIAD Agentur
+*   **Domain:** [variad.de](https://variad.de)
+*   **Standort:** Region Stuttgart | Heilbronn | Ludwigsburg
