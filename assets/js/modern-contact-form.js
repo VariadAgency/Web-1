@@ -16,7 +16,7 @@
         localStorageKey: 'variad_contact_form_draft',
         emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         phoneRegex: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
-        submitEmail: 'info@variad-agency.de'
+        submitEmail: atob('aW5mb0B2YXJpYWQtYWdlbmN5LmRl')
     };
 
     const state = {

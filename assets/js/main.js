@@ -355,7 +355,7 @@
             const formData = new FormData();
             formData.append('form-name', 'contact-wizard');
             formData.append('bot-field', '');
-            formData.append('recipient', 'projekte@variad.de');
+            formData.append('recipient', atob('cHJvamVrdGVAdmFyaWFkLmRl'));
             formData.append('intent', intentLabel);
             formData.append('note', state.note || '');
             formData.append('budget', budgetTxt);
@@ -3085,4 +3085,68 @@
 
         metricCards.forEach(card => observer.observe(card));
     });
+})();
+
+/* --- Block 16: Email Obfuscation --- */
+(function() {
+    function decodeEmails() {
+        // Base64 decoding function that works with UTF-8
+        function b64DecodeUnicode(str) {
+            try {
+                // Handle UTF-8 characters encoded in Base64
+                return decodeURIComponent(atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            } catch(e) {
+                try {
+                    return atob(str); // Fallback for simple ASCII
+                } catch(e2) {
+                    console.error('[Email Obfuscation] Error decoding:', str, e2);
+                    return str;
+                }
+            }
+        }
+
+        const emailElements = document.querySelectorAll('[data-email]');
+        emailElements.forEach(el => {
+            try {
+                const encoded = el.getAttribute('data-email');
+                if (!encoded) return;
+                
+                const decoded = b64DecodeUnicode(encoded);
+                
+                if (el.tagName === 'A') {
+                    // Update href
+                    const currentHref = el.getAttribute('href') || '';
+                    if (currentHref === '#' || currentHref.includes('mailto:') || currentHref === '') {
+                        el.href = 'mailto:' + decoded;
+                    }
+                    
+                    // Update content only if it's empty or looks like a placeholder
+                    const currentText = el.textContent.trim();
+                    if (currentText === '' || currentText.includes('[at]') || currentText === encoded || currentText === 'E-Mail' || currentText === 'E‑Mail') {
+                        el.textContent = decoded;
+                    }
+                } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    // Do nothing for inputs, we don't want to obfuscate user input
+                } else {
+                    el.textContent = decoded;
+                }
+                
+                // Keep the original encoded data for reference but mark as processed
+                el.dataset.emailProcessed = 'true';
+            } catch (e) {
+                console.error('[Email Obfuscation] Failed to process element:', el, e);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', decodeEmails);
+    } else {
+        decodeEmails();
+    }
+    
+    // Also expose to window for dynamic content if needed
+    window.decodeEmails = decodeEmails;
 })();
