@@ -381,25 +381,21 @@
 
         <style>
             .portfolio-carousel-container {
-                position: relative;
-                min-height: 250px;
+                display: grid;
+                grid-template-columns: 1fr;
                 margin-top: 40px;
             }
             .portfolio-stage {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
+                grid-area: 1 / 1 / 2 / 1; /* Stacks all stages on top of each other */
                 opacity: 0;
-                visibility: hidden;
                 transition: opacity 0.5s ease-in-out;
                 z-index: 1;
+                pointer-events: none;
             }
             .portfolio-stage.active {
-                position: relative;
                 opacity: 1;
-                visibility: visible;
                 z-index: 2;
+                pointer-events: auto;
             }
             /* Ensure grid is consistent */
             .portfolio-teaser-grid {
@@ -410,9 +406,6 @@
             @media (max-width: 768px) {
                 .portfolio-teaser-grid {
                     grid-template-columns: 1fr;
-                }
-                .portfolio-carousel-container {
-                    min-height: 600px;
                 }
             }
         </style>
