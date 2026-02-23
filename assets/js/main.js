@@ -96,12 +96,17 @@
 /* --- Block 3 --- */
 // Contact Wizard (frontend only)
     (function(){
-        function setup(){
-        const root = document.getElementById('contact-wizard');
-        if(!root) return; // should exist now
-        console.log('[Wizard] init');
-        const isEn = document.documentElement.lang.startsWith('en');
-        const steps = Array.from(root.querySelectorAll('.wiz-step'));
+                window.initVariadWizard = function(rootElement) {
+                    const roots = rootElement ? [rootElement] : Array.from(document.querySelectorAll('.wizard'));
+                    roots.forEach(root => {
+                        if(!root) return; 
+                        if(root.dataset.wizardInit === 'true') return; 
+                        root.dataset.wizardInit = 'true';
+                        console.log('[Wizard] init on element:', root);
+                        
+                        const isEn = document.documentElement.lang.startsWith('en') || window.location.pathname.includes('/en/');
+                        const steps = Array.from(root.querySelectorAll('.wiz-step'));
+        
         const nextBtn = root.querySelector('.wiz-btn.next');
         const prevBtn = root.querySelector('.wiz-btn.prev');
         const bar = root.querySelector('.wiz-progress .bar span');
@@ -408,33 +413,46 @@
         // Attach direct listeners as fallback (REMOVED - Delegation is enough)
         // Array.from(root.querySelectorAll('.chip')).forEach(b=> b.addEventListener('click', ()=> toggleChip(b)));
 
-        setActive(0);
-        updateNextDisabled();
+            setActive(0);
+            updateNextDisabled();
 
-        // Ensure upper sticky sections never block the wizard when in view
-        try{
-            const contactSection = document.getElementById('contact');
-            const smm = document.getElementById('smm');
-            if(contactSection && smm && 'IntersectionObserver' in window){
-                const io = new IntersectionObserver((entries)=>{
-                    entries.forEach(e=>{
-                        if(e.isIntersecting){ smm.style.pointerEvents = 'none'; }
-                        else { smm.style.pointerEvents = ''; }
-                    });
-                }, { threshold: 0.05 });
-                io.observe(contactSection);
-            }
-        }catch(err){ console.warn('[Wizard] overlay guard failed', err); }
-        }
-        if(document.readyState === 'loading'){
-            document.addEventListener('DOMContentLoaded', setup, { once: true });
+            // Ensure upper sticky sections never block the wizard when in view
+            try{
+                const contactSection = document.getElementById('contact');
+                const smm = document.getElementById('smm');
+                if(contactSection && smm && 'IntersectionObserver' in window){
+                    const io = new IntersectionObserver((entries)=>{
+                        entries.forEach(e=>{
+                            if(e.isIntersecting){ smm.style.pointerEvents = 'none'; }
+                            else { smm.style.pointerEvents = ''; }
+                        });
+                    }, { threshold: 0.05 });
+                    io.observe(contactSection);
+                }
+            }catch(err){ console.warn('[Wizard] overlay guard failed', err); }
+        };
+
+        // Initialize on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => window.initVariadWizard());
         } else {
-            // try immediate; if not present, try again on next frame
-            if(!document.getElementById('contact-wizard')){
-                requestAnimationFrame(()=> document.addEventListener('DOMContentLoaded', setup, { once: true }));
-            } else {
-                setup();
-            }
+            window.initVariadWizard();
+        }
+        
+        // Also observe for future additions (like the modal)
+        if(window.MutationObserver) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType !== 1) return;
+                        if(node.id === 'contact-modal-overlay' || node.id === 'contact-wizard' || node.querySelector('#contact-wizard')) {
+                            const target = node.id === 'contact-wizard' ? node : node.querySelector('#contact-wizard');
+                            if (target) window.initVariadWizard(target);
+                        }
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
         }
     })();
 
