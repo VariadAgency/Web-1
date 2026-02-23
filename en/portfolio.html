@@ -320,24 +320,51 @@
     <!-- Navigation -->
     <header class="nav-wrapper">
         <div class="nav-hover-trigger"></div>
-        <nav class="nav-visible-on-top">
+        <nav>
             <div class="nav-container">
-                <div class="logo-nav">
-                    <a href="index.html">
-                        <img src="/images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
-                    </a>
-                </div>
+                <a href="/en/index.html" class="logo-nav" aria-label="Logo">
+                    <img src="/images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
+                </a>
                 <ul class="nav-links">
-                    <li><a href="index.html#home">Home</a></li>
-                    <li><a href="index.html#editorial" class="mob-link">Services</a></li>
-                    <li><a href="about-us.html" class="mob-link">About Us</a></li>
-                    <li><a href="portfolio.html" class="mob-link">Portfolio</a></li>
-                    <li><a href="index.html#contact" class="mob-link">Contact</a></li>
-                    <li><a href="/portfolio.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
+
+                    <li><a href="/en/index.html">Home</a></li>
+                    <li><a href="/en/about-us.html">About Us</a></li>
+                    <li><a href="/en/portfolio.html" class='active'>Portfolio</a></li>
+                    <li><a href="/en/impressum.html">Imprint</a></li>
+                    <li><a href="/index.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
                 </ul>
-                <a href="index.html#contact" class="cta-button">Book Call</a>
+                <div class="nav-right">
+                    <a href="/index.html#contact" class="cta-button">Book Consultation</a>
+                    <button id="mobile-toggle-btn" class="mobile-nav-toggle" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
             </div>
         </nav>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="mobile-menu">
+            <div class="mobile-menu-inner">
+                <ul class="mobile-nav-links">
+
+                    <li><a href="/en/index.html" class="mob-link">Home</a></li>
+                    <li><a href="/en/about-us.html" class="mob-link">About Us</a></li>
+                    <li><a href="/en/portfolio.html" class="mob-link">Portfolio</a></li>
+                    <li><a href="/en/impressum.html" class="mob-link">Imprint</a></li>
+                    
+                    <li class="mobile-lang-switch">
+                        <a href="/index.html" class="lang-de">DE</a>
+                        <span class="lang-sep">|</span>
+                        <span class="lang-en active">EN</span>
+                    </li>
+                </ul>
+                <div class="mobile-menu-footer">
+                    <a href="/index.html#contact" class="cta-button mob-link">Book Consultation</a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -414,15 +441,15 @@
             <div class="footer-section">
                 <h4>Legal</h4>
                 <ul>
-                    <li><a href="impressum.html">Legal Notice</a></li>
-                    <li><a href="datenschutz.html">Privacy Policy</a></li>
-                    <li><a href="agb.html">Terms & Conditions</a></li>
+                    <li><a href="/impressum.html">Legal Notice</a></li>
+                    <li><a href="/datenschutz.html">Privacy Policy</a></li>
+                    <li><a href="/agb.html">Terms & Conditions</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h4>Contact</h4>
                 <ul>
-                    <li><a href="index.html#contact">Contact Form</a></li>
+                    <li><a href="/index.html#contact">Contact Form</a></li>
                     <li>Phone: <a href="tel:+4915511541310">+49 1551 1541310</a></li>
                     <li>E-Mail: <a href="#" data-email="aGVsbG9AdmFyaWFkLmRl">hello [at] variad.de</a></li>
                 </ul>

@@ -143,7 +143,7 @@
 
     .mobile-nav-links {
         display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr !important;
+        grid-template-columns: 1fr 1fr !important;
         gap: 10px !important;
         list-style: none !important;
         padding: 0 !important;
@@ -156,7 +156,7 @@
     .mobile-nav-links a:active, .mobile-nav-links a:hover { color: #fff !important; background: rgba(255,255,255,0.05) !important; }
 
     .mobile-lang-switch {
-        grid-column: span 3 !important;
+        grid-column: span 2 !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;

@@ -2933,3 +2933,15 @@ section {
         font-size: 16px;
     }
 }
+
+/* Desktop-only: Optische Korrektur Abstände Equipment Sektion */
+@media (min-width: 1025px) {
+    .equipment-card p {
+        min-height: auto !important;
+        margin-bottom: 4px !important;
+    }
+    .equipment-spec {
+        margin-block-start: 10px !important;
+        margin-top: 10px !important;
+    }
+}
