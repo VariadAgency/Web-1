@@ -4,16 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio - VARIAD</title>
+  <link rel="canonical" href="https://variad.de/en/portfolio.html">
+  <link rel="alternate" hreflang="de" href="https://variad.de/portfolio.html">
+  <link rel="alternate" hreflang="en" href="https://variad.de/en/portfolio.html">
   
   <meta name="theme-color" content="#0a0a0a">
-  <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
-  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../assets/css/style.css"><link rel="stylesheet" href="../assets/css/contact-modal.css">
+  <link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="/assets/css/contact-modal.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWorkSeries",
+    "name": "VARIAD Portfolio",
+    "description": "Portfolio of our social media and video productions",
+    "url": "https://variad.de/en/portfolio.html",
+    "provider": {
+      "@type": "Organization",
+      "name": "VARIAD",
+      "url": "https://variad.de/en/"
+    }
+  }
+  </script>
 
   <style>
     /* Masonry specific Styles */
@@ -306,7 +324,7 @@
             <div class="nav-container">
                 <div class="logo-nav">
                     <a href="index.html">
-                        <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
+                        <img src="/images/logo/Variad-weiß.png" alt="VARIAD Logo" class="nav-logo-img">
                     </a>
                 </div>
                 <ul class="nav-links">
@@ -315,7 +333,7 @@
                     <li><a href="about-us.html" class="mob-link">About Us</a></li>
                     <li><a href="portfolio.html" class="mob-link">Portfolio</a></li>
                     <li><a href="index.html#contact" class="mob-link">Contact</a></li>
-                    <li><a href="../portfolio.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
+                    <li><a href="/portfolio.html" style="opacity: 0.7;">DE</a> | <strong>EN</strong></li>
                 </ul>
                 <a href="index.html#contact" class="cta-button">Book Call</a>
             </div>
@@ -381,16 +399,16 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <img src="../images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agency" class="footer-logo-img">
+                <img src="/images/logo/Variad-weiß.png" alt="VARIAD Logo - Social Media Agency" class="footer-logo-img">
                 <p>Social Media & Content Agency.<br>Based in the region for Stuttgart, Heilbronn,<br>Ludwigsburg, Schwäbisch Hall & surroundings.</p>
             </div>
             <div class="footer-section">
                 <h4>Services</h4>
                 <ul>
-                    <li><a href="../beratung.html">Consulting</a></li>
-                    <li><a href="../social-media-management.html">Social Media Management</a></li>
-                    <li><a href="../content-produktion.html">Content Production</a></li>
-                    <li><a href="../advertising.html">Meta Ads (Advertising)</a></li>
+                    <li><a href="/consulting.html">Consulting</a></li>
+                    <li><a href="/social-media-management.html">Social Media Management</a></li>
+                    <li><a href="/content-production.html">Content Production</a></li>
+                    <li><a href="/advertising.html">Meta Ads (Advertising)</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -498,7 +516,7 @@
     ];
 
     // Video-Liste (updated)
-    const videoPath = '../videos/Portfolio%20Videos/Portfolio-Videos_Variad-Web_Kompremiert_1000Kbps/';
+    const videoPath = '/videos/Portfolio%20Videos/Portfolio-Videos_Variad-Web_Kompremiert_1000Kbps/';
     const videos = [
         'social-media-agentur-stuttgart-video-01.mp4',
         'videoproduktion-heilbronn-video-02.mp4',
@@ -518,8 +536,8 @@
         'videoproduktion-heilbronn-video-16.mp4'
     ];
 
-    function urlQ(n){ return '../images/portfolio/Quer/' + encodeURI(n); }
-    function urlH(n){ return '../images/portfolio/Hoch/' + encodeURI(n); }
+    function urlQ(n){ return '/images/portfolio/Quer/' + encodeURI(n); }
+    function urlH(n){ return '/images/portfolio/Hoch/' + encodeURI(n); }
 
     const gridFoto = document.getElementById('grid-foto');
     const gridVideo = document.getElementById('grid-video');
