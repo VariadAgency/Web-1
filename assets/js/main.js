@@ -1283,17 +1283,16 @@
         const shutterValues = ['1/125', '1/250', '1/500', '1/1000'];
         const wbValues = ['5600K', '4500K', '6500K', '5000K'];
 
-        // Calculate section bounds
-        function computeBounds() {
+        // Calculate section bounds dynamically
+        function getBounds() {
             const rect = sec.getBoundingClientRect();
-            const scrollY = window.scrollY || window.pageYOffset;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
             return {
                 start: scrollY + rect.top,
                 height: rect.height
             };
         }
 
-        let bounds = computeBounds();
         let rafId = null;
 
         // Update camera settings display
@@ -1307,44 +1306,42 @@
         // Main update function
         function updateCamera() {
             rafId = null;
-
-            const scrollY = window.scrollY || window.pageYOffset;
+            
+            const bounds = getBounds();
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
             const viewportCenter = scrollY + window.innerHeight / 2;
 
-            // Start früher, nutze mehr Raum für alle 4 Steps - Step 4 bleibt länger
+            // Start früher, nutze mehr Raum für alle 4 Steps
             const startOffset = bounds.height * 0.05;
-            const activeRange = bounds.height * 0.65;
+            const activeRange = bounds.height * 0.85; // Mehr Range für besseres Scroll-Gefühl
 
-            // Calculate progress through section (0 to 1) - mit Verzögerung
+            // Calculate progress through section (0 to 1)
             const rawProgress = (viewportCenter - bounds.start - startOffset) / activeRange;
             const progress = Math.max(0, Math.min(1, rawProgress));
 
-            // Determine active card (0-3) - Step 4 bekommt viel mehr Zeit (40% der Range)
-            let activeIndex;
-            if (progress < 0.30) activeIndex = 0;
-            else if (progress < 0.60) activeIndex = 1;
-            else if (progress < 0.80) activeIndex = 2;
+            // Determine active card (0-3)
+            let activeIndex = 0;
+            if (progress < 0.25) activeIndex = 0;
+            else if (progress < 0.50) activeIndex = 1;
+            else if (progress < 0.75) activeIndex = 2;
             else activeIndex = 3;
 
             // Update cards (fade in/out)
             cards.forEach((card, index) => {
                 const isActive = index === activeIndex;
-
-                if (isActive && !card.classList.contains('active')) {
-                    card.classList.add('active');
-                    updateCameraSettings(index);
-                } else if (!isActive && card.classList.contains('active')) {
+                if (isActive) {
+                    if (!card.classList.contains('active')) {
+                        card.classList.add('active');
+                        updateCameraSettings(index);
+                    }
+                } else {
                     card.classList.remove('active');
                 }
             });
 
             // Update step indicators
             stepIndicators.forEach((indicator, index) => {
-                if (index === activeIndex) {
-                    indicator.classList.add('active');
-                } else {
-                    indicator.classList.remove('active');
-                }
+                indicator.classList.toggle('active', index === activeIndex);
             });
         }
 
@@ -1355,25 +1352,17 @@
             }
         }
 
-        // Resize handler
-        function onResize() {
-            bounds = computeBounds();
-            updateCamera();
-        }
-
         // Initialize
         window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onResize, { passive: true });
+        window.addEventListener('resize', updateCamera, { passive: true });
 
-        // Initial update
-        updateCamera();
-
-        // Cleanup
-        window.addEventListener('beforeunload', () => {
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', onResize);
-        });
-
+        // Initial update after a short delay to ensure layout is ready
+        setTimeout(updateCamera, 100);
+        
+        // Safety: Ensure at least the first card is visible if something goes wrong
+        if (cards.length > 0 && !sec.querySelector('.production-card.active')) {
+            cards[0].classList.add('active');
+        }
     })();
 
 
@@ -2632,6 +2621,7 @@
 
     const cards = Array.from(section.querySelectorAll('.production-card'));
     const allTextElements = [];
+    let hasStarted = false;
 
     cards.forEach(card => {
         const num = card.querySelector('.step-number');
