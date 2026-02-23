@@ -3027,8 +3027,11 @@
                     }
                     
                     // Update content only if it's empty or looks like a placeholder
+                    // AND it has no child elements (like SVGs) to avoid breaking icons
                     const currentText = el.textContent.trim();
-                    if (currentText === '' || currentText.includes('[at]') || currentText === encoded || currentText === 'E-Mail' || currentText === 'E‑Mail') {
+                    const hasChildren = el.children.length > 0;
+                    
+                    if (!hasChildren && (currentText === '' || currentText.includes('[at]') || currentText === encoded || currentText === 'E-Mail' || currentText === 'E‑Mail')) {
                         el.textContent = decoded;
                     }
                 } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
