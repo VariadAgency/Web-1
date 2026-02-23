@@ -47,8 +47,15 @@
             // Close menu when link is clicked
             mobileLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
                     // Wenn es ein Anker-Link (#) auf der gleichen Seite ist
-                    if (link.getAttribute('href').startsWith('#')) {
+                    if (href.startsWith('#')) {
+                        // Bei #contact verhindern wir das Standard-Scrollen, 
+                        // da das Modal-Script übernimmt.
+                        if (href === '#contact') {
+                            e.preventDefault();
+                        }
+                        
                         mobileToggle.classList.remove('is-active');
                         mobileMenu.classList.remove('is-active');
                         nav.classList.remove('is-expanded'); // Header schrumpft
@@ -2913,6 +2920,9 @@
                 const href = this.getAttribute('href');
 
                 if (href === '#' || href === '') return;
+                
+                // Ignoriere #contact, da dies vom Contact Modal Script behandelt wird
+                if (href === '#contact') return;
 
                 const target = document.querySelector(href);
 
