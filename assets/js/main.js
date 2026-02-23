@@ -63,30 +63,26 @@
         }
 
         // Initial sichtbar wenn oben
-        if (window.scrollY < 50) {
+        if (nav && window.scrollY < 50) {
             nav.classList.add('nav-visible-on-top');
         }
 
-        const SCROLL_THRESHOLD = 5; // Minimum scroll delta to trigger show/hide
+        const SCROLL_THRESHOLD = 5; 
         window.addEventListener('scroll', function() {
+            if (!nav) return;
             const currentScrollY = window.scrollY;
 
-            // Don't hide nav if mobile menu is open
             if (mobileMenu && mobileMenu.classList.contains('is-active')) return;
 
             const delta = currentScrollY - lastScrollY;
 
-            // Wenn ganz oben (innerhalb 50px), Header sichtbar
             if (currentScrollY < 50) {
                 nav.classList.add('nav-visible-on-top');
             } else if (delta < -SCROLL_THRESHOLD) {
-                // Nach oben scrollen - Header einblenden
                 nav.classList.add('nav-visible-on-top');
             } else if (delta > SCROLL_THRESHOLD) {
-                // Nach unten scrollen - Header verstecken
                 nav.classList.remove('nav-visible-on-top');
             }
-            // Bei delta innerhalb Threshold: nichts ändern (Deadzone)
 
             lastScrollY = currentScrollY;
         });
@@ -95,366 +91,246 @@
 
 /* --- Block 3 --- */
 // Contact Wizard (frontend only)
-    (function(){
-                window.initVariadWizard = function(rootElement) {
-                    const roots = rootElement ? [rootElement] : Array.from(document.querySelectorAll('.wizard'));
-                    roots.forEach(root => {
-                        if(!root) return; 
-                        if(root.dataset.wizardInit === 'true') return; 
-                        root.dataset.wizardInit = 'true';
-                        console.log('[Wizard] init on element:', root);
-                        
-                        const isEn = document.documentElement.lang.startsWith('en') || window.location.pathname.includes('/en/');
-                        const steps = Array.from(root.querySelectorAll('.wiz-step'));
-        
-        const nextBtn = root.querySelector('.wiz-btn.next');
-        const prevBtn = root.querySelector('.wiz-btn.prev');
-        const bar = root.querySelector('.wiz-progress .bar span');
-        const dots = Array.from(root.querySelectorAll('.wiz-progress .dots i'));
-        const state = { intent:null, budgetValue:1000, note:'', name:'', company:'', email:'', phone:'', skipBudget:false };
-        let idx = 0;
-
-        function setActive(i){
-            steps.forEach((s,k)=> s.classList.toggle('is-active', k===i));
-            idx = i;
-            prevBtn.disabled = (idx===0);
-            prevBtn.textContent = isEn ? 'Back' : 'Zurück';
-            nextBtn.textContent = (idx === steps.length-1 ? (isEn ? 'Send Inquiry' : 'Anfrage absenden') : (isEn ? 'Next' : 'Weiter'));
-            nextBtn.disabled = (idx===0 && !state.intent);
-            const p = idx/(steps.length-1)*100; bar.style.width = p+'%';
-            // Update step indicators with active/completed classes
-            dots.forEach((d,k)=> {
-                d.classList.toggle('completed', k < idx);
-                d.classList.toggle('active', k === idx);
-            });
-            if(idx===3) renderSummary();
-
-            // Auto-Focus Textarea on Step 1 - Aggressive retry strategy
-            if(idx === 1) {
-                const note = root.querySelector('#wiz-note');
-                if(note) {
-                    // Versuch 1: Schnell
-                    setTimeout(() => note.focus({ preventScroll: true }), 100);
-                    // Versuch 2: Nach Transition start
-                    setTimeout(() => note.focus({ preventScroll: true }), 300);
-                    // Versuch 3: Sicher ist sicher
-                    setTimeout(() => note.focus({ preventScroll: true }), 600);
-                }
-            }
-
-            // Auto-Focus Slider on Step 2 (Budget)
-            if(idx === 2) {
-                const budgetSlider = root.querySelector('#wiz-budget');
-                if(budgetSlider) {
-                    setTimeout(() => {
-                        budgetSlider.focus({ preventScroll: true });
-                        budgetSlider.click(); // Simuliere Klick
-                    }, 150);
-                }
-            }
-        }
-
-        function toggleChip(btn){
-            const key = btn.getAttribute('data-key');
-
-            // --- Cookie Requirement Check: Debug & Force ---
-            if(!key && typeof klaro !== 'undefined') {
-                const manager = klaro.getManager();
-                manager.loadConsents(); // Lade den aktuellsten Stand aus den Cookies
-                
-                const confirmed = manager.confirmed;
-                const facebookConsent = manager.consents ? manager.consents.facebook : false;
-                
-                console.log('[Wizard Check] Confirmed:', confirmed, 'Facebook:', facebookConsent);
-
-                // Wenn nicht bestätigt ODER facebook abgelehnt
-                if (!confirmed || facebookConsent !== true) {
-                    console.log('[Wizard Check] ACCESS DENIED. Showing Banner.');
-                    
-                    const banner = document.getElementById('variad-cookie-banner');
-                    if(banner) {
-                        const p = banner.querySelector('.text-side p');
-                        const originalText = "Wir nutzen Cookies für Performance";
-                        p.textContent = "Akzeptiere erst die Cookies.";
-                        banner.classList.add('is-visible');
-                        
-                        const resetText = () => { p.textContent = originalText; };
-                        document.getElementById('v-accept-btn').addEventListener('click', resetText, {once:true});
-                        document.getElementById('v-decline-btn').addEventListener('click', resetText, {once:true});
-                    }
-                    return; // Blockiere hier hart!
-                }
-                console.log('[Wizard Check] ACCESS GRANTED.');
-            }
-            // ----------------------------------------------
-
-            const dv = btn.getAttribute('data-value');
-            const value = (dv !== null && dv !== undefined) ? dv : btn.textContent.trim();
-            if(!key){ // step 0 intent
-                state.intent = btn.dataset.value;
-                root.querySelectorAll('[data-step="0"] .chip').forEach(b=> b.classList.toggle('is-on', b===btn));
-                updateNextDisabled();
-
-                // Bei Beratung: Budget überspringen, direkt zu Beschreibung (Step 1)
-                if(state.intent === 'beratung'){
-                    state.skipBudget = true;
-                    setTimeout(()=> setActive(1), 120);
-                } else {
-                    state.skipBudget = false;
-                    setTimeout(()=> setActive(1), 120);
-                }
-                return;
-            }
-            // single-choice keys
-            root.querySelectorAll(`.chip[data-key="${key}"]`).forEach(b=> b.classList.remove('is-on'));
-            btn.classList.add('is-on');
-            state[key] = value;
-            updateNextDisabled();
-        }
-
-        root.addEventListener('click', (e)=>{
-            // in case something floats above: force enable pointer events on active step
-            steps.forEach((s,k)=> s.style.pointerEvents = k===idx? 'auto':'none');
-            const b = e.target.closest('.chip'); if(b){ toggleChip(b); return; }
-            if(e.target===nextBtn){ onNext(); }
-            if(e.target===prevBtn){ setActive(Math.max(0, idx-1)); }
-        });
-
-        const budgetInput = root.querySelector('#wiz-budget');
-        if(budgetInput){
-            const fmt=(n)=> new Intl.NumberFormat('de-DE').format(n)+' €';
-            const out=root.querySelector('#wiz-budget-out');
-            const sync=()=>{
-                const raw = parseInt(budgetInput.value,10) || 1000;
-                const clamped = Math.max(250, Math.min(2500, raw));
-                const stepped = Math.min(2500, Math.max(250, Math.round(clamped/25)*25));
-                state.budgetValue = stepped;
-                if(out) out.textContent = (stepped >= 2500) ? '> 2 500 €' : fmt(stepped);
-            };
-            budgetInput.addEventListener('input',sync); sync();
-        }
-
-        
-
-        // Mapping von technischen Werten zu lesbaren Namen
-        function getIntentLabel(value){
-            const labelsDe = {
-                'smm': 'Social Media Management',
-                'content': 'Content-Produktion',
-                'ads': 'Meta Ads',
-                'beratung': 'Kostenlos beraten',
-                'sonstiges': 'Sonstiges'
-            };
-            const labelsEn = {
-                'smm': 'Social Media Management',
-                'content': 'Content Production',
-                'ads': 'Meta Ads',
-                'beratung': 'Free Consultation',
-                'sonstiges': 'Other'
-            };
-            const labels = isEn ? labelsEn : labelsDe;
-            return labels[value] || value;
-        }
-
-        function renderSummary(){
-            const el = root.querySelector('#wiz-summary');
-            const locale = isEn ? 'en-US' : 'de-DE';
-            const budgetTxt = (state.budgetValue>=2500) ? '> 2,500 €' : (new Intl.NumberFormat(locale).format(state.budgetValue||0)+' €');
-            const budgetDisplay = state.skipBudget ? (isEn ? 'free' : 'kostenlos') : budgetTxt;
-            const intentLabel = getIntentLabel(state.intent);
+(function() {
+    window.initVariadWizard = function(rootElement) {
+        const roots = rootElement ? [rootElement] : Array.from(document.querySelectorAll('.wizard'));
+        roots.forEach(root => {
+            if (!root) return;
+            if (root.dataset.wizardInit === 'true') return;
+            root.dataset.wizardInit = 'true';
             
-            if (isEn) {
-                el.innerHTML = `Selection: ${intentLabel||'-'} • Budget: ${budgetDisplay}`;
-            } else {
-                el.innerHTML = `Auswahl: ${intentLabel||'-'} • Budget: ${budgetDisplay}`;
-            }
-        }
+            console.log('[Wizard] init on element:', root);
+            
+            const isEn = document.documentElement.lang.startsWith('en') || window.location.pathname.includes('/en/');
+            const steps = Array.from(root.querySelectorAll('.wiz-step'));
+            const nextBtn = root.querySelector('.wiz-btn.next');
+            const prevBtn = root.querySelector('.wiz-btn.prev');
+            const bar = root.querySelector('.wiz-progress .bar span');
+            const dots = Array.from(root.querySelectorAll('.wiz-progress .dots i'));
+            
+            if (!nextBtn || !prevBtn || !steps.length) return;
 
-        function updateNextDisabled(){
-            nextBtn.disabled = (idx===0 && !state.intent);
-        }
+            const state = { 
+                intent: null, 
+                budgetValue: 1000, 
+                note: '', 
+                name: '', 
+                company: '', 
+                email: '', 
+                phone: '', 
+                skipBudget: false 
+            };
+            let idx = 0;
 
-        function onNext(){
-            // --- Cookie Requirement Check: Before proceeding ---
-            if(typeof klaro !== 'undefined') {
-                const manager = klaro.getManager();
-                manager.loadConsents();
-                const confirmed = manager.confirmed;
-                const facebookConsent = manager.consents ? manager.consents.facebook : false;
-
-                if (!confirmed || facebookConsent !== true) {
-                    console.log('[Wizard Check] ACCESS DENIED on Next. Showing Banner.');
-                    const banner = document.getElementById('variad-cookie-banner');
-                    if(banner) {
-                        const p = banner.querySelector('.text-side p');
-                        const originalText = "Wir nutzen Cookies für Performance";
-                        p.textContent = "Akzeptiere erst die Cookies.";
-                        banner.classList.add('is-visible');
-                        const resetText = () => { p.textContent = originalText; };
-                        document.getElementById('v-accept-btn').addEventListener('click', resetText, {once:true});
-                        document.getElementById('v-decline-btn').addEventListener('click', resetText, {once:true});
-                    }
-                    return; 
-                }
-            }
-            // ----------------------------------------------
-
-            if(idx < steps.length-1){
-                // Capture note from Step 1
-                if(idx===1){
-                    state.note = root.querySelector('#wiz-note').value.trim();
-                }
-
-                if(idx===3){ return submit(); }
-
-                // Bei Beratung: Step 2 (Budget) überspringen
-                if(idx===1 && state.skipBudget){
-                    setActive(3); // Direkt zu Kontakt
-                } else {
-                    setActive(idx+1);
-                }
-            } else {
-                submit();
-            }
-        }
-
-        function submit(){
-            const errorEl = root.querySelector('#wiz-error');
-            const nameEl = root.querySelector('#wiz-name');
-            const emailEl = root.querySelector('#wiz-email');
-            const phoneEl = root.querySelector('#wiz-phone');
-            state.name = (nameEl?.value || '').trim();
-            state.company = (root.querySelector('#wiz-company')?.value || '').trim();
-            state.email = (emailEl?.value || '').trim();
-            state.phone = (phoneEl?.value || '').trim();
-
-            // Validation: Name required AND (Email OR Phone)
-            function isEmail(v){ return /.+@.+\..+/.test(v); }
-            function isPhone(v){ return v.replace(/\D/g,'').length >= 7; }
-            let err = '';
-            // reset invalid styles
-            [nameEl,emailEl,phoneEl].forEach(el=> el && el.classList.remove('invalid'));
-            if(!state.name){
-                err = isEn ? 'Please provide your name.' : 'Bitte gib deinen Namen an.';
-                if(nameEl) nameEl.classList.add('invalid');
-            } else if(!(isEmail(state.email) || isPhone(state.phone))){
-                err = isEn ? 'Please provide an email or phone number.' : 'Bitte gib E‑Mail oder Telefon an (eins davon reicht).';
-                if(emailEl) emailEl.classList.add('invalid');
-                if(phoneEl) phoneEl.classList.add('invalid');
-            }
-            if(err){
-                if(errorEl){ errorEl.textContent = err; errorEl.scrollIntoView({behavior:'smooth', block:'nearest'}); }
-                return;
-            } else { if(errorEl) errorEl.textContent=''; }
-
-            // Loading State
-            nextBtn.disabled = true;
-            nextBtn.textContent = isEn ? 'Sending...' : 'Wird gesendet...';
-
-            // Data Preparation
-            const intentLabel = getIntentLabel(state.intent);
-            const locale = isEn ? 'en-US' : 'de-DE';
-            const budgetTxt = state.skipBudget ? (isEn ? 'free' : 'kostenlos') : ((state.budgetValue>=2500) ? (isEn ? '> 2,500 €' : '> 2 500 €') : (new Intl.NumberFormat(locale).format(state.budgetValue||0)+' €'));
-
-            // Netlify Form Submission
-            const formData = new FormData();
-            formData.append('form-name', 'contact-wizard');
-            formData.append('bot-field', '');
-            formData.append('recipient', atob('cHJvamVrdGVAdmFyaWFkLmRl'));
-            formData.append('intent', intentLabel);
-            formData.append('note', state.note || '');
-            formData.append('budget', budgetTxt);
-            formData.append('name', state.name);
-            formData.append('company', state.company || '');
-            formData.append('email', state.email);
-            formData.append('phone', state.phone);
-
-            fetch(window.location.pathname, {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                console.log('[Wizard] Success: Data sent to Netlify');
-                // Success View (MASSIVE TEXT LEFT)
-                root.querySelector('.wiz-viewport').innerHTML = `
-                    <div class="wiz-success-card">
-                        <div class="success-content">
-                            <h3>${isEn ? 'Inquiry Sent.<br>Thank you.' : 'Anfrage gesendet<br>Danke.'}</h3>
-                            <p>${isEn ? 'We will get back to you shortly.' : 'Wir melden uns in Kürze.'}</p>
-                        </div>
-                        <div class="success-actions">
-                            <a href="/" class="btn-action-link">Startseite</a>
-                            <button type="button" class="btn-action-link" onclick="window.location.reload()">neue anfrage</button>
-                        </div>
-                    </div>
-                `;
-                // Hide navigation and progress
-                const nav = root.querySelector('.wiz-nav');
-                const prog = root.querySelector('.wiz-progress');
-                if(nav) nav.style.display = 'none';
-                if(prog) prog.style.opacity = '0';
+            function setActive(i) {
+                steps.forEach((s, k) => s.classList.toggle('is-active', k === i));
+                idx = i;
+                prevBtn.disabled = (idx === 0);
+                prevBtn.textContent = isEn ? 'Back' : 'Zurück';
+                nextBtn.textContent = (idx === steps.length - 1 ? (isEn ? 'Send Inquiry' : 'Anfrage absenden') : (isEn ? 'Next' : 'Weiter'));
+                nextBtn.disabled = (idx === 0 && !state.intent);
                 
-                // Scroll success card into view if needed
-                root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (bar) {
+                    const p = idx / (steps.length - 1) * 100;
+                    bar.style.width = p + '%';
+                }
+                
+                dots.forEach((d, k) => {
+                    d.classList.toggle('completed', k < idx);
+                    d.classList.toggle('active', k === idx);
+                });
+                
+                if (idx === 3) renderSummary();
 
-                // Clean local draft
-                localStorage.removeItem('variad_contact_draft');
-            })
-            .catch((error) => {
-                console.error('[Wizard] Submission error:', error);
-                nextBtn.disabled = false;
-                nextBtn.textContent = 'Erneut versuchen';
-                if(errorEl) errorEl.textContent = 'Fehler beim Senden. Bitte versuche es erneut.';
+                if (idx === 1) {
+                    const note = root.querySelector('#wiz-note');
+                    if (note) setTimeout(() => note.focus({ preventScroll: true }), 300);
+                }
+
+                if (idx === 2) {
+                    const budgetSlider = root.querySelector('#wiz-budget');
+                    if (budgetSlider) setTimeout(() => budgetSlider.focus({ preventScroll: true }), 150);
+                }
+            }
+
+            function toggleChip(btn) {
+                const key = btn.getAttribute('data-key');
+                const dv = btn.getAttribute('data-value');
+                const value = (dv !== null && dv !== undefined) ? dv : btn.textContent.trim();
+
+                if (!key) { // step 0 intent
+                    state.intent = btn.dataset.value;
+                    root.querySelectorAll('[data-step="0"] .chip').forEach(b => b.classList.toggle('is-on', b === btn));
+                    updateNextDisabled();
+
+                    if (state.intent === 'beratung') {
+                        state.skipBudget = true;
+                    } else {
+                        state.skipBudget = false;
+                    }
+                    setTimeout(() => setActive(1), 120);
+                    return;
+                }
+                
+                root.querySelectorAll(`.chip[data-key="${key}"]`).forEach(b => b.classList.remove('is-on'));
+                btn.classList.add('is-on');
+                state[key] = value;
+                updateNextDisabled();
+            }
+
+            function getIntentLabel(value) {
+                const labelsDe = { 'smm': 'Social Media Management', 'content': 'Content-Produktion', 'ads': 'Meta Ads', 'beratung': 'Kostenlos beraten', 'sonstiges': 'Sonstiges' };
+                const labelsEn = { 'smm': 'Social Media Management', 'content': 'Content Production', 'ads': 'Meta Ads', 'beratung': 'Free Consultation', 'sonstiges': 'Other' };
+                const labels = isEn ? labelsEn : labelsDe;
+                return labels[value] || value;
+            }
+
+            function renderSummary() {
+                const el = root.querySelector('#wiz-summary');
+                if (!el) return;
+                const locale = isEn ? 'en-US' : 'de-DE';
+                const budgetTxt = (state.budgetValue >= 2500) ? (isEn ? '> 2,500 €' : '> 2.500 €') : (new Intl.NumberFormat(locale).format(state.budgetValue || 0) + ' €');
+                const budgetDisplay = state.skipBudget ? (isEn ? 'free' : 'kostenlos') : budgetTxt;
+                const intentLabel = getIntentLabel(state.intent);
+                el.innerHTML = isEn ? `Selection: ${intentLabel || '-'} • Budget: ${budgetDisplay}` : `Auswahl: ${intentLabel || '-'} • Budget: ${budgetDisplay}`;
+            }
+
+            function updateNextDisabled() {
+                if (nextBtn) nextBtn.disabled = (idx === 0 && !state.intent);
+            }
+
+            function onNext() {
+                if (idx < steps.length - 1) {
+                    if (idx === 1) state.note = root.querySelector('#wiz-note').value.trim();
+                    if (idx === 3) return submit();
+
+                    if (idx === 1 && state.skipBudget) {
+                        setActive(3);
+                    } else {
+                        setActive(idx + 1);
+                    }
+                } else {
+                    submit();
+                }
+            }
+
+            function submit() {
+                const errorEl = root.querySelector('#wiz-error');
+                const nameEl = root.querySelector('#wiz-name');
+                const emailEl = root.querySelector('#wiz-email');
+                const phoneEl = root.querySelector('#wiz-phone');
+                
+                state.name = (nameEl?.value || '').trim();
+                state.company = (root.querySelector('#wiz-company')?.value || '').trim();
+                state.email = (emailEl?.value || '').trim();
+                state.phone = (phoneEl?.value || '').trim();
+
+                if (!state.name) {
+                    if (errorEl) errorEl.textContent = isEn ? 'Please provide your name.' : 'Bitte gib deinen Namen an.';
+                    return;
+                }
+                if (!state.email && !state.phone) {
+                    if (errorEl) errorEl.textContent = isEn ? 'Please provide an email or phone number.' : 'Bitte gib E‑Mail oder Telefon an.';
+                    return;
+                }
+
+                nextBtn.disabled = true;
+                nextBtn.textContent = isEn ? 'Sending...' : 'Wird gesendet...';
+
+                const intentLabel = getIntentLabel(state.intent);
+                const locale = isEn ? 'en-US' : 'de-DE';
+                const budgetTxt = state.skipBudget ? (isEn ? 'free' : 'kostenlos') : ((state.budgetValue >= 2500) ? (isEn ? '> 2,500 €' : '> 2 500 €') : (new Intl.NumberFormat(locale).format(state.budgetValue || 0) + ' €'));
+
+                const formData = new FormData();
+                formData.append('form-name', 'contact-wizard');
+                formData.append('recipient', atob('cHJvamVrdGVAdmFyaWFkLmRl'));
+                formData.append('intent', intentLabel);
+                formData.append('note', state.note || '');
+                formData.append('budget', budgetTxt);
+                formData.append('name', state.name);
+                formData.append('company', state.company || '');
+                formData.append('email', state.email);
+                formData.append('phone', state.phone);
+
+                fetch(window.location.pathname, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    root.querySelector('.wiz-viewport').innerHTML = `
+                        <div class="wiz-success-card">
+                            <div class="success-content">
+                                <h3>${isEn ? 'Inquiry Sent.<br>Thank you.' : 'Anfrage gesendet<br>Danke.'}</h3>
+                                <p>${isEn ? 'We will get back to you shortly.' : 'Wir melden uns in Kürze.'}</p>
+                            </div>
+                            <div class="success-actions">
+                                <a href="/" class="btn-action-link">Startseite</a>
+                                <button type="button" class="btn-action-link" onclick="window.location.reload()">neue anfrage</button>
+                            </div>
+                        </div>
+                    `;
+                    const nav = root.querySelector('.wiz-nav');
+                    const prog = root.querySelector('.wiz-progress');
+                    if (nav) nav.style.display = 'none';
+                    if (prog) prog.style.opacity = '0';
+                    root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .catch(error => {
+                    console.error('[Wizard] Submission error:', error);
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Erneut versuchen';
+                });
+            }
+
+            root.addEventListener('click', (e) => {
+                const b = e.target.closest('.chip');
+                if (b) { toggleChip(b); return; }
+                if (e.target === nextBtn) { onNext(); }
+                if (e.target === prevBtn) { setActive(Math.max(0, idx - 1)); }
             });
-        }
 
-        // Attach direct listeners as fallback (REMOVED - Delegation is enough)
-        // Array.from(root.querySelectorAll('.chip')).forEach(b=> b.addEventListener('click', ()=> toggleChip(b)));
+            const budgetInput = root.querySelector('#wiz-budget');
+            if (budgetInput) {
+                const out = root.querySelector('#wiz-budget-out');
+                const sync = () => {
+                    const raw = parseInt(budgetInput.value, 10) || 1000;
+                    const stepped = Math.min(2500, Math.max(250, Math.round(raw / 25) * 25));
+                    state.budgetValue = stepped;
+                    if (out) out.textContent = (stepped >= 2500) ? '> 2.500 €' : new Intl.NumberFormat('de-DE').format(stepped) + ' €';
+                };
+                budgetInput.addEventListener('input', sync);
+                sync();
+            }
 
             setActive(0);
             updateNextDisabled();
+        });
+    };
 
-            // Ensure upper sticky sections never block the wizard when in view
-            try{
-                const contactSection = document.getElementById('contact');
-                const smm = document.getElementById('smm');
-                if(contactSection && smm && 'IntersectionObserver' in window){
-                    const io = new IntersectionObserver((entries)=>{
-                        entries.forEach(e=>{
-                            if(e.isIntersecting){ smm.style.pointerEvents = 'none'; }
-                            else { smm.style.pointerEvents = ''; }
-                        });
-                    }, { threshold: 0.05 });
-                    io.observe(contactSection);
-                }
-            }catch(err){ console.warn('[Wizard] overlay guard failed', err); }
-        };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => window.initVariadWizard());
+    } else {
+        window.initVariadWizard();
+    }
 
-        // Initialize on load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => window.initVariadWizard());
-        } else {
-            window.initVariadWizard();
-        }
-        
-        // Also observe for future additions (like the modal)
-        if(window.MutationObserver) {
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    mutation.addedNodes.forEach((node) => {
-                        if (node.nodeType !== 1) return;
-                        if(node.id === 'contact-modal-overlay' || node.id === 'contact-wizard' || node.querySelector('#contact-wizard')) {
-                            const target = node.id === 'contact-wizard' ? node : node.querySelector('#contact-wizard');
-                            if (target) window.initVariadWizard(target);
-                        }
-                    });
+    if (window.MutationObserver) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType !== 1) return;
+                    if (node.id === 'contact-modal-overlay' || node.id === 'contact-wizard' || node.querySelector('#contact-wizard')) {
+                        const target = node.id === 'contact-wizard' ? node : node.querySelector('#contact-wizard');
+                        if (target) window.initVariadWizard(target);
+                    }
                 });
             });
-            observer.observe(document.body, { childList: true, subtree: true });
-        }
-    })();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+})();
+
 
 
 /* --- Block 4 --- */
@@ -1314,15 +1190,16 @@
         
         const io = new IntersectionObserver((entries)=>{
             entries.forEach(entry=>{ 
-                // ZUSATZ-CHECK: Nur animieren, wenn wir nicht ganz oben sind (verhindert Instant-Trigger beim Laden)
-                if(entry.isIntersecting && window.scrollY > 50){ 
+                // Einfacher Check: Wenn sichtbar, dann einblenden.
+                // Wir verzichten auf den scrollY > 50 Check, da dieser Elemente am Seitenanfang blockiert.
+                if(entry.isIntersecting){ 
                     entry.target.classList.add('visible'); 
                     io.unobserve(entry.target); 
                 } 
             });
         }, { 
-            threshold: 0.3, // Muss zu 30% sichtbar sein
-            rootMargin: "0px 0px -100px 0px" // Trigger weit oberhalb des Bodens
+            threshold: 0.1, // Reagiere schon bei 10% Sichtbarkeit für besseres Gefühl
+            rootMargin: "0px 0px -50px 0px" // Trigger etwas früher
         });
         
         // Erst beobachten, wenn wir sicher sind, dass das Layout steht
@@ -2791,7 +2668,16 @@
         item.el.style.opacity = '0';
     });
 
-    let hasStarted = false;
+    // Safety Reveal after 3 seconds
+    setTimeout(() => {
+        if (!hasStarted) {
+            hasStarted = true;
+            allTextElements.forEach(item => {
+                item.el.style.opacity = '1';
+                item.el.textContent = item.text;
+            });
+        }
+    }, 3000);
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && !hasStarted) {
             hasStarted = true;

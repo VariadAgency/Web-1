@@ -38,8 +38,8 @@
 
     /* NAV BAR - GLASOPTIK FULL HEIGHT (Statusbar + Header) */
     nav {
-        /* Standardmäßig VERSTECKT (wie Desktop) */
-        transform: translateY(-100%);
+        /* Standardmäßig SICHTBAR auf Mobile für bessere UX */
+        transform: translateY(0);
         opacity: 1 !important;
         visibility: visible !important;
         pointer-events: auto !important;
