@@ -120,13 +120,6 @@
             pointer-events: auto;
         }
 
-        /* Standardmäßig sichtbar ganz oben (Safety Fallback) */
-        @media (min-width: 769px) {
-            nav {
-                transform: translateY(0);
-            }
-        }
-
         /* Backdrop und Hintergrund nur für sichtbaren Bereich */
         nav::before {
             content: '';
