@@ -71,18 +71,16 @@ Die Website ist von Grund auf für internationales SEO konzipiert:
 
 ---
 
-## 🛠 Entwicklung & Deployment
+## 🛠 Entwicklung & Workflow
 
-### Lokale Entwicklung
-Die Website basiert auf reinem HTML/CSS/JS (Vanilla), was eine extrem schnelle lokale Entwicklung ohne komplexe Build-Pipelines ermöglicht.
-Ein einfacher lokaler Server (z.B. `live-server` oder Python `http.server`) reicht aus:
-```bash
-python3 -m http.server 8000
-```
+### AI-Driven Engineering
+Dieses Projekt wurde unter Einsatz modernster KI-Technologien entwickelt und optimiert. Der Workflow nutzt fortschrittliche Agenten-Systeme zur Code-Generierung, zum Refactoring und zur Qualitätssicherung:
+*   **Claude Code & Gemini:** Primär genutzt für komplexes Refactoring, architektonische Entscheidungen, SEO-Strategien und multilinguale Strukturierung.
+*   **Automatisierte Workflows:** KI-gestützte Validierung von Pfaden, technischer Integrität und UI-Konsistenz über 25+ Unterseiten hinweg.
 
 ### Git Workflow
-*   **main:** Enthält den stabilen Live-Stand der Produktion.
-*   **preview:** Dient als Staging-Umgebung für Tests und Abnahmen vor dem Push auf Main.
+*   **main:** Stabiler Live-Stand der Produktion.
+*   **preview:** Aktiver Staging-Branch für Tests und Abnahmen.
 
 ---
 
