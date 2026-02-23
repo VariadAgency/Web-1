@@ -1210,30 +1210,9 @@
 
 
 /* --- Block 9 --- */
-// Make "Beratung buchen" CTA focus the contact form after scroll
+// Smooth scroll removed because we now use a global modal popup
     (function(){
-        const ctas = document.querySelectorAll('a[href="#contact"]');
-        
-        const smoothScrollToContact = (e) => {
-            e.preventDefault();
-            const target = document.getElementById('contact');
-            if (!target) return;
-            
-            // Calculate position: target top + offset (e.g. -95px)
-            // A negative offset helps land higher up if the target is being overshot
-            const offset = window.innerWidth <= 768 ? -95 : 80;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + offset;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-
-            // Focus name field after scroll
-            setTimeout(()=> document.getElementById('wiz-name')?.focus({ preventScroll:true }), 800);
-        };
-
-        ctas.forEach(a=> a.addEventListener('click', smoothScrollToContact));
+        // Handled by contact-modal.js auto-binding
     })();
 
 
