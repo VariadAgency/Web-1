@@ -1,0 +1,432 @@
+/* --- Senior Level Refactor: About Page --- */
+
+:root {
+    --glass-surface: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
+    --depth-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    --glow-warm: radial-gradient(circle at center, rgba(251, 146, 60, 0.15), transparent 70%);
+}
+
+/* 1. Global Texture & Typography Polish */
+.about-page-wrapper {
+    position: relative;
+    overflow: hidden; /* For noise containment */
+}
+
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+}
+
+/* 2. Hero Section: Cinematic & Deep */
+.about-hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 120px;
+    text-align: center;
+}
+
+.about-hero-bg {
+    position: absolute;
+    inset: 0;
+    /* Subtler, deep gradients */
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(251, 146, 60, 0.06) 0%, transparent 60%);
+    z-index: 0;
+}
+
+.about-hero-content {
+    max-width: 1100px;
+    padding: 0 var(--container-padding);
+    position: relative;
+    z-index: 2;
+}
+
+.about-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand-orange);
+    margin-bottom: var(--space-32);
+    display: inline-block;
+    position: relative;
+    padding-left: 12px;
+}
+
+.about-eyebrow::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 6px; height: 6px;
+    background: var(--brand-orange);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px var(--brand-orange);
+}
+
+.about-title {
+    font-size: clamp(56px, 7vw, 110px);
+    line-height: 1.0;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-40);
+    color: #fff;
+    /* Optical balancing for headlines */
+    text-wrap: balance;
+}
+
+.about-title span {
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(to bottom right, #fff 30%, #999 100%);
+}
+
+.about-lead {
+    font-size: clamp(20px, 2vw, 26px);
+    color: var(--text-2);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 auto;
+    text-wrap: pretty;
+}
+
+/* 3. Stats Row: Architectural Layout */
+.stats-strip {
+    width: 100%;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.01);
+    backdrop-filter: blur(10px);
+    margin-top: -80px; /* Overlap Hero slightly */
+    position: relative;
+    z-index: 5;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.stat-item {
+    padding: 40px 20px;
+    text-align: center;
+    border-right: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-value {
+    font-size: clamp(40px, 4vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-feature-settings: "tnum"; /* Tabular numbers */
+}
+
+.stat-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-4);
+    font-weight: 500;
+}
+
+/* 4. Scrollytelling Section (The "Senior" Feature) */
+.scrolly-section {
+    padding: 160px 0;
+    position: relative;
+}
+
+.scrolly-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Left: Sticky Visual */
+.scrolly-visual {
+    width: 50%;
+    position: sticky;
+    top: 120px; /* Sticky offset */
+    height: 70vh;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: #111;
+    box-shadow: var(--depth-shadow);
+}
+
+.visual-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.8s ease; /* For slow zoom effect */
+}
+
+.visual-overlay {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    padding: 32px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.visual-caption {
+    font-size: 14px;
+    color: var(--text-3);
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.visual-caption::before {
+    content: ''; width: 8px; height: 8px; background: var(--brand-red); border-radius: 50%;
+}
+
+/* Right: Scrolling Content */
+.scrolly-content {
+    width: 50%;
+    padding-top: 5vh; /* Initial offset */
+    padding-bottom: 20vh;
+}
+
+.scrolly-block {
+    min-height: 60vh; /* Each block takes space to allow scroll */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0.3; /* Inactive state */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    padding-left: 20px;
+    border-left: 2px solid rgba(255,255,255,0.05);
+}
+
+/* Active State Logic (via IntersectionObserver in JS later, or CSS hover for now fallback) */
+.scrolly-block.active {
+    opacity: 1;
+    border-left-color: var(--brand-orange);
+    transform: translateX(10px);
+}
+
+.scrolly-block h2 {
+    font-size: clamp(32px, 3vw, 42px);
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #fff;
+}
+
+.scrolly-block p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-3);
+}
+
+/* 5. DNA / Values: High-End Cards */
+.dna-section {
+    padding: 120px 0;
+    position: relative;
+}
+
+.dna-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 80px;
+}
+
+.dna-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 32px;
+    padding: 0 var(--container-padding);
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.dna-card {
+    background: var(--glass-surface);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    position: relative;
+    transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+    overflow: hidden;
+}
+
+/* High-end hover effect: light border + glow */
+.dna-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.4),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* Decorative gradient blob inside card */
+.dna-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+.dna-card:hover::before { opacity: 1; }
+
+.dna-number {
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--brand-orange);
+    opacity: 0.8;
+    margin-bottom: 24px;
+    display: block;
+}
+
+.dna-card h3 {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.dna-card p {
+    font-size: 17px;
+    color: var(--text-3);
+    line-height: 1.6;
+    position: relative;
+}
+
+/* 6. Insights / Gallery: Masonry Polish */
+.insights-section {
+    padding: 160px 0;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 350px 350px;
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.insight-item {
+    background: #111;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--glass-border);
+}
+
+.insight-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.insight-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Layout Variations */
+.insight-large { grid-column: span 2; grid-row: span 2; }
+.insight-wide { grid-column: span 2; }
+.insight-tall { grid-row: span 2; }
+
+/* Caption on hover */
+.insight-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 32px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.insight-item:hover .insight-overlay { opacity: 1; }
+
+.insight-txt {
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+.insight-item:hover .insight-txt { transform: translateY(0); }
+
+.insight-title { color: #fff; font-weight: 700; font-size: 18px; display: block; }
+.insight-sub { color: var(--text-3); font-size: 14px; margin-top: 4px; display: block; }
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .scrolly-container {
+        flex-direction: column;
+    }
+    .scrolly-visual {
+        position: relative;
+        width: 100%;
+        height: 50vh;
+        top: 0;
+        margin-bottom: 40px;
+    }
+    .scrolly-content {
+        width: 100%;
+        padding-top: 0;
+    }
+    .scrolly-block {
+        min-height: auto;
+        padding-bottom: 80px;
+        opacity: 1; /* Disable fade on mobile for simplicity */
+        border-left: none;
+        padding-left: 0;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 32px;
+    }
+    .stat-item:last-child { border-bottom: none; }
+    
+    .insights-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+    }
+    .insight-large, .insight-wide, .insight-tall {
+        grid-column: auto;
+        grid-row: auto;
+        aspect-ratio: 4/3;
+    }
+}

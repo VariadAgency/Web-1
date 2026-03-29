@@ -1,0 +1,293 @@
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * ANNOUNCEMENT MODAL - STYLES
+ * ═══════════════════════════════════════════════════════════════
+ *
+ * ⚠️ DIESE DATEI NICHT BEARBEITEN!
+ * Alle Einstellungen werden in config.js vorgenommen.
+ *
+ * Design: VARIAD Brand Style
+ * - Schwarze Box mit roter leuchtender Outline
+ * - Weißer Text
+ * - Roter CTA-Button
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   CONTAINER & OVERLAY
+   ═══════════════════════════════════════════════════════ */
+
+.announcement-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.announcement-modal.announcement-modal-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dunkler Overlay-Hintergrund */
+.announcement-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL BOX
+   ═══════════════════════════════════════════════════════ */
+
+.announcement-modal-content {
+    position: relative;
+    background: #0a0a0a;
+    border: 2px solid #dc2626;
+    border-radius: 24px;
+    max-width: 750px;
+    width: 100%;
+    padding: 60px 50px;
+    box-shadow:
+        0 0 30px rgba(220, 38, 38, 0.4),
+        0 0 60px rgba(220, 38, 38, 0.2),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: modalGlow 3s ease-in-out infinite;
+}
+
+.announcement-modal-visible .announcement-modal-content {
+    transform: scale(1);
+}
+
+/* Leuchtende Outline Animation */
+@keyframes modalGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 30px rgba(220, 38, 38, 0.4),
+            0 0 60px rgba(220, 38, 38, 0.2),
+            0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 40px rgba(220, 38, 38, 0.6),
+            0 0 80px rgba(220, 38, 38, 0.3),
+            0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CLOSE BUTTON (X)
+   ═══════════════════════════════════════════════════════ */
+
+.announcement-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.announcement-modal-close:hover {
+    background: rgba(220, 38, 38, 0.2);
+    border-color: #dc2626;
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+.announcement-modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT
+   ═══════════════════════════════════════════════════════ */
+
+.announcement-modal-body {
+    text-align: center;
+}
+
+.announcement-modal-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+.announcement-modal-message {
+    font-size: clamp(16px, 2vw, 18px);
+    color: #d4d4d4;
+    line-height: 1.7;
+    margin: 0 0 36px 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════ */
+
+.announcement-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* CTA Button (Rot) */
+.announcement-modal-cta {
+    display: block;
+    width: 100%;
+    padding: 16px 32px;
+    background: #dc2626;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+}
+
+.announcement-modal-cta:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(220, 38, 38, 0.5);
+}
+
+.announcement-modal-cta:active {
+    transform: translateY(0);
+}
+
+/* "Nein danke" Button (Grau) */
+.announcement-modal-decline {
+    display: block;
+    width: 100%;
+    padding: 14px 32px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.announcement-modal-decline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+    .announcement-modal {
+        padding: 16px;
+    }
+
+    .announcement-modal-content {
+        padding: 36px 24px;
+        border-radius: 20px;
+    }
+
+    .announcement-modal-close {
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .announcement-modal-title {
+        font-size: 22px;
+    }
+
+    .announcement-modal-message {
+        font-size: 15px;
+    }
+
+    .announcement-modal-cta,
+    .announcement-modal-decline {
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .announcement-modal-content {
+        padding: 28px 20px;
+    }
+
+    .announcement-modal-title {
+        font-size: 20px;
+    }
+
+    .announcement-modal-message {
+        font-size: 14px;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ═══════════════════════════════════════════════════════ */
+
+/* Fokus-Styles für Tastatur-Navigation */
+.announcement-modal-cta:focus,
+.announcement-modal-decline:focus,
+.announcement-modal-close:focus {
+    outline: 2px solid #fb923c;
+    outline-offset: 2px;
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .announcement-modal,
+    .announcement-modal-content,
+    .announcement-modal-close,
+    .announcement-modal-cta,
+    .announcement-modal-decline {
+        transition: none;
+        animation: none;
+    }
+
+    .announcement-modal-content {
+        transform: scale(1);
+    }
+}
