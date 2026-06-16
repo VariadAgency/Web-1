@@ -1164,12 +1164,9 @@
                 'imagefilm-produktion-backnang-quer-04.jpeg',
                 'eventfotografie-stuttgart-quer-05.jpeg',
                 'social-media-management-heilbronn-quer-06.jpeg',
-                'werbefilm-produktion-bw-quer-07.jpeg',
                 'corporate-influencer-marketing-quer-08.jpeg',
                 'tiktok-reels-agentur-stuttgart-quer-09.jpeg',
-                'produktfotografie-e-commerce-quer-11.jpeg',
                 'unternehmensvideo-produktion-quer-12.jpeg',
-                'social-media-content-creation-quer-13.jpeg',
                 'performance-marketing-visuals-quer-14.jpeg',
                 'social-media-agentur-stuttgart-quer-15.jpeg'
             ];
