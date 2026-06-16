@@ -632,7 +632,7 @@
       
       gridFoto.innerHTML = list.map((it, index) => {
           const seoTxt = getSeoText(index);
-          return `<figure class="item" onclick="openLightbox('${it.src}', 'img')" title="${seoTxt}"><img loading="lazy" src="${it.src}" alt="${seoTxt}"></figure>`;
+          return `<figure class="item" onclick="openLightbox('${it.src}', 'img')"><img loading="lazy" src="${it.src}" alt="${seoTxt}"></figure>`;
       }).join('');
     })();
 
@@ -676,7 +676,7 @@
             const src = videoPath + filename;
             const seoTxt = getSeoText(index + 5); // Offset für Varianz
             return `
-            <div class="video-item" title="${seoTxt}" onclick="openLightbox('${src}', 'video')" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+            <div class="video-item" onclick="openLightbox('${src}', 'video')" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
                 <video muted loop playsinline preload="auto" onloadeddata="updateLoader()" onerror="updateLoader()">
                     <source src="${src}#t=0.5" type="video/mp4">
                 </video>
